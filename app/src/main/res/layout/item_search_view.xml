@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Created on 31/1/21 10:51 PM
+  ~ Copyright (c) Muhammad Utsman 2021 All rights reserved.
+  -->
+
+<LinearLayout
+    android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="12dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nama tempat"
+        android:textStyle="bold"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:id="@+id/txt_place_name"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Alamat"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:id="@+id/txt_address"/>
+
+</LinearLayout>

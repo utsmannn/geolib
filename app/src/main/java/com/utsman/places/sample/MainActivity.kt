@@ -34,24 +34,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val txtLog = findViewById<TextView>(R.id.txt_log)
-
-        val fusedLocation = LocationServices.getFusedLocationProviderClient(this)
-        val hereApiKey = getString(strings.here_maps_api)
-
-        val placesLocation = fusedLocation.createPlacesLocation(hereApiKey)
-        placesLocation.enableLog = false
-
         Dexter.withContext(this)
             .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
             .withListener(object : PermissionListener {
                 override fun onPermissionGranted(p0: PermissionGrantedResponse?) {
-                    MainScope().launch {
-                        placesLocation.getLocationFlow()
-                            .collect {
-                                val places = placesLocation.getPlacesLocation(it)
-                                txtLog.text = places.toString()
-                            }
+                    findViewById<Button>(R.id.btn_current_location).setOnClickListener {
+                        this@MainActivity intent CurrentLocationActivity::class.java
+                    }
+
+                    findViewById<Button>(R.id.btn_search_location).setOnClickListener {
+                        this@MainActivity intent SearchActivity::class.java
+                    }
+
+                    findViewById<Button>(R.id.btn_route).setOnClickListener {
+                        this@MainActivity intent RouteActivity::class.java
                     }
                 }
 
@@ -66,17 +62,5 @@ class MainActivity : AppCompatActivity() {
 
             })
             .check()
-
-        findViewById<Button>(R.id.btn_to_search).setOnClickListener {
-            startActivity(Intent(this, SearchActivity::class.java))
-        }
-
-        findViewById<Button>(R.id.btn_to_route).setOnClickListener {
-            startActivity(Intent(this, RouteActivity::class.java))
-        }
-
-        findViewById<Button>(R.id.btn_to_maps).setOnClickListener {
-            startActivity(Intent(this, MapsActivity::class.java))
-        }
     }
 }

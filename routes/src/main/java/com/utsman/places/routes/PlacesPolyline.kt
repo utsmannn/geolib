@@ -95,10 +95,10 @@ class PlacesPolyline(
                 listener?.onEndAnimation(geometries.last())
             }, onUpdate = { _, _ ->
 
-            }, zIndex = 1f)
+            }, zIndex = 10f)
         }, onUpdate = { latLng, d ->
             listener?.onUpdate(latLng, d)
-        }, zIndex = 10f)
+        }, zIndex = 1f)
     }
 
     internal fun blockStackAnimate(

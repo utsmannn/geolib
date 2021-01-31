@@ -10,27 +10,69 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.location.LocationServices
 import com.utsman.places.location.createPlacesLocation
+import com.utsman.places.location.data.PlaceData
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class SearchActivity : AppCompatActivity() {
 
+    class ViewHolderAdapter(view: View) : RecyclerView.ViewHolder(view) {
+        fun bind(placeData: PlaceData) = itemView.run {
+            val txtPlaceName = findViewById<TextView>(R.id.txt_place_name)
+            val txtPlaceAddress = findViewById<TextView>(R.id.txt_address)
+
+            txtPlaceName.text = placeData.title
+            txtPlaceAddress.text = placeData.address
+        }
+    }
+
+    class Adapter : RecyclerView.Adapter<ViewHolderAdapter>() {
+        var items = listOf<PlaceData>()
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderAdapter {
+            return ViewHolderAdapter(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.item_search_view, parent, false)
+            )
+        }
+
+        override fun onBindViewHolder(holder: ViewHolderAdapter, position: Int) {
+            holder.bind(items[position])
+        }
+
+        override fun getItemCount(): Int {
+            return items.size
+        }
+    }
+
     private val placesLocation by lazy {
         LocationServices.getFusedLocationProviderClient(this)
             .createPlacesLocation(getString(strings.here_maps_api))
     }
 
+    private val searchAdapter by lazy { Adapter() }
+    private val editQuery by lazy { findViewById<EditText>(R.id.edit_query) }
+    private val recyclerView by lazy { findViewById<RecyclerView>(R.id.rv_places) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
-        val editQuery = findViewById<EditText>(R.id.edit_query)
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(this@SearchActivity)
+            adapter = searchAdapter
+        }
         editQuery.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -53,8 +95,8 @@ class SearchActivity : AppCompatActivity() {
         MainScope().launch {
             val currentLocation = placesLocation.getLocationFlow().first()
             val data = placesLocation.searchPlaces(currentLocation, query)
-            val txtResult = findViewById<TextView>(R.id.txt_result)
-            txtResult.text = data.toString()
+            searchAdapter.items = data
+            searchAdapter.notifyDataSetChanged()
         }
     }
 }

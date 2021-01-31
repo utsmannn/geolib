@@ -27,6 +27,7 @@
         <activity android:name=".SearchActivity"/>
         <activity android:name=".RouteActivity"/>
         <activity android:name=".MapsActivity"/>
+        <activity android:name=".CurrentLocationActivity"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

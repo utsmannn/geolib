@@ -9,7 +9,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -25,7 +24,6 @@ import com.utsman.places.location.createPlacesLocation
 import com.utsman.places.routes.*
 import com.utsman.places.routes.data.StackAnimationMode
 import com.utsman.places.routes.data.TransportMode
-import com.utsman.smartmarker.moveMarkerSmoothly
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
@@ -161,7 +159,7 @@ class MapsActivity : AppCompatActivity() {
             delay(2000)
             val routeToInitial = placesRoute.searchRoute {
                 startLocation = rawabadak
-                endLocation = center
+                endLocation = center1
                 transportMode = TransportMode.BIKE
             }
 
