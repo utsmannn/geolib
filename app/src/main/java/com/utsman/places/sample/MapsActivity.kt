@@ -15,7 +15,9 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.RoundCap
 import com.google.maps.android.ktx.addMarker
 import com.google.maps.android.ktx.awaitMap
 import com.utsman.places.location.PlacesLocation
@@ -23,6 +25,7 @@ import com.utsman.places.location.createPlacesLocation
 import com.utsman.places.routes.*
 import com.utsman.places.routes.data.StackAnimationMode
 import com.utsman.places.routes.data.TransportMode
+import com.utsman.smartmarker.moveMarkerSmoothly
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
@@ -45,9 +48,18 @@ class MapsActivity : AppCompatActivity() {
         lifecycleScope.launchWhenCreated {
             val googleMap = mapsFragment.awaitMap().apply {
                 uiSettings.isZoomControlsEnabled = true
-                setPadding(0, 0, 0, 100)
+                setPadding(0, 0, 0, 200)
             }
-            googleMap.animateCamera(center.toCameraUpdate(13f))
+
+            val cameraPosition = CameraPosition.builder()
+                .tilt(90f)
+                .bearing(90f)
+                .zoom(17f)
+                .target(buaran.toLatLng())
+                .build()
+
+            val cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition)
+            googleMap.animateCamera(cameraUpdate)
 
             val polylineBuilder = googleMap.createPlacesPolylineBuilder()
                 .withStackAnimationMode(StackAnimationMode.OffStackAnimation)
@@ -57,8 +69,9 @@ class MapsActivity : AppCompatActivity() {
 
             findViewById<Button>(R.id.btn_start).setOnClickListener {
                 googleMap.clear()
-                startTestPoly(placesRoute, polyline, googleMap)
+                //startTestPoly(placesRoute, polyline, googleMap)
                 //startObserverLocation(placesLocation, polyline)
+                startTestTracking(placesRoute, polyline, googleMap)
             }
         }
     }
@@ -136,7 +149,7 @@ class MapsActivity : AppCompatActivity() {
                 duration = 4000
                 doOnUpdateAnimation { latLng, mapCameraDuration ->
                     logd("updated ---> $latLng")
-                    val cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17f)
+                    val cameraUpdate = CameraUpdateFactory.newLatLng(latLng)
                     googleMap.animateCamera(cameraUpdate, mapCameraDuration, null)
                 }
             }
@@ -167,6 +180,45 @@ class MapsActivity : AppCompatActivity() {
             delay(3000)
             toast("start remove")
             end.remove()
+        }
+    }
+
+    private fun startTestTracking(route: PlacesRoute, polyLine: PlacesPolyline, googleMap: GoogleMap) {
+        lifecycleScope.launch {
+            val marker = googleMap.addMarker {
+                position(buaran.toLatLng())
+            }
+            googleMap.isBuildingsEnabled = true
+            val cameraPosition = CameraPosition.builder()
+                .tilt(60f)
+                .bearing(30f)
+                .zoom(17f)
+                .target(buaran.toLatLng())
+                .build()
+
+            val cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition)
+            googleMap.animateCamera(cameraUpdate)
+
+            delay(2000)
+            val data = route.searchRoute {
+                startLocation = buaran
+                endLocation = rawamangun
+                transportMode = TransportMode.BIKE
+            }
+
+            polyLine.startAnimate(data.geometries) {
+                duration = 300000
+                stackAnimationMode = StackAnimationMode.OffStackAnimation
+                withPrimaryPolyline {
+                    color(Color.RED)
+                    endCap(RoundCap())
+                }
+                doOnUpdateAnimation { latLng, mapCameraDuration ->
+                    marker.position = latLng
+                    val newCameraUpdate = CameraUpdateFactory.newLatLng(latLng)
+                    googleMap.animateCamera(newCameraUpdate, mapCameraDuration, null)
+                }
+            }
         }
     }
 }

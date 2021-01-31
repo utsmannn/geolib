@@ -34,6 +34,16 @@ val center = Location("").apply {
     longitude = 106.9055753
 }
 
+val gunungBatu = Location("").apply {
+    latitude = -6.60602
+    longitude = 107.0543233
+}
+
+val gunungBatu2 = Location("").apply {
+    latitude = -6.591606
+    longitude = 107.0565503
+}
+
 fun Location.toLatLng() = LatLng(latitude, longitude)
 
 fun Location.toCameraUpdate(zoom: Float = 16f): CameraUpdate =
