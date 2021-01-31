@@ -1,0 +1,44 @@
+/*
+ * Created on 31/1/21 5:51 PM
+ * Copyright (c) Muhammad Utsman 2021 All rights reserved.
+ */
+
+android {
+    compileSdkVersion rootProject.ext.compileSdk
+    buildToolsVersion rootProject.ext.buildTools
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdk
+        targetSdkVersion rootProject.ext.targetSdk
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+        freeCompilerArgs += [
+                "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
+                "-Xuse-experimental=kotlinx.coroutines.ObsoleteCoroutinesApi",
+                "-Xuse-experimental=kotlinx.coroutines.FlowPreview",
+                "-Xuse-experimental=kotlinx.coroutines.InternalCoroutinesApi",
+                "-Xuse-experimental=kotlin.ExperimentalStdlibApi",
+                "-Xuse-experimental=kotlin.time.ExperimentalTime",]
+    }
+
+    viewBinding {
+        enabled = true
+    }
+}

@@ -1,0 +1,7 @@
+/*
+ * Created on 31/1/21 5:51 PM
+ * Copyright (c) Muhammad Utsman 2021 All rights reserved.
+ */
+
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'

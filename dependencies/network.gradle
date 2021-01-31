@@ -1,0 +1,16 @@
+/*
+ * Created on 31/1/21 5:51 PM
+ * Copyright (c) Muhammad Utsman 2021 All rights reserved.
+ */
+
+dependencies {
+    // retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.7.2'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.4.1'
+    implementation 'com.squareup.okhttp3:okhttp-urlconnection:4.7.2'
+    implementation 'org.conscrypt:conscrypt-android:2.2.1'
+
+    // gson
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
+}

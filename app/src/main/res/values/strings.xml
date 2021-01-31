@@ -1,0 +1,9 @@
+<!--
+  ~ Created on 31/1/21 5:51 PM
+  ~ Copyright (c) Muhammad Utsman 2021 All rights reserved.
+  -->
+
+<resources>
+    <string name="app_name">Coroutine Places Helper</string>
+    <string name="here_maps_api">rujdNo1Z-UlY47ipLzcvIkgXpiNSvdYdTxpiDRV-Z6I</string>
+</resources>

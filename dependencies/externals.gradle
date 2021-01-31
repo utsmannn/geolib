@@ -1,0 +1,21 @@
+/*
+ * Created on 31/1/21 5:51 PM
+ * Copyright (c) Muhammad Utsman 2021 All rights reserved.
+ */
+
+dependencies {
+    // coroutine
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2-native-mt'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1'
+
+    // google maps
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.google.maps.android:maps-ktx:2.1.1'
+    implementation 'com.google.maps.android:android-maps-utils:0.5'
+
+    // play location
+    implementation 'com.google.android.gms:play-services-location:17.1.0'
+
+    // dexter permission
+    implementation 'com.karumi:dexter:6.2.2'
+}
