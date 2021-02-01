@@ -23,6 +23,15 @@
 - [Routes Library](routes)
 - [Polyline-utils for GoogleMaps](polyline-utils)
 
+## Screenshot
+|Get location|Search location|
+|---|---|
+|![](images/current_location.gif)|![](images/search_location.gif)|
+
+|Route|Polyline-utils|
+|---|---|
+|![](images/route.gif)|![](images/polyline_animate.gif)|
+
 ## Prerequisite
 ### HERE Api
 You need HERE Api, open https://developer.here.com/. Create new account or login and create api key.
@@ -62,16 +71,6 @@ implementation 'com.utsman.geolib:routes:1.0.0'
 // polyline utils
 implementation 'com.utsman.geolib:polyline:1.0.0'
 ```
-
-## Screenshot
-|Get location|Search location|
-|---|---|
-|![](images/current_location.gif)|![](images/search_location.gif)|
-
-|Route|Polyline-utils|
-|---|---|
-|![](images/route.gif)|![](images/polyline_animate.gif)|
-
 
 ## License
 ```
