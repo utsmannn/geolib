@@ -6,8 +6,7 @@
 package com.utsman.places.routes
 
 import android.util.Log
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.PolylineOptions
+import java.util.*
 
 internal fun logd(message: String) = Log.d("--PLACES--", message)
 

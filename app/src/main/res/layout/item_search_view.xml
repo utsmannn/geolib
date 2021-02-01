@@ -26,4 +26,11 @@
         android:ellipsize="end"
         android:id="@+id/txt_address"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10Km"
+        android:alpha="0.6"
+        android:id="@+id/txt_distance"/>
+
 </LinearLayout>

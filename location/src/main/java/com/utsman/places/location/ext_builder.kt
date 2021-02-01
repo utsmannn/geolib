@@ -6,7 +6,17 @@
 package com.utsman.places.location
 
 import com.google.android.gms.location.FusedLocationProviderClient
+import java.util.*
 
 fun FusedLocationProviderClient.createPlacesLocation(hereMapsApiKey: String): PlacesLocation {
     return PlacesLocationImpl(this, hereMapsApiKey)
 }
+
+internal val Double.kM: String
+    get() {
+        val distanceInMeter = this / 1000.0
+
+        val formatter = Formatter().format("%.1f", distanceInMeter)
+        val doubleFormat = formatter.toString().replace(",", ".").toDouble()
+        return "$doubleFormat Km"
+    }

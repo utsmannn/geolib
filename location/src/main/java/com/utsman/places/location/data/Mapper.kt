@@ -6,6 +6,7 @@
 package com.utsman.places.location.data
 
 import android.location.Location
+import com.utsman.places.location.kM
 import com.utsman.places.location.network.HerePlaceResponse
 
 internal object Mapper {
@@ -13,6 +14,7 @@ internal object Mapper {
         return item.run {
             val title = title
             val addressLabel = address?.label?.removePrefix("$title, ")
+            val distanceInKm = distance?.kM
             PlaceData(
                 hereId = id ?: "",
                 title = title ?: "Unknown place",
@@ -21,6 +23,7 @@ internal object Mapper {
                 city = address?.city ?: "Unknown city",
                 location = position?.toLocation() ?: Location(""),
                 distance = distance ?: 0.0,
+                distanceInKm = distanceInKm,
                 category = categories?.firstOrNull()?.name
             )
         }

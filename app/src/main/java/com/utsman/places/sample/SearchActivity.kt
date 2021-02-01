@@ -31,9 +31,11 @@ class SearchActivity : AppCompatActivity() {
         fun bind(placeData: PlaceData) = itemView.run {
             val txtPlaceName = findViewById<TextView>(R.id.txt_place_name)
             val txtPlaceAddress = findViewById<TextView>(R.id.txt_address)
+            val txtDistanceKm = findViewById<TextView>(R.id.txt_distance)
 
             txtPlaceName.text = placeData.title
             txtPlaceAddress.text = placeData.address
+            txtDistanceKm.text = placeData.distanceInKm
         }
     }
 

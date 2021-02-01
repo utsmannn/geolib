@@ -10,7 +10,7 @@ import android.location.Location
 data class RouteRequest(
     var startLocation: Location? = null,
     var endLocation: Location? = null,
-    var transportMode: TransportMode? = TransportMode.CAR,
+    var transportMode: TransportMode? = TransportMode.CAR
 ) {
     fun isNullSafe() = startLocation != null
             && endLocation != null

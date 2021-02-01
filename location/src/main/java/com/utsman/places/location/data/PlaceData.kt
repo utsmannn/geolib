@@ -15,5 +15,6 @@ data class PlaceData(
     val city: String,
     val location: Location,
     val distance: Double,
+    val distanceInKm: String?,
     val category: String? = null
 )

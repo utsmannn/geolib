@@ -25,10 +25,10 @@ internal class PlacesRouteImpl(
     }
 
     override suspend fun searchRoute(request: RouteRequest.() -> Unit): RouteData {
-        val routeRequest = RouteRequest()
-        request.invoke(routeRequest)
+        val routeRequest = RouteRequest().apply(request)
 
         return if (routeRequest.isNullSafe()) {
+
             val hereDataPolyline = fetch {
                 provideService().getRoutes(
                     transportMode = routeRequest.transportMode?.getString()!!,
