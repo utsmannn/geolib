@@ -8,11 +8,11 @@ Libraries for Location, Routes and Polyline utils for GoogleMaps
 - [Polyline-utils for GoogleMaps](polyline-utils)
 
 ## Prerequisite
-1. HERE Api
+### HERE Api
 You need HERE Api, open https://developer.here.com/. Create new account or login and create api key.
 ![](images/here_api.png)
 
-2. Google dependencies
+### Google dependencies
 ```groovy
 // Google maps if needed
 implementation 'com.google.android.gms:play-services-maps:17.0.0'
