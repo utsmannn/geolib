@@ -23,6 +23,11 @@ val polyline = polylineBuilder.createAnimatePolyline()
 
 ### Stack Animation Mode
 This is animation type of polyline
+![](/images/polyline_animate.gif)
+
+- Button 1: `StackAnimationMode.BlockStackAnimation` (this default configuration)
+- Button 2: `StackAnimationMode.WaitStackEndAnimation`
+- Button 2: `StackAnimationMode.OffStackAnimation`
 
 ## Animating polyline
 ### Start animate polyline
