@@ -2,6 +2,11 @@
 # Route
 This feature for search route between location, include ***LatLng Geometry*** and ***encoded path***
 
+## Download
+```groovy
+implementation 'com.utsman.geolib:routes:1.0.0'
+```
+
 ## Create `PlaceRoute`
 ```kotlin
 val placesRoute = createPlacesRoute(HERE_MAPS_API)

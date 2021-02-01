@@ -1,5 +1,11 @@
 
 # Polyline utils
+
+## Download
+```groovy
+implementation 'com.utsman.geolib:polyline:1.0.0'
+```
+
 ## Create `PlacesPolyline`
 ```kotlin
 val polylineBuilder = googleMap.createPlacesPolylineBuilder()

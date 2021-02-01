@@ -2,7 +2,7 @@
 # Location and Places Helper
 Libraries for Location, Routes and Polyline utils for GoogleMaps
 
-## The libraries
+## Documentation libraries
 - [Location library](location)
 - [Routes Library](routes)
 - [Polyline-utils for GoogleMaps](polyline-utils)
@@ -21,6 +21,29 @@ implementation 'com.google.maps.android:maps-ktx:2.1.1'
 
 // Google play location
 implementation 'com.google.android.gms:play-services-location:17.1.0'
+```
+
+### Maven repositories
+````groovy
+allprojects {
+	repositories {
+		...
+		maven { url 'https://dl.bintray.com/kucingapes/utsman' }
+	}
+}
+````
+
+### All dependencies
+```groovy
+
+// location
+implementation 'com.utsman.geolib:location:1.0.0'
+
+// routes
+implementation 'com.utsman.geolib:routes:1.0.0'
+
+// polyline utils
+implementation 'com.utsman.geolib:polyline:1.0.0'
 ```
 
 ## Screenshot

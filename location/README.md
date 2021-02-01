@@ -2,6 +2,11 @@
 # Location and Places
 This feature include ***observer location***, ***get current location***, ***get place data*** and ***search nearby place by location***
 
+## Download
+```groovy
+implementation 'com.utsman.geolib:location:1.0.0'
+```
+
 ## Prerequisite
 You need `FusedLocationProviderClient`
 ```kotlin

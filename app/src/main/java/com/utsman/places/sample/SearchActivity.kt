@@ -5,6 +5,7 @@
 
 package com.utsman.places.sample
 
+import android.location.Location
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -16,6 +17,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.location.LocationServices
@@ -75,27 +77,31 @@ class SearchActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@SearchActivity)
             adapter = searchAdapter
         }
-        editQuery.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (count > 2) {
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        searchPlace(s.toString())
-                    }, 1000)
+        lifecycleScope.launch {
+            val currentLocation = placesLocation.getLocationFlow().first()
+
+            editQuery.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 }
-            }
 
-            override fun afterTextChanged(s: Editable?) {
-            }
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    if (count > 2) {
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            searchPlace(s.toString(), currentLocation)
+                        }, 1000)
+                    }
+                }
 
-        })
+                override fun afterTextChanged(s: Editable?) {
+                }
+            })
+
+        }
     }
 
-    private fun searchPlace(query: String) {
+    private fun searchPlace(query: String, currentLocation: Location) {
         MainScope().launch {
-            val currentLocation = placesLocation.getLocationFlow().first()
             val data = placesLocation.searchPlaces(currentLocation, query)
             searchAdapter.items = data
             searchAdapter.notifyDataSetChanged()
