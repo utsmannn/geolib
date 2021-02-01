@@ -7,7 +7,6 @@ package com.utsman.places.sample
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -16,7 +15,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.Marker
 import com.google.maps.android.ktx.addMarker
 import com.google.maps.android.ktx.awaitMap
-import com.utsman.places.polyline.PlacesPointPolyline
+import com.utsman.places.polyline.point.PlacesPointPolyline
 import com.utsman.places.polyline.data.StackAnimationMode
 import com.utsman.places.polyline.utils.*
 import com.utsman.places.routes.*

@@ -16,7 +16,7 @@ import com.utsman.places.utils.toStringService
 
 internal class PlacesRouteImpl(
     private val hereMapsApi: String,
-    override var enableLog: Boolean = true
+    override var enableLog: Boolean = false
 ) : PlacesRoute {
 
     private fun provideService(): HereService {
@@ -28,7 +28,6 @@ internal class PlacesRouteImpl(
         val routeRequest = RouteRequest().apply(request)
 
         return if (routeRequest.isNullSafe()) {
-
             val hereDataPolyline = fetch {
                 provideService().getRoutes(
                     transportMode = routeRequest.transportMode?.getString()!!,

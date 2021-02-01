@@ -14,7 +14,7 @@ ext {
     artifact = 'routes'
 
     publishedGroupId = 'com.utsman.geolib'
-    libraryVersion = '1.0.0'
+    libraryVersion = versionName
 
     libraryDescription = 'Android helper libraries for place, location and polyline utils'
     siteUrl = 'https://github.com/utsmannn/geolib'

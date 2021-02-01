@@ -9,6 +9,8 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.maps.android.ktx.model.polylineOptions
 import com.utsman.places.polyline.data.StackAnimationMode
+import com.utsman.places.polyline.polyline.PlacesPolyline
+import com.utsman.places.polyline.polyline.PlacesPolylineOptions
 
 class PlacesPolylineBuilder(
     private val googleMap: GoogleMap,

@@ -12,6 +12,7 @@ import com.google.android.gms.maps.model.PolylineOptions
 import com.google.maps.android.ktx.model.polylineOptions
 import com.utsman.places.polyline.PlacesPolylineBuilder
 import com.utsman.places.polyline.data.PolylineConfig
+import com.utsman.places.polyline.data.PolylineIdentifier
 
 fun GoogleMap.createPlacesPolylineBuilder(primaryColor: Int = Color.BLACK, accentColor: Int = Color.GRAY) =
     PlacesPolylineBuilder(this, primaryColor, accentColor)
@@ -33,6 +34,16 @@ internal fun PolylineOptions.copyPolylineOptions(): PolylineOptions {
         .visible(this.isVisible)
         .pattern(this.pattern)
 }
+
+internal fun List<LatLng>.toGeoId(): String {
+    return "${first()}-${last()}"
+}
+
+internal fun List<LatLng>.toGeoIdZIndex(zIndex: Float): String {
+    return "${first()}-${last()}-${zIndex}"
+}
+
+internal fun PolylineIdentifier.toGeoIdZIndex() = "${this.geoId}-${this.zIndex}"
 
 fun PolylineConfig.withPrimaryPolyline(optionsActions: PolylineOptions.() -> Unit) {
     val options = polylineOptions(optionsActions)

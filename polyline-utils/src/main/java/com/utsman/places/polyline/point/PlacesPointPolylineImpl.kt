@@ -1,21 +1,24 @@
 /*
- * Created on 1/2/21 10:18 AM
+ * Created on 1/2/21 10:09 PM
  * Copyright (c) Muhammad Utsman 2021 All rights reserved.
  */
 
-package com.utsman.places.polyline
+package com.utsman.places.polyline.point
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.PolylineOptions
+import com.utsman.places.polyline.AnimationListener
 import com.utsman.places.polyline.data.PolylineConfig
 import com.utsman.places.polyline.data.StackAnimationMode
+import com.utsman.places.polyline.polyline.PlacesPolylineOptions
+import com.utsman.places.polyline.utils.toGeoId
 
 internal class PlacesPointPolylineImpl(
     private val placesPolylineOptions: PlacesPolylineOptions,
     private val stackAnimationMode: StackAnimationMode?
-): PlacesPointPolyline {
+) : PlacesPointPolyline {
 
     private lateinit var geometries: List<LatLng>
 
@@ -32,17 +35,19 @@ internal class PlacesPointPolylineImpl(
             PolylineConfig()
         }
 
-        val polylineOptions1 = polylineConfig.polylineOptions1 ?: placesPolylineOptions.polylineOption1
-        ?: PolylineOptions().apply {
-            width(8f)
-            color(placesPolylineOptions.primaryColor)
-        }
+        val polylineOptions1 =
+            polylineConfig.polylineOptions1 ?: placesPolylineOptions.polylineOption1
+            ?: PolylineOptions().apply {
+                width(8f)
+                color(placesPolylineOptions.primaryColor)
+            }
 
-        val polylineOptions2 = polylineConfig.polylineOptions2 ?: placesPolylineOptions.polylineOption2
-        ?: PolylineOptions().apply {
-            width(8f)
-            color(placesPolylineOptions.accentColor)
-        }
+        val polylineOptions2 =
+            polylineConfig.polylineOptions2 ?: placesPolylineOptions.polylineOption2
+            ?: PolylineOptions().apply {
+                width(8f)
+                color(placesPolylineOptions.accentColor)
+            }
 
         if (polylineConfig.cameraAutoUpdate) {
             val latLngBounds = LatLngBounds.builder().apply {
@@ -69,8 +74,11 @@ internal class PlacesPointPolylineImpl(
             }
         }
 
-        when (polylineConfig.stackAnimationMode ?: stackAnimationMode
-        ?: StackAnimationMode.BlockStackAnimation) {
+        val animationMode = polylineConfig.stackAnimationMode
+            ?: stackAnimationMode
+            ?: StackAnimationMode.BlockStackAnimation
+
+        when (animationMode) {
             is StackAnimationMode.WaitStackEndAnimation -> {
                 placesPolylineOptions.waitEndAnimate(
                     polylineOptions1,
@@ -107,17 +115,21 @@ internal class PlacesPointPolylineImpl(
     override fun remove(withGeometries: List<LatLng>?): Boolean {
         val geo = withGeometries ?: geometries
         return if (this::geometries.isInitialized) {
+            val currentGeoId = geo.toGeoId()
             val findPolyline = placesPolylineOptions.hasPolylines.filter {
-                it?.firstLatLng == geo.first() && it.lastLatLng == geo.last()
+                it?.geoId == currentGeoId
             }
 
-            findPolyline.forEach { p ->
-                p?.polyline?.forEach {
-                    it.isVisible = false
-                    it.remove()
+            if (!findPolyline.isNullOrEmpty()) {
+                findPolyline.forEach { p ->
+                    p?.polyline?.forEach {
+                        it.isVisible = false
+                        it.remove()
+                    }
+                    placesPolylineOptions.hasPolylines.remove(p)
                 }
             }
-            findPolyline.isNotEmpty()
+            findPolyline.isNullOrEmpty()
         } else {
             false
         }

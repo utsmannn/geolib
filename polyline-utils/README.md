@@ -3,7 +3,7 @@
 
 ## Download
 ```groovy
-implementation 'com.utsman.geolib:polyline:1.0.0'
+implementation 'com.utsman.geolib:polyline:1.1.0'
 ```
 
 ## Create `PlacesPolyline`

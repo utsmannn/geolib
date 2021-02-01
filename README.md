@@ -63,13 +63,13 @@ allprojects {
 ```groovy
 
 // location
-implementation 'com.utsman.geolib:location:1.0.0'
+implementation 'com.utsman.geolib:location:1.1.0'
 
 // routes
-implementation 'com.utsman.geolib:routes:1.0.0'
+implementation 'com.utsman.geolib:routes:1.1.0'
 
 // polyline utils
-implementation 'com.utsman.geolib:polyline:1.0.0'
+implementation 'com.utsman.geolib:polyline:1.1.0'
 ```
 
 ## License

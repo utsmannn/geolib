@@ -5,12 +5,10 @@
 
 package com.utsman.places.polyline.data
 
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Polyline
 
 internal data class PolylineIdentifier(
     var polyline: List<Polyline>?,
-    var firstLatLng: LatLng,
-    var lastLatLng: LatLng,
+    var geoId: String,
     var zIndex: Float
 )

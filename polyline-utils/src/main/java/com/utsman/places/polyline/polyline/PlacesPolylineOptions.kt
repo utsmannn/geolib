@@ -1,9 +1,9 @@
 /*
- * Created on 1/2/21 9:53 AM
+ * Created on 1/2/21 10:08 PM
  * Copyright (c) Muhammad Utsman 2021 All rights reserved.
  */
 
-package com.utsman.places.polyline
+package com.utsman.places.polyline.polyline
 
 import android.animation.Animator
 import android.animation.ValueAnimator
@@ -14,10 +14,16 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.Polyline
 import com.google.android.gms.maps.model.PolylineOptions
+import com.utsman.places.polyline.AnimationListener
+import com.utsman.places.polyline.CalculationHelper
+import com.utsman.places.polyline.point.PlacesPointPolyline
+import com.utsman.places.polyline.point.PlacesPointPolylineImpl
 import com.utsman.places.polyline.data.PolylineConfig
 import com.utsman.places.polyline.data.PolylineIdentifier
 import com.utsman.places.polyline.data.StackAnimationMode
 import com.utsman.places.polyline.utils.copyPolylineOptions
+import com.utsman.places.polyline.utils.toGeoId
+import com.utsman.places.polyline.utils.toGeoIdZIndex
 
 internal class PlacesPolylineOptions(
     internal val googleMap: GoogleMap,
@@ -182,7 +188,7 @@ internal class PlacesPolylineOptions(
 
     private fun startAnimatePolyline(
         polylineOptions: PolylineOptions = PolylineOptions(),
-        listLatLng: List<LatLng>,
+        geometries: List<LatLng>,
         duration: Long,
         zIndex: Float,
         start: () -> Unit,
@@ -190,21 +196,20 @@ internal class PlacesPolylineOptions(
         onUpdate: (LatLng, Int) -> Unit
     ) {
         var renderedPolyline: Polyline? = null
-        val legs: List<Double> = CalculationHelper.calculateLegsLengths(listLatLng)
+        val legs: List<Double> = CalculationHelper.calculateLegsLengths(geometries)
         val interpolator = DecelerateInterpolator()
 
         val totalPathDistance = legs.sum()
         val animator = ValueAnimator.ofFloat(0f, 100f)
         animator.duration = duration
-        interpolator.let {
-            animator.interpolator = it
-        }
+        animator.interpolator = interpolator
+
         val polylines = mutableListOf<Polyline>()
         animator.addUpdateListener { valueAnimator ->
             val fraction = valueAnimator.animatedValue as Float
             val pathSection = totalPathDistance * fraction / 100
             val copyPolylineOption = CalculationHelper.polylineUntilSection(
-                listLatLng, legs, pathSection, polylineOptions.copyPolylineOptions()
+                geometries, legs, pathSection, polylineOptions.copyPolylineOptions()
             ) {
                 onUpdate.invoke(it, (duration / 1000).toInt())
             }
@@ -222,14 +227,16 @@ internal class PlacesPolylineOptions(
             }
 
             override fun onAnimationEnd(animation: Animator?) {
-                val hasPolylineAdded = hasPolylines.map { "${it?.firstLatLng}-${it?.lastLatLng}-${it?.zIndex}" }
-                    .contains("${listLatLng.first()}-${listLatLng.last()}-$zIndex")
+                val currentGeoId = geometries.toGeoId()
+                val currentGeoIdZIndex = geometries.toGeoIdZIndex(zIndex)
+
+                val hasPolylineAdded = hasPolylines.map { it?.toGeoIdZIndex() }
+                    .contains(currentGeoIdZIndex)
 
                 if (!hasPolylineAdded) {
                     val identifier = PolylineIdentifier(
                         polyline = polylines,
-                        firstLatLng = listLatLng.first(),
-                        lastLatLng = listLatLng.last(),
+                        geoId = currentGeoId,
                         zIndex = zIndex
                     )
                     hasPolylines.add(identifier)

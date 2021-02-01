@@ -1,20 +1,17 @@
 /*
- * Created on 1/2/21 9:49 AM
+ * Created on 1/2/21 10:08 PM
  * Copyright (c) Muhammad Utsman 2021 All rights reserved.
  */
 
-package com.utsman.places.polyline
+package com.utsman.places.polyline.polyline
 
 import com.google.android.gms.maps.model.LatLng
+import com.utsman.places.polyline.point.PlacesPointPolyline
 import com.utsman.places.polyline.data.PolylineConfig
 
-interface PlacesPointPolyline {
-
-    fun addPoints(
-        newGeometries: List<LatLng>,
+interface PlacesPolyline {
+    fun startAnimate(
+        geometries: List<LatLng>,
         actionConfig: (PolylineConfig.() -> Unit)? = null
     ): PlacesPointPolyline
-
-    fun remove(withGeometries: List<LatLng>? = null): Boolean
-
 }

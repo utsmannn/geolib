@@ -4,7 +4,7 @@ This feature for search route between location, include ***LatLng Geometry*** an
 
 ## Download
 ```groovy
-implementation 'com.utsman.geolib:routes:1.0.0'
+implementation 'com.utsman.geolib:routes:1.1.0'
 ```
 
 ## Create `PlaceRoute`
