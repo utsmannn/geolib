@@ -8,9 +8,13 @@ Libraries for Location, Routes and Polyline utils for GoogleMaps
 - [Polyline-utils for GoogleMaps](/polyline-utils)
 
 ### Screenshot
-|Location|Routes|Polyline-utils|
-|---|---|---|
-|![](/images/current_location.gif)|![](/images/search_location.gif)|![](/images/polyline_animate.gif)|
+|Get location|Search location|
+|---|---|
+|![](/images/current_location.gif)|![](/images/search_location.gif)|
+
+|Route|Polyline-utils|
+|---|---|
+|![](/images/route.gif)|![](/images/polyline_animate.gif)|
 
 ---
 

@@ -8,12 +8,14 @@ package com.utsman.places.sample
 import android.content.Context
 import android.content.Intent
 import android.location.Location
+import android.util.Log
 import android.widget.Toast
 import com.google.android.gms.maps.CameraUpdate
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
 
 fun Context.toast(msg:String) = Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+fun logd(message: String) = Log.d("SAMPLE", message)
 
 val Context.HERE_API get() = this.getString(R.string.here_maps_api)
 

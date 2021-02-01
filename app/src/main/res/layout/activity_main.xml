@@ -29,4 +29,10 @@
         android:text="Routes"
         android:id="@+id/btn_route"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Polyline"
+        android:id="@+id/btn_polyline"/>
+
 </LinearLayout>

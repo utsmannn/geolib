@@ -7,23 +7,15 @@ package com.utsman.places.sample
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.location.LocationServices
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
-import com.utsman.places.location.createPlacesLocation
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 
 typealias strings = R.string
 
@@ -48,6 +40,10 @@ class MainActivity : AppCompatActivity() {
 
                     findViewById<Button>(R.id.btn_route).setOnClickListener {
                         this@MainActivity intent RouteActivity::class.java
+                    }
+
+                    findViewById<Button>(R.id.btn_polyline).setOnClickListener {
+                        this@MainActivity intent PolylineActivity::class.java
                     }
                 }
 
