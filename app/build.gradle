@@ -50,6 +50,7 @@ dependencies {
 
     implementation project(":location")
     implementation project(":routes")
+    implementation project(":polyline-utils")
 
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.2.0'
 

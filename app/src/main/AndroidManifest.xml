@@ -26,7 +26,6 @@
         </activity>
         <activity android:name=".SearchActivity"/>
         <activity android:name=".RouteActivity"/>
-        <activity android:name=".MapsActivity"/>
         <activity android:name=".CurrentLocationActivity"/>
 
         <meta-data

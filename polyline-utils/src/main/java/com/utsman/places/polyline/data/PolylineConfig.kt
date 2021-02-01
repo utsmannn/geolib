@@ -1,12 +1,13 @@
 /*
- * Created on 31/1/21 5:51 PM
+ * Created on 1/2/21 9:49 AM
  * Copyright (c) Muhammad Utsman 2021 All rights reserved.
  */
 
-package com.utsman.places.routes.data
+package com.utsman.places.polyline.data
 
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.PolylineOptions
+import com.utsman.places.polyline.data.StackAnimationMode
 
 data class PolylineConfig(
     var stackAnimationMode: StackAnimationMode? = null,

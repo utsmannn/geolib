@@ -1,0 +1,12 @@
+apply plugin: 'com.android.library'
+apply from: "$rootDir/dependencies/plugins.gradle"
+
+apply from: "$rootDir/dependencies/android.gradle"
+apply from: "$rootDir/dependencies/commons.gradle"
+apply from: "$rootDir/dependencies/externals.gradle"
+
+dependencies {
+    // another dependencies
+
+    implementation project(":utils")
+}

@@ -1,30 +1,29 @@
 /*
- * Created on 31/1/21 5:51 PM
+ * Created on 1/2/21 10:18 AM
  * Copyright (c) Muhammad Utsman 2021 All rights reserved.
  */
 
-package com.utsman.places.routes.polyline
+package com.utsman.places.polyline
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.PolylineOptions
-import com.utsman.places.routes.PlacesPolyline
-import com.utsman.places.routes.data.PolylineConfig
-import com.utsman.places.routes.data.StackAnimationMode
+import com.utsman.places.polyline.data.PolylineConfig
+import com.utsman.places.polyline.data.StackAnimationMode
 
-class PlacesPointPolyline(
-    private val placesPolyline: PlacesPolyline,
+internal class PlacesPointPolylineImpl(
+    private val placesPolylineOptions: PlacesPolylineOptions,
     private val stackAnimationMode: StackAnimationMode?
-) {
+): PlacesPointPolyline {
 
     private lateinit var geometries: List<LatLng>
 
-    fun addPoints(
+    override fun addPoints(
         newGeometries: List<LatLng>,
-        actionConfig: (PolylineConfig.() -> Unit)? = null
+        actionConfig: (PolylineConfig.() -> Unit)?
     ): PlacesPointPolyline {
-        placesPolyline.initialPoints.addAll(newGeometries)
+        placesPolylineOptions.initialPoints.addAll(newGeometries)
         geometries = newGeometries
 
         val polylineConfig = if (actionConfig != null) {
@@ -33,16 +32,16 @@ class PlacesPointPolyline(
             PolylineConfig()
         }
 
-        val polylineOptions1 = polylineConfig.polylineOptions1 ?: placesPolyline.polylineOption1
+        val polylineOptions1 = polylineConfig.polylineOptions1 ?: placesPolylineOptions.polylineOption1
         ?: PolylineOptions().apply {
             width(8f)
-            color(placesPolyline.primaryColor)
+            color(placesPolylineOptions.primaryColor)
         }
 
-        val polylineOptions2 = polylineConfig.polylineOptions2 ?: placesPolyline.polylineOption2
+        val polylineOptions2 = polylineConfig.polylineOptions2 ?: placesPolylineOptions.polylineOption2
         ?: PolylineOptions().apply {
             width(8f)
-            color(placesPolyline.accentColor)
+            color(placesPolylineOptions.accentColor)
         }
 
         if (polylineConfig.cameraAutoUpdate) {
@@ -53,10 +52,10 @@ class PlacesPointPolyline(
             }.build()
 
             val cameraUpdateFactory = CameraUpdateFactory.newLatLngBounds(latLngBounds, 100)
-            placesPolyline.googleMap.animateCamera(cameraUpdateFactory)
+            placesPolylineOptions.googleMap.animateCamera(cameraUpdateFactory)
         }
 
-        val listener = object : PlacesPolyline.AnimationListener {
+        val listener = object : AnimationListener {
             override fun onStartAnimation(latLng: LatLng) {
                 polylineConfig.doOnStartAnim?.invoke(latLng)
             }
@@ -73,7 +72,7 @@ class PlacesPointPolyline(
         when (polylineConfig.stackAnimationMode ?: stackAnimationMode
         ?: StackAnimationMode.BlockStackAnimation) {
             is StackAnimationMode.WaitStackEndAnimation -> {
-                placesPolyline.waitEndAnimate(
+                placesPolylineOptions.waitEndAnimate(
                     polylineOptions1,
                     polylineOptions2,
                     newGeometries,
@@ -83,7 +82,7 @@ class PlacesPointPolyline(
                 )
             }
             is StackAnimationMode.BlockStackAnimation -> {
-                placesPolyline.blockStackAnimate(
+                placesPolylineOptions.blockStackAnimate(
                     polylineOptions1,
                     polylineOptions2,
                     newGeometries,
@@ -93,7 +92,7 @@ class PlacesPointPolyline(
                 )
             }
             is StackAnimationMode.OffStackAnimation -> {
-                placesPolyline.offStackAnimate(
+                placesPolylineOptions.offStackAnimate(
                     polylineOptions1,
                     newGeometries,
                     polylineConfig.duration,
@@ -105,10 +104,10 @@ class PlacesPointPolyline(
         return this
     }
 
-    fun remove(withGeometries: List<LatLng>? = null): Boolean {
+    override fun remove(withGeometries: List<LatLng>?): Boolean {
         val geo = withGeometries ?: geometries
         return if (this::geometries.isInitialized) {
-            val findPolyline = placesPolyline.hasPolylines.filter {
+            val findPolyline = placesPolylineOptions.hasPolylines.filter {
                 it?.firstLatLng == geo.first() && it.lastLatLng == geo.last()
             }
 

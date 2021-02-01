@@ -1,9 +1,9 @@
 /*
- * Created on 31/1/21 5:51 PM
+ * Created on 1/2/21 9:53 AM
  * Copyright (c) Muhammad Utsman 2021 All rights reserved.
  */
 
-package com.utsman.places.routes
+package com.utsman.places.polyline
 
 import android.animation.Animator
 import android.animation.ValueAnimator
@@ -14,23 +14,16 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.Polyline
 import com.google.android.gms.maps.model.PolylineOptions
-import com.utsman.places.routes.data.CalculationHelper
-import com.utsman.places.routes.data.PolylineConfig
-import com.utsman.places.routes.data.PolylineIdentifier
-import com.utsman.places.routes.data.StackAnimationMode
-import com.utsman.places.routes.polyline.PlacesPointPolyline
+import com.utsman.places.polyline.data.PolylineConfig
+import com.utsman.places.polyline.data.PolylineIdentifier
+import com.utsman.places.polyline.data.StackAnimationMode
+import com.utsman.places.polyline.utils.copyPolylineOptions
 
-class PlacesPolyline(
+internal class PlacesPolylineOptions(
     internal val googleMap: GoogleMap,
     internal var primaryColor: Int,
     internal var accentColor: Int
-) {
-
-    internal interface AnimationListener {
-        fun onStartAnimation(latLng: LatLng)
-        fun onEndAnimation(latLng: LatLng)
-        fun onUpdate(latLng: LatLng, duration: Int)
-    }
+) : PlacesPolyline {
 
     internal var cameraAutoFocus = false
     internal var polylineOption1: PolylineOptions? = null
@@ -40,11 +33,11 @@ class PlacesPolyline(
     internal val initialPoints: MutableList<LatLng> = mutableListOf()
     internal val hasPolylines: MutableList<PolylineIdentifier?> = mutableListOf()
 
-    fun startAnimate(
+    override fun startAnimate(
         geometries: List<LatLng>,
-        actionConfig: (PolylineConfig.() -> Unit)? = null
+        actionConfig: (PolylineConfig.() -> Unit)?
     ): PlacesPointPolyline {
-        val result = PlacesPointPolyline(this, stackAnimationMode)
+        val result = PlacesPointPolylineImpl(this, stackAnimationMode)
         result.addPoints(geometries, actionConfig)
         return result
     }

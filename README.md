@@ -56,16 +56,15 @@ Search place is searching nearby place on location by query with data result `Li
 val data = placesLocation.searchPlaces(location, query)
 ```
 
-## Route and polyline
-This feature for search route polyline between location, include ***LatLng Geometry*** and ***encoded path***
+## Route
+This feature for search route between location, include ***LatLng Geometry*** and ***encoded path***
 
-### Route
-#### Create `PlaceRoute`
+### Create `PlaceRoute`
 ```kotlin
 val placesRoute = createPlacesRoute(HERE_MAPS_API)
 ```
 
-#### Search route between locations
+### Search route between locations
 For search a route, use `searchRoute` DSL builder.
 ```kotlin
 val route = placesRoute.searchRoute {
@@ -75,28 +74,28 @@ val route = placesRoute.searchRoute {
 }
 ```
 
-##### Builder
+#### Builder
 |Param|type|desc|
 |---|---|---|
 |`startLocation`|`Location`|start destination|
 |`endLocation`|`Location`|end destination|
 |`transportMode`|`TransportMode`|transport mode, available `CAR` and `BIKE`, default is `CAR`|
 
-##### Route Data
+#### Route Data
 |Param|type|desc|
 |---|---|---|
 |`encodedPolyline`|`String`|encoded of geometry|
 |`geometries`|`List<LatLng>`|list LatLng of geometry|
 |`length`|`Float`|Length of polyline decoded|
 
-### Animate polyline
-#### Create `PlacesPolyline`
+## Animate polyline
+### Create `PlacesPolyline`
 ```kotlin
 val polylineBuilder = googleMap.createPlacesPolylineBuilder()
 val polyline = polylineBuilder.createAnimatePolyline()
 ```
 
-##### Configuration builder
+#### Configuration builder
 |Param|type|desc|
 |---|---|---|
 |`withPrimaryPolyline(PolylineOptions.() -> Unit)`|`PlacesPolylineBuilder`|DSL param for add primary polyline|
@@ -105,23 +104,23 @@ val polyline = polylineBuilder.createAnimatePolyline()
 |`withStackAnimationMode(StackAnimationMode)`|`PlacesPolylineBuilder`|Set for animate type polyline|
 |`createAnimatePolyline()`|`PlacesPolyline`|to create `PlacesPolyline`|
 
-##### Stack Animation Mode
+#### Stack Animation Mode
 This is animation type of polyline
 
-#### Animating polyline
-##### Start animate polyline
+### Animating polyline
+#### Start animate polyline
 To start animate use `startAnimate(geometries: List<LatLng>, duration: Long)` and result is `PlacesPointPolyline`
 ```kotlin
 val point = polyline.startAnimate(geometries, 2000)
 ```
 
-##### Add points in polyline
+#### Add points in polyline
 You can added polyline in existing polyline
 ```kotlin
 val nextPoint = point.addPoints(nextGeometries)
 ```
 
-##### Remove polyline
+#### Remove polyline
 Remove polyline on `PlacesPointPolyline`
 ```kotlin
 val isRemoveSuccess = nextPoint.remove()
@@ -132,7 +131,7 @@ Or by geometries
 val isRemoveSuccess = point.remove(nextGeometries)
 ```
 
-##### Configuration DSL
+#### Configuration DSL
 |Param|return|desc|
 |---|---|---|
 |`withPrimaryPolyline(PolylineOptions.() -> Unit)`|`Unit`|DSL param for add primary polyline|
@@ -144,7 +143,7 @@ val isRemoveSuccess = point.remove(nextGeometries)
 |`doOnEndAnimation(action: (LatLng) -> Unit)`|`Unit`|Do action when animation is finish|
 |`doOnUpdateAnimation(action: (latLng: LatLng, mapCameraDuration: Int) -> Unit)`|`Unit`|Do action when animation is update with duration for camera movement|
 
-#### Sample
+### Sample
 ```kotlin
 
 val polylineBuilder = googleMap.createPlacesPolylineBuilder()
