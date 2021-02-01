@@ -22,7 +22,7 @@ val polyline = polylineBuilder.createAnimatePolyline()
 |`createAnimatePolyline()`|`PlacesPolyline`|to create `PlacesPolyline`|
 
 ### Stack Animation Mode
-This is animation type of polyline
+This is animation type of polyline<br>
 ![](/images/polyline_animate.gif)
 
 - Button 1: `StackAnimationMode.BlockStackAnimation` (this default configuration)
