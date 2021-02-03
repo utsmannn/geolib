@@ -32,6 +32,10 @@
 |---|---|
 |![](images/route.gif)|![](images/polyline_animate.gif)|
 
+|Curve polyline mode| All draw mode|
+|---|---|
+|![](images/polyline_curve.gif)|![](images/draw_polyline.gif)|
+
 ## Prerequisite
 ### HERE Api
 You need HERE Api, open https://developer.here.com/. Create new account or login and create api key.
@@ -63,13 +67,13 @@ allprojects {
 ```groovy
 
 // location
-implementation 'com.utsman.geolib:location:1.1.0'
+implementation 'com.utsman.geolib:location:1.2.0'
 
 // routes
-implementation 'com.utsman.geolib:routes:1.1.0'
+implementation 'com.utsman.geolib:routes:1.2.0'
 
 // polyline utils
-implementation 'com.utsman.geolib:polyline:1.1.0'
+implementation 'com.utsman.geolib:polyline:1.2.0'
 ```
 
 ## License

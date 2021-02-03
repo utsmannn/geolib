@@ -15,7 +15,8 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.Marker
 import com.google.maps.android.ktx.addMarker
 import com.google.maps.android.ktx.awaitMap
-import com.utsman.places.polyline.point.PlacesPointPolyline
+import com.utsman.places.polyline.data.PolylineDrawMode
+import com.utsman.places.polyline.point.PointPolyline
 import com.utsman.places.polyline.data.StackAnimationMode
 import com.utsman.places.polyline.utils.*
 import com.utsman.places.routes.*
@@ -36,9 +37,9 @@ class PolylineActivity : AppCompatActivity() {
     private var poly2HasRender = false
     private var poly3HasRender = false
 
-    private lateinit var point1: PlacesPointPolyline
-    private lateinit var point2: PlacesPointPolyline
-    private lateinit var point3: PlacesPointPolyline
+    private lateinit var point1: PointPolyline
+    private lateinit var point2: PointPolyline
+    private lateinit var point3: PointPolyline
 
     private var markerPoly3: Marker? = null
 
@@ -57,8 +58,8 @@ class PolylineActivity : AppCompatActivity() {
 
             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(center.toLatLng(), 14f))
 
-            val placesPolyline = googleMap.createPlacesPolylineBuilder()
-                .createAnimatePolyline()
+            val polylineAnimator = googleMap.createPolylineAnimatorBuilder()
+                .createPolylineAnimator()
 
             btnPoly1.setOnClickListener {
                 lifecycleScope.launch {
@@ -70,7 +71,7 @@ class PolylineActivity : AppCompatActivity() {
                     }
 
                     if (!poly1HasRender) {
-                        point1 = placesPolyline.startAnimate(first.geometries) {
+                        point1 = polylineAnimator.startAnimate(first.geometries) {
                             stackAnimationMode = StackAnimationMode.BlockStackAnimation
                         }
                         poly1HasRender = true
@@ -90,15 +91,16 @@ class PolylineActivity : AppCompatActivity() {
                     }
 
                     if (!poly2HasRender) {
-                        point2 = placesPolyline.startAnimate(second.geometries) {
+                        point2 = polylineAnimator.startAnimate(second.geometries) {
                             stackAnimationMode = StackAnimationMode.WaitStackEndAnimation
+                            enableBorder(true, Color.RED)
                             withPrimaryPolyline {
                                 width(8f)
                                 color(Color.BLUE)
                             }
                             withAccentPolyline {
                                 width(8f)
-                                color(Color.CYAN)
+                                color(Color.GREEN)
                             }
                             doOnStartAnimation {
                                 toast("start...")
@@ -134,17 +136,14 @@ class PolylineActivity : AppCompatActivity() {
                             position(thirdPoint1.toLatLng())
                         }
 
-                        point3 = placesPolyline.startAnimate(third.geometries) {
+                        point3 = polylineAnimator.startAnimate(third.geometries) {
                             duration = 10000
                             stackAnimationMode = StackAnimationMode.OffStackAnimation
-                            withAccentPolyline {
-                                width(8f)
-                                color(Color.CYAN)
-                            }
                             withPrimaryPolyline {
                                 width(8f)
-                                color(Color.BLUE)
+                                color(Color.GREEN)
                             }
+                            enableBorder(true, Color.RED, 5)
                             doOnUpdateAnimation { latLng, _ ->
                                 markerPoly3?.position = latLng
                             }

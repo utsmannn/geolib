@@ -17,8 +17,6 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
 
-typealias strings = R.string
-
 class MainActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
@@ -44,6 +42,10 @@ class MainActivity : AppCompatActivity() {
 
                     findViewById<Button>(R.id.btn_polyline).setOnClickListener {
                         this@MainActivity intent PolylineActivity::class.java
+                    }
+
+                    findViewById<Button>(R.id.btn_draw_polyline).setOnClickListener {
+                        this@MainActivity intent DrawModePolyline::class.java
                     }
                 }
 

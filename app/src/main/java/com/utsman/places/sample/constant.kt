@@ -73,6 +73,26 @@ val rawabadak = Location("").apply {
     longitude = 106.8999633
 }
 
+val cakung = Location("").apply {
+    latitude = -6.177588
+    longitude = 106.959040
+}
+
+val bintara = Location("").apply {
+    latitude = -6.229297
+    longitude = 106.962991
+}
+
+val kpmelayu = Location("").apply {
+    latitude = -6.234230
+    longitude =  106.868797
+}
+
+val kemayoran = Location("").apply {
+    latitude = -6.157396
+    longitude = 106.855518
+}
+
 val center1 = Location("").apply {
     latitude = -6.218141
     longitude = 106.9055753
@@ -95,3 +115,19 @@ fun Location.toCameraUpdate(zoom: Float = 16f): CameraUpdate =
 
 fun LatLng.toCameraUpdate(zoom: Float = 16f): CameraUpdate =
     CameraUpdateFactory.newLatLngZoom(this, zoom)
+
+val List<Double>.toLatLng: LatLng get() {
+    return LatLng(this[0], this[1])
+}
+
+val List<Double>.toLocation: Location get() {
+    return Location("").apply {
+        latitude =  this@toLocation[0]
+        longitude =  this@toLocation[0]
+    }
+}
+
+val uki = Location("").apply {
+    latitude = -6.248133
+    longitude = 106.8698257
+}

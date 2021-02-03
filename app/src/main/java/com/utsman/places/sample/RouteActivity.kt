@@ -6,6 +6,7 @@
 package com.utsman.places.sample
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -13,9 +14,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLngBounds
-import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.gms.maps.model.*
 import com.google.maps.android.ktx.awaitMap
+import com.utsman.places.polyline.data.PolylineDrawMode
+import com.utsman.places.polyline.data.StackAnimationMode
+import com.utsman.places.polyline.utils.addPolyline
+import com.utsman.places.polyline.utils.buildAnimationConfig
+import com.utsman.places.polyline.utils.withAnimate
+import com.utsman.places.polyline.utils.withPrimaryPolyline
 import com.utsman.places.routes.createPlacesRoute
 import com.utsman.places.routes.data.TransportMode
 import kotlinx.coroutines.launch
@@ -47,7 +53,9 @@ class RouteActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.maps_view) as SupportMapFragment
 
         lifecycleScope.launch {
-            val googleMap = mapsFragment.awaitMap()
+            val googleMap = mapsFragment.awaitMap().apply {
+                uiSettings.isZoomControlsEnabled = true
+            }
 
             val latLngBounds = LatLngBounds.builder()
                 .include(buaran.toLatLng())
@@ -57,22 +65,33 @@ class RouteActivity : AppCompatActivity() {
             googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 100))
 
             txtFrom.text = "From: Buaran (${buaran.latitude},${buaran.longitude})"
-            txtTo.text = "From: Rawabadak (${rawabadak.latitude},${rawabadak.latitude})"
+            txtTo.text = "To: Rawabadak (${rawabadak.latitude},${rawabadak.latitude})"
 
             btnGetRoute.setOnClickListener {
                 btnGetRoute.isEnabled = false
                 lifecycleScope.launch {
                     val routeData = placeRoute.searchRoute {
-                        startLocation = buaran
-                        endLocation = rawabadak
+                        startLocation = cakung
+                        endLocation = buaran
                         transportMode = TransportMode.CAR
                     }
 
                     val geometriesRoute = routeData.geometries
+
+                    val pattern = listOf(Dot(), Gap(10f))
                     val polylineOptions = PolylineOptions()
                         .addAll(geometriesRoute)
+                        .color(Color.BLUE)
 
-                    googleMap.addPolyline(polylineOptions)
+                    googleMap.addPolyline(polylineOptions).withAnimate(googleMap, polylineOptions) {
+                        stackAnimationMode = StackAnimationMode.BlockStackAnimation
+                        polylineDrawMode = PolylineDrawMode.Curved
+                        /*withPrimaryPolyline {
+                            startCap(RoundCap())
+                            endCap(RoundCap())
+                            color(Color.GREEN)
+                        }*/
+                    }
                     btnGetRoute.isEnabled = true
                 }
             }

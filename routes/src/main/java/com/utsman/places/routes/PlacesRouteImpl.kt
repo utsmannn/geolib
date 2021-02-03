@@ -9,7 +9,7 @@ import com.utsman.places.routes.data.Mapper
 import com.utsman.places.routes.data.RouteData
 import com.utsman.places.routes.data.RouteRequest
 import com.utsman.places.routes.network.HereService
-import com.utsman.places.utils.HelperPlacesException
+import com.utsman.places.utils.GeolibException
 import com.utsman.places.utils.Network
 import com.utsman.places.utils.fetch
 import com.utsman.places.utils.toStringService
@@ -55,7 +55,7 @@ internal class PlacesRouteImpl(
                 length = dataLength ?: 0f
             )
         } else {
-            throw HelperPlacesException()
+            throw GeolibException()
         }
     }
 
