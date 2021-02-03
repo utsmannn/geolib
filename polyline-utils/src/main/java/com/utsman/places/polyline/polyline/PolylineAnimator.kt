@@ -5,13 +5,19 @@
 
 package com.utsman.places.polyline.polyline
 
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
-import com.utsman.places.polyline.point.PlacesPointPolyline
+import com.utsman.places.polyline.data.PolylineConfigValue
+import com.utsman.places.polyline.point.PointPolyline
 import com.utsman.places.polyline.data.PolylineConfig
 
-interface PlacesPolyline {
+interface PolylineAnimator {
     fun startAnimate(
         geometries: List<LatLng>,
         actionConfig: (PolylineConfig.() -> Unit)? = null
-    ): PlacesPointPolyline
+    ): PointPolyline
+
+    fun getBindGoogleMaps(): GoogleMap
+
+    fun getCurrentConfig(): PolylineConfigValue
 }

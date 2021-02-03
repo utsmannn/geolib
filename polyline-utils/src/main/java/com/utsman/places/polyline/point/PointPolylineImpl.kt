@@ -11,42 +11,51 @@ import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.PolylineOptions
 import com.utsman.places.polyline.AnimationListener
 import com.utsman.places.polyline.data.PolylineConfig
+import com.utsman.places.polyline.data.PolylineDrawMode
 import com.utsman.places.polyline.data.StackAnimationMode
-import com.utsman.places.polyline.polyline.PlacesPolylineOptions
+import com.utsman.places.polyline.polyline.PolylineAnimatorOptions
+import com.utsman.places.polyline.utils.CalculationHelper
 import com.utsman.places.polyline.utils.toGeoId
+import com.utsman.places.polyline.utils.transparentColor
 
-internal class PlacesPointPolylineImpl(
-    private val placesPolylineOptions: PlacesPolylineOptions,
+internal class PointPolylineImpl(
+    private val polylineAnimatorOptions: PolylineAnimatorOptions,
     private val stackAnimationMode: StackAnimationMode?
-) : PlacesPointPolyline {
+) : PointPolyline {
 
     private lateinit var geometries: List<LatLng>
 
     override fun addPoints(
         newGeometries: List<LatLng>,
         actionConfig: (PolylineConfig.() -> Unit)?
-    ): PlacesPointPolyline {
-        placesPolylineOptions.initialPoints.addAll(newGeometries)
-        geometries = newGeometries
-
+    ): PointPolyline {
         val polylineConfig = if (actionConfig != null) {
             PolylineConfig().apply(actionConfig)
         } else {
             PolylineConfig()
         }
 
+        val geometriesWithMode = when (polylineConfig.drawMode) {
+            is PolylineDrawMode.Normal -> newGeometries
+            is PolylineDrawMode.Curved -> CalculationHelper.geometriesCurved(newGeometries, 2.0)
+            is PolylineDrawMode.Lank -> CalculationHelper.geometriesLank(newGeometries, )
+        }
+
+        polylineAnimatorOptions.initialPoints.addAll(geometriesWithMode)
+        geometries = geometriesWithMode
+
         val polylineOptions1 =
-            polylineConfig.polylineOptions1 ?: placesPolylineOptions.polylineOption1
+            polylineConfig.polylineOptions1 ?: polylineAnimatorOptions.polylineOption1
             ?: PolylineOptions().apply {
-                width(8f)
-                color(placesPolylineOptions.primaryColor)
+                width(10f)
+                color(polylineAnimatorOptions.primaryColor)
             }
 
         val polylineOptions2 =
-            polylineConfig.polylineOptions2 ?: placesPolylineOptions.polylineOption2
+            polylineConfig.polylineOptions2 ?: polylineAnimatorOptions.polylineOption2
             ?: PolylineOptions().apply {
-                width(8f)
-                color(placesPolylineOptions.accentColor)
+                width(10f)
+                color(polylineOptions1.color.transparentColor())
             }
 
         if (polylineConfig.cameraAutoUpdate) {
@@ -57,7 +66,7 @@ internal class PlacesPointPolylineImpl(
             }.build()
 
             val cameraUpdateFactory = CameraUpdateFactory.newLatLngBounds(latLngBounds, 100)
-            placesPolylineOptions.googleMap.animateCamera(cameraUpdateFactory)
+            polylineAnimatorOptions.googleMap.animateCamera(cameraUpdateFactory)
         }
 
         val listener = object : AnimationListener {
@@ -78,34 +87,42 @@ internal class PlacesPointPolylineImpl(
             ?: stackAnimationMode
             ?: StackAnimationMode.BlockStackAnimation
 
+        val drawMode = polylineConfig.drawMode
+
         when (animationMode) {
             is StackAnimationMode.WaitStackEndAnimation -> {
-                placesPolylineOptions.waitEndAnimate(
+                polylineAnimatorOptions.waitEndAnimate(
                     polylineOptions1,
                     polylineOptions2,
-                    newGeometries,
+                    polylineConfig.polylineOptionsBorder,
+                    geometriesWithMode,
                     polylineConfig.duration,
                     listener,
-                    polylineConfig.cameraAutoUpdate
+                    polylineConfig.cameraAutoUpdate,
+                    drawMode
                 )
             }
             is StackAnimationMode.BlockStackAnimation -> {
-                placesPolylineOptions.blockStackAnimate(
+                polylineAnimatorOptions.blockStackAnimate(
                     polylineOptions1,
                     polylineOptions2,
-                    newGeometries,
+                    polylineConfig.polylineOptionsBorder,
+                    geometriesWithMode,
                     polylineConfig.duration,
                     listener,
-                    polylineConfig.cameraAutoUpdate
+                    polylineConfig.cameraAutoUpdate,
+                    drawMode
                 )
             }
             is StackAnimationMode.OffStackAnimation -> {
-                placesPolylineOptions.offStackAnimate(
+                polylineAnimatorOptions.offStackAnimate(
                     polylineOptions1,
-                    newGeometries,
+                    polylineConfig.polylineOptionsBorder,
+                    geometriesWithMode,
                     polylineConfig.duration,
                     listener,
-                    polylineConfig.cameraAutoUpdate
+                    polylineConfig.cameraAutoUpdate,
+                    drawMode
                 )
             }
         }
@@ -116,7 +133,7 @@ internal class PlacesPointPolylineImpl(
         val geo = withGeometries ?: geometries
         return if (this::geometries.isInitialized) {
             val currentGeoId = geo.toGeoId()
-            val findPolyline = placesPolylineOptions.hasPolylines.filter {
+            val findPolyline = polylineAnimatorOptions.hasPolylines.filter {
                 it?.geoId == currentGeoId
             }
 
@@ -126,7 +143,7 @@ internal class PlacesPointPolylineImpl(
                         it.isVisible = false
                         it.remove()
                     }
-                    placesPolylineOptions.hasPolylines.remove(p)
+                    polylineAnimatorOptions.hasPolylines.remove(p)
                 }
             }
             findPolyline.isNullOrEmpty()

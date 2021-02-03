@@ -6,21 +6,34 @@
 package com.utsman.places.polyline.utils
 
 import android.graphics.Color
+import android.util.Log
+import androidx.core.graphics.ColorUtils
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Polyline
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.maps.android.ktx.model.polylineOptions
-import com.utsman.places.polyline.PlacesPolylineBuilder
+import com.utsman.places.polyline.PolylineAnimatorBuilder
 import com.utsman.places.polyline.data.PolylineConfig
 import com.utsman.places.polyline.data.PolylineIdentifier
+import com.utsman.places.polyline.polyline.PolylineAnimator
+import com.utsman.places.polyline.polyline.PolylineAnimatorOptions
 
-fun GoogleMap.createPlacesPolylineBuilder(primaryColor: Int = Color.BLACK, accentColor: Int = Color.GRAY) =
-    PlacesPolylineBuilder(this, primaryColor, accentColor)
+fun GoogleMap.createPolylineAnimatorBuilder(
+    primaryColor: Int = Color.BLACK,
+    accentColor: Int = primaryColor.transparentColor()
+) = PolylineAnimatorBuilder(this, primaryColor, accentColor)
 
 fun PolylineOptions.toPolylineOptions(points: List<LatLng>): PolylineOptions {
     val polylineOptions = this.copyPolylineOptions()
     polylineOptions.addAll(points)
     return polylineOptions
+}
+
+internal fun logd(msg: String) = Log.d("PLACES", msg)
+
+internal fun Int.transparentColor(): Int {
+    return ColorUtils.setAlphaComponent(this, 0x59)
 }
 
 internal fun PolylineOptions.copyPolylineOptions(): PolylineOptions {
@@ -45,6 +58,42 @@ internal fun List<LatLng>.toGeoIdZIndex(zIndex: Float): String {
 
 internal fun PolylineIdentifier.toGeoIdZIndex() = "${this.geoId}-${this.zIndex}"
 
+fun Polyline.withAnimate(
+    polylineAnimator: PolylineAnimator,
+    actionConfig: (PolylineConfig.() -> Unit)? = null
+): Polyline {
+    val googleMaps = polylineAnimator.getBindGoogleMaps()
+    val config = polylineAnimator.getCurrentConfig()
+    val primaryColor = config.primaryColor
+    val accentColor = config.accentColor
+
+    val options = PolylineAnimatorOptions(googleMaps, primaryColor, accentColor)
+    options.startAnimate(points, actionConfig)
+    return this.apply {
+        points = emptyList()
+    }
+}
+
+fun Polyline.withAnimate(
+    googleMap: GoogleMap,
+    actionConfig: (PolylineConfig.() -> Unit)? = null
+): Polyline {
+    val config = if (actionConfig != null) {
+        PolylineConfig().apply(actionConfig)
+    } else {
+        null
+    }
+
+    val primaryColor = config?.polylineOptions1?.color ?: Color.BLACK
+    val accentColor = config?.polylineOptions2?.color ?: primaryColor.transparentColor()
+    val builder = PolylineAnimatorBuilder(googleMap, primaryColor, accentColor)
+    val placePolyline = builder.createPolylineAnimator()
+    placePolyline.startAnimate(points, actionConfig)
+    return this.apply {
+        points = emptyList()
+    }
+}
+
 fun PolylineConfig.withPrimaryPolyline(optionsActions: PolylineOptions.() -> Unit) {
     val options = polylineOptions(optionsActions)
     polylineOptions1 = options
@@ -65,4 +114,8 @@ fun PolylineConfig.doOnEndAnimation(action: (LatLng) -> Unit) {
 
 fun PolylineConfig.doOnUpdateAnimation(action: (latLng: LatLng, mapCameraDuration: Int) -> Unit) {
     this.doOnUpdateAnim = action
+}
+
+fun PolylineConfig.enableBorder(isEnable: Boolean, color: Int, width: Int = 2) {
+    this.enableBorder(isEnable, color, width)
 }
