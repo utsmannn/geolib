@@ -32,8 +32,11 @@ fun PolylineOptions.toPolylineOptions(points: List<LatLng>): PolylineOptions {
 
 internal fun logd(msg: String) = Log.d("PLACES", msg)
 
-internal fun Int.transparentColor(): Int {
-    return ColorUtils.setAlphaComponent(this, 0x59)
+internal const val trans35 = 0x59
+internal const val trans20 = 0x33
+
+internal fun Int.transparentColor(alpha: Int = trans35): Int {
+    return ColorUtils.setAlphaComponent(this, alpha)
 }
 
 internal fun PolylineOptions.copyPolylineOptions(): PolylineOptions {
@@ -116,6 +119,6 @@ fun PolylineConfig.doOnUpdateAnimation(action: (latLng: LatLng, mapCameraDuratio
     this.doOnUpdateAnim = action
 }
 
-fun PolylineConfig.enableBorder(isEnable: Boolean, color: Int, width: Int = 2) {
+fun PolylineConfig.enableBorder(isEnable: Boolean, color: Int = Color.BLACK.transparentColor(), width: Int = 2) {
     this.enableBorder(isEnable, color, width)
 }

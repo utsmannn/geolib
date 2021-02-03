@@ -5,9 +5,13 @@
 
 package com.utsman.places.polyline.data
 
+import android.graphics.Color
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.PolylineOptions
 import com.utsman.places.polyline.data.StackAnimationMode
+import com.utsman.places.polyline.utils.copyPolylineOptions
+import com.utsman.places.polyline.utils.transparentColor
+import com.utsman.places.polyline.utils.withAccentPolyline
 
 data class PolylineConfig(
     var stackAnimationMode: StackAnimationMode? = StackAnimationMode.BlockStackAnimation,
@@ -25,10 +29,15 @@ data class PolylineConfig(
     internal fun enableBorder(isEnable: Boolean, borderColor: Int, width: Int) {
         val primaryWidth = polylineOptions1?.width ?: 10f
         polylineOptionsBorder = if (isEnable) {
-            PolylineOptions()
-                .zIndex(1f)
-                .width(primaryWidth+width)
-                .color(borderColor)
+            if (polylineOptions1 != null) {
+                polylineOptions1!!.copyPolylineOptions()
+            } else {
+                PolylineOptions()
+            }.apply {
+                zIndex(1f)
+                width(primaryWidth+width)
+                color(borderColor)
+            }
         } else {
             null
         }

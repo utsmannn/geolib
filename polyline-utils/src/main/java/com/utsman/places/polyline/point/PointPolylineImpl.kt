@@ -37,8 +37,8 @@ internal class PointPolylineImpl(
 
         val geometriesWithMode = when (polylineConfig.drawMode) {
             is PolylineDrawMode.Normal -> newGeometries
-            is PolylineDrawMode.Curved -> CalculationHelper.geometriesCurved(newGeometries, 2.0)
-            is PolylineDrawMode.Lank -> CalculationHelper.geometriesLank(newGeometries, )
+            is PolylineDrawMode.Curved -> CalculationHelper.geometriesCurved(newGeometries)
+            is PolylineDrawMode.Lank -> CalculationHelper.geometriesLank(newGeometries)
         }
 
         polylineAnimatorOptions.initialPoints.addAll(geometriesWithMode)

@@ -43,7 +43,6 @@ internal object CalculationHelper {
         return polylineOptions
     }
 
-
     fun calculateLegsLengths(path: List<LatLng>): List<Double> {
         val legs = mutableListOf<Double>()
         for ((index, value) in path.withIndex()) {
@@ -57,8 +56,6 @@ internal object CalculationHelper {
     }
 
     private fun step(closed: ClosedRange<Double>, step: Double): Iterable<Double> {
-        //require(closed.start.isFinite())
-        //require(closed.endInclusive.isFinite())
         val sequence = generateSequence(closed.start) { previous ->
             if (previous == Double.POSITIVE_INFINITY) return@generateSequence null
             val next = previous + step
@@ -67,7 +64,7 @@ internal object CalculationHelper {
         return sequence.asIterable()
     }
 
-    fun geometriesCurved(geometries: List<LatLng>, k: Double): List<LatLng> {
+    fun geometriesCurved(geometries: List<LatLng>): List<LatLng> {
         return if (geometries.size > 2) {
             val first = geometries.first()
             val last = geometries.last()
@@ -76,11 +73,17 @@ internal object CalculationHelper {
             val distances = SphericalUtil.computeDistanceBetween(first, last)
             val heading = SphericalUtil.computeHeading(first, last)
 
+            val radius = if (heading < 0) {
+                2.0
+            } else {
+                0.2
+            }
+
             val midPoint = SphericalUtil.computeOffset(first, distances * 0.5, heading)
 
             //Apply mathematics to calculate position of the circle center
-            val x = (1 - k * k) * distances * 0.5 / (2 * k)
-            val r = (1 + k * k) * distances * 0.5 / (2 * k)
+            val x = (1 - radius * radius) * distances * 0.5 / (2 * radius)
+            val r = (1 + radius * radius) * distances * 0.5 / (2 * radius)
             val c = SphericalUtil.computeOffset(midPoint, x, heading + 90.0)
 
             val h1 = SphericalUtil.computeHeading(c, first)
@@ -92,17 +95,42 @@ internal object CalculationHelper {
             }
         } else {
             val completeStep = geometriesLank(geometries)
-            geometriesCurved(completeStep, k)
+            geometriesCurved(completeStep)
         }
     }
 
     fun geometriesLank(geometries: List<LatLng>): List<LatLng> {
-        val heading = SphericalUtil.computeHeading(geometries.first(), geometries.last())
-        val distance = SphericalUtil.computeDistanceBetween(geometries.first(), geometries.last())
-        val range = 0.0.rangeTo(distance)
-        val iterator = step(range, distance/10000)
-        return iterator.map {
-            SphericalUtil.computeOffset(geometries.first(), it, heading)
+        return if (geometries.size > 2) {
+            val first = geometries.first()
+            val last = geometries.last()
+            val points = geometries.size
+
+            val distances = SphericalUtil.computeDistanceBetween(first, last)
+            val heading = SphericalUtil.computeHeading(first, last)
+
+            val radius = 0.01
+
+            val midPoint = SphericalUtil.computeOffset(first, distances * 0.5, heading)
+            val x = (1 - radius * radius) * distances * 0.5 / (2 * radius)
+            val r = (1 + radius * radius) * distances * 0.5 / (2 * radius)
+            val c = SphericalUtil.computeOffset(midPoint, x, heading + 90.0)
+
+            val h1 = SphericalUtil.computeHeading(c, first)
+            val h2 = SphericalUtil.computeHeading(c, last)
+
+            val step = (h2 - h1) / points
+            (0 until points/100).toList().mapIndexed { index, _ ->
+                SphericalUtil.computeOffset(c, r, h1 + index * step)
+            }
+        } else {
+            val heading = SphericalUtil.computeHeading(geometries.first(), geometries.last())
+            val distance = SphericalUtil.computeDistanceBetween(geometries.first(), geometries.last())
+            val range = 0.0.rangeTo(distance)
+            val completableStep = (geometries.size * 0.10) * 0.1
+            val iterator = step(range, (distance/geometries.size) * completableStep)
+            iterator.map {
+                SphericalUtil.computeOffset(geometries.first(), it, heading)
+            }
         }
     }
 }

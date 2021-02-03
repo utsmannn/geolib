@@ -73,6 +73,26 @@ val rawabadak = Location("").apply {
     longitude = 106.8999633
 }
 
+val cakung = Location("").apply {
+    latitude = -6.177588
+    longitude = 106.959040
+}
+
+val bintara = Location("").apply {
+    latitude = -6.229297
+    longitude = 106.962991
+}
+
+val kpmelayu = Location("").apply {
+    latitude = -6.234230
+    longitude =  106.868797
+}
+
+val kemayoran = Location("").apply {
+    latitude = -6.157396
+    longitude = 106.855518
+}
+
 val center1 = Location("").apply {
     latitude = -6.218141
     longitude = 106.9055753

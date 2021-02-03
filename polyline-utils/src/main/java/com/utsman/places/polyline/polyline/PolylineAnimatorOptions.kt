@@ -9,12 +9,11 @@ import android.animation.Animator
 import android.animation.ValueAnimator
 import android.graphics.Color
 import android.view.animation.DecelerateInterpolator
+import android.view.animation.Interpolator
+import android.view.animation.LinearInterpolator
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.LatLngBounds
-import com.google.android.gms.maps.model.Polyline
-import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.gms.maps.model.*
 import com.utsman.places.polyline.AnimationListener
 import com.utsman.places.polyline.data.*
 import com.utsman.places.polyline.point.PointPolyline
@@ -37,7 +36,9 @@ internal class PolylineAnimatorOptions(
 
     private val shadowPolylineOptions by lazy {
         PolylineOptions().apply {
-            color(Color.GRAY)
+            color(Color.GRAY.transparentColor(trans20))
+            endCap(RoundCap())
+            startCap(RoundCap())
         }
     }
 
@@ -86,7 +87,7 @@ internal class PolylineAnimatorOptions(
             newPolyline2 = polylineOptions2
         }
 
-        checkIsCurved(drawMode, geometries, duration)
+        startAnimateShadowIsCurve(drawMode, geometries, duration)
         startAnimatePolyline(newPolyline2, null, geometries, duration, start = {
             // empty start
             listener?.onStartAnimation(geometries.first())
@@ -150,7 +151,7 @@ internal class PolylineAnimatorOptions(
             newPolyline2 = polylineOptions2
         }
 
-        checkIsCurved(drawMode, geometries, duration)
+        startAnimateShadowIsCurve(drawMode, geometries, duration)
         startAnimatePolyline(newPolyline2, null, geometries, duration / 2, start = {
             listener?.onStartAnimation(geometries.first())
             if (cameraAutoFocus && !cameraPoint) {
@@ -202,7 +203,7 @@ internal class PolylineAnimatorOptions(
                 color(accentColor)
             }
 
-        checkIsCurved(drawMode, geometries, duration)
+        startAnimateShadowIsCurve(drawMode, geometries, duration)
         startAnimatePolyline(newPolyline, polylineOptionsBorder, geometries, duration / 2, start = {
             listener?.onStartAnimation(geometries.first())
             if (cameraAutoFocus && !cameraPoint) {
@@ -223,7 +224,7 @@ internal class PolylineAnimatorOptions(
         }, zIndex = 3f)
     }
 
-    private fun checkIsCurved(
+    private fun startAnimateShadowIsCurve(
         drawMode: PolylineDrawMode,
         geometries: List<LatLng>,
         duration: Long
@@ -232,13 +233,14 @@ internal class PolylineAnimatorOptions(
             val geometriesLank =
                 CalculationHelper.geometriesLank(listOf(geometries.first(), geometries.last()))
             startAnimatePolyline(
-                shadowPolylineOptions,
-                null,
-                geometriesLank,
-                duration,
+                polylineOptions = shadowPolylineOptions,
+                polylineOptionsBorder = null,
+                geometries = geometriesLank,
+                duration = duration/2,
+                zIndex = 1f,
+                interpolator = LinearInterpolator(),
                 start = {},
                 end = {},
-                zIndex = 1f,
                 onUpdate = { _, _ -> })
         }
     }
@@ -249,6 +251,7 @@ internal class PolylineAnimatorOptions(
         geometries: List<LatLng>,
         duration: Long,
         zIndex: Float,
+        interpolator: Interpolator = DecelerateInterpolator(),
         start: () -> Unit,
         end: () -> Unit,
         onUpdate: (LatLng, Int) -> Unit
@@ -256,10 +259,7 @@ internal class PolylineAnimatorOptions(
         var renderedPolyline: Polyline? = null
         var renderedPolylineBorder: Polyline? = null
 
-        logd("geometri size is ---> ${geometries.size}")
-
         val legs: List<Double> = CalculationHelper.calculateLegsLengths(geometries)
-        val interpolator = DecelerateInterpolator()
 
         val totalPathDistance = legs.sum()
         val animator = ValueAnimator.ofFloat(0f, 100f)

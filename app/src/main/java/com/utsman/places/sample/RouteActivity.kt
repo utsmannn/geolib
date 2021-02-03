@@ -7,6 +7,7 @@ package com.utsman.places.sample
 
 import android.annotation.SuppressLint
 import android.graphics.Color
+import android.location.Location
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -14,11 +15,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.gms.maps.model.RoundCap
 import com.google.maps.android.ktx.awaitMap
 import com.utsman.places.polyline.data.PolylineDrawMode
 import com.utsman.places.polyline.data.StackAnimationMode
+import com.utsman.places.polyline.utils.enableBorder
 import com.utsman.places.polyline.utils.withAnimate
 import com.utsman.places.polyline.utils.withPrimaryPolyline
 import com.utsman.places.routes.createPlacesRoute
@@ -70,21 +74,27 @@ class RouteActivity : AppCompatActivity() {
                 btnGetRoute.isEnabled = false
                 lifecycleScope.launch {
                     val routeData = placeRoute.searchRoute {
-                        startLocation = buaran
-                        endLocation = rawabadak
+                        startLocation = cakung
+                        endLocation = buaran
                         transportMode = TransportMode.CAR
                     }
 
                     val geometriesRoute = routeData.geometries
                     val polylineOptions = PolylineOptions()
+                        /*.add(cakung.toLatLng())
+                        .add(buaran.toLatLng())*/
                         .addAll(geometriesRoute)
 
                     googleMap.addPolyline(polylineOptions).withAnimate(googleMap) {
-                        stackAnimationMode = StackAnimationMode.OffStackAnimation
+                        stackAnimationMode = StackAnimationMode.BlockStackAnimation
                         drawMode = PolylineDrawMode.Curved
                         withPrimaryPolyline {
-                            color(Color.GREEN)
+                            color(Color.RED)
+                            startCap(RoundCap())
+                            endCap(RoundCap())
                         }
+
+                        //enableBorder(true, color = Color.GREEN, width = 10)
                     }
                     btnGetRoute.isEnabled = true
                 }

@@ -15,6 +15,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.Marker
 import com.google.maps.android.ktx.addMarker
 import com.google.maps.android.ktx.awaitMap
+import com.utsman.places.polyline.data.PolylineDrawMode
 import com.utsman.places.polyline.point.PointPolyline
 import com.utsman.places.polyline.data.StackAnimationMode
 import com.utsman.places.polyline.utils.*
@@ -134,6 +135,7 @@ class PolylineActivity : AppCompatActivity() {
                         point3 = polylineAnimator.startAnimate(third.geometries) {
                             duration = 10000
                             stackAnimationMode = StackAnimationMode.OffStackAnimation
+                            drawMode = PolylineDrawMode.Curved
                             withPrimaryPolyline {
                                 width(8f)
                                 color(Color.GREEN)
