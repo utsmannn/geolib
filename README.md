@@ -34,7 +34,7 @@
 
 |Curve polyline mode| All draw mode|
 |---|---|
-|![](images/polyline_curve.gif)|![](images/draw_polyline)|
+|![](images/polyline_curve.gif)|![](images/draw_polyline.gif)|
 
 ## Prerequisite
 ### HERE Api
