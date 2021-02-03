@@ -9,32 +9,36 @@ implementation 'com.utsman.geolib:polyline:1.1.0'
 ## Create `PlacesPolyline`
 ```kotlin
 val polylineBuilder = googleMap.createPlacesPolylineBuilder()
-val polyline = polylineBuilder.createAnimatePolyline()
+val polylineAnimator = polylineBuilder.createAnimatePolyline()
 ```
 
 ### Configuration builder
 |Param|type|desc|
 |---|---|---|
-|`withPrimaryPolyline(PolylineOptions.() -> Unit)`|`PlacesPolylineBuilder`|DSL param for add primary polyline|
-|`withAccentPolyline(PolylineOptions.() -> Unit)`|`PlacesPolylineBuilder`|DSL param for add accent polyline|
-|`withCameraAutoFocus(Boolean)`|`PlacesPolylineBuilder`|Set for auto zoom camera|
-|`withStackAnimationMode(StackAnimationMode)`|`PlacesPolylineBuilder`|Set for animate type polyline|
-|`createAnimatePolyline()`|`PlacesPolyline`|to create `PlacesPolyline`|
-
-### Stack Animation Mode
-This is animation type of polyline
-
-![](/images/polyline_animate.gif)
-
-- Button 1: `StackAnimationMode.BlockStackAnimation` (this default configuration)
-- Button 2: `StackAnimationMode.WaitStackEndAnimation`
-- Button 2: `StackAnimationMode.OffStackAnimation`
+|`withPrimaryPolyline(PolylineOptions.() -> Unit)`|`PolylineAnimatorBuilder`|DSL param for add primary polyline|
+|`withAccentPolyline(PolylineOptions.() -> Unit)`|`PolylineAnimatorBuilder`|DSL param for add accent polyline|
+|`withCameraAutoFocus(Boolean)`|`PolylineAnimatorBuilder`|Set for auto zoom camera|
+|`withStackAnimationMode(StackAnimationMode)`|`PolylineAnimatorBuilder`|Set for animate type polyline|
+|`createAnimatePolyline()`|`PolylineAnimator`|to create `PolylineAnimator`|
 
 ## Animating polyline
 ### Start animate polyline
-To start animate use `startAnimate(geometries: List<LatLng>, duration: Long)` and result is `PlacesPointPolyline`
+To start animate use `startAnimate(geometries: List<LatLng>, duration: Long)` and result is `PointPolyline`
 ```kotlin
-val point = polyline.startAnimate(geometries, 2000)
+val point = polylineAnimator.startAnimate(geometries, 2000)
+```
+
+### Start with existing Polyline
+```kotlin
+val polyline = googleMap.addPolyline(polylineOptions)
+polyline.withAnimate(googleMap) {
+         stackAnimationMode = StackAnimationMode.BlockStackAnimation
+         withPrimaryPolyline {
+             color(Color.RED)
+             startCap(RoundCap())
+             endCap(RoundCap())
+         }
+     }
 ```
 
 ### Add points in polyline
@@ -44,7 +48,7 @@ val nextPoint = point.addPoints(nextGeometries)
 ```
 
 ### Remove polyline
-Remove polyline on `PlacesPointPolyline`
+Remove polyline on `PointPolyline`
 ```kotlin
 val isRemoveSuccess = nextPoint.remove()
 ```
@@ -54,7 +58,7 @@ Or by geometries
 val isRemoveSuccess = point.remove(nextGeometries)
 ```
 
-### Configuration DSL
+## Configuration DSL
 |Param|return|desc|
 |---|---|---|
 |`withPrimaryPolyline(PolylineOptions.() -> Unit)`|`Unit`|DSL param for add primary polyline|
@@ -62,9 +66,29 @@ val isRemoveSuccess = point.remove(nextGeometries)
 |`duration`|`Long`|Duration of animation|
 |`cameraAutoUpdate`|`Boolean`|Set for auto zoom camera|
 |`stackAnimationMode`|`StackAnimationMode`|Set for animate type polyline|
+|`polylineDrawMode`|`PolylineDrawMode`|Set for draw type polyline|
+|`enableBorder(isEnable: Boolean, color: Int, width: Int)`|`Unit`|Set for border of polyline|
 |`doOnStartAnimation(action: (LatLng) -> Unit)`|`Unit`|Do action when animation is start|
 |`doOnEndAnimation(action: (LatLng) -> Unit)`|`Unit`|Do action when animation is finish|
 |`doOnUpdateAnimation(action: (latLng: LatLng, mapCameraDuration: Int) -> Unit)`|`Unit`|Do action when animation is update with duration for camera movement|
+
+### Polyline draw mode
+This library able to customize polyline draw mode
+
+![](/images/draw_polyline.gif)
+
+- Button 1: `PolylineDrawMode.Normal` (this default configuration)
+- Button 2: `PolylineDrawMode.Curved`
+- Button 2: `PolylineDrawMode.Lank`
+
+### Stack Animation Mode
+This is animation type of polyline
+
+![](/images/polyline_animate.gif)
+
+- Button 1: `StackAnimationMode.BlockStackAnimation` (this default configuration)
+- Button 2: `StackAnimationMode.WaitStackEndAnimation`
+- Button 2: `StackAnimationMode.OffStackAnimation`
 
 ## Sample
 ```kotlin

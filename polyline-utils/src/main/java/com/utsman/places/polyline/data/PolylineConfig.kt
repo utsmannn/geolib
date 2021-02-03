@@ -17,7 +17,7 @@ data class PolylineConfig(
     var stackAnimationMode: StackAnimationMode? = StackAnimationMode.BlockStackAnimation,
     var duration: Long = 2000,
     var cameraAutoUpdate: Boolean = false,
-    var drawMode: PolylineDrawMode = PolylineDrawMode.Normal,
+    var polylineDrawMode: PolylineDrawMode = PolylineDrawMode.Normal,
     internal var doOnStartAnim: ((LatLng) -> Unit)? = null,
     internal var doOnEndAnim: ((LatLng) -> Unit)? = null,
     internal var doOnUpdateAnim: ((LatLng, Int) -> Unit)? = null,

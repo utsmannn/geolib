@@ -9,7 +9,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.utsman.places.polyline.data.PolylineConfig
 
 interface PointPolyline {
-
     fun addPoints(
         newGeometries: List<LatLng>,
         actionConfig: (PolylineConfig.() -> Unit)? = null

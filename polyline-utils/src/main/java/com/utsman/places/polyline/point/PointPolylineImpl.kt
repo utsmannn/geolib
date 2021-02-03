@@ -35,10 +35,15 @@ internal class PointPolylineImpl(
             PolylineConfig()
         }
 
-        val geometriesWithMode = when (polylineConfig.drawMode) {
+        val geometriesWithMode = when (polylineConfig.polylineDrawMode) {
             is PolylineDrawMode.Normal -> newGeometries
             is PolylineDrawMode.Curved -> CalculationHelper.geometriesCurved(newGeometries)
-            is PolylineDrawMode.Lank -> CalculationHelper.geometriesLank(newGeometries)
+            is PolylineDrawMode.Lank -> CalculationHelper.geometriesLank(
+                listOf(
+                    newGeometries.first(),
+                    newGeometries.last()
+                )
+            )
         }
 
         polylineAnimatorOptions.initialPoints.addAll(geometriesWithMode)
@@ -87,7 +92,7 @@ internal class PointPolylineImpl(
             ?: stackAnimationMode
             ?: StackAnimationMode.BlockStackAnimation
 
-        val drawMode = polylineConfig.drawMode
+        val drawMode = polylineConfig.polylineDrawMode
 
         when (animationMode) {
             is StackAnimationMode.WaitStackEndAnimation -> {

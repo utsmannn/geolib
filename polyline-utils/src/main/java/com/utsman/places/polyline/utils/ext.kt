@@ -67,8 +67,10 @@ fun Polyline.withAnimate(
 ): Polyline {
     val googleMaps = polylineAnimator.getBindGoogleMaps()
     val config = polylineAnimator.getCurrentConfig()
-    val primaryColor = config.primaryColor
-    val accentColor = config.accentColor
+
+    val primaryColor = if (config.primaryColor == Color.BLACK) color else config.primaryColor
+    val accentColor =
+        if (config.primaryColor == primaryColor.transparentColor()) config.accentColor else config.accentColor
 
     val options = PolylineAnimatorOptions(googleMaps, primaryColor, accentColor)
     options.startAnimate(points, actionConfig)
@@ -119,6 +121,10 @@ fun PolylineConfig.doOnUpdateAnimation(action: (latLng: LatLng, mapCameraDuratio
     this.doOnUpdateAnim = action
 }
 
-fun PolylineConfig.enableBorder(isEnable: Boolean, color: Int = Color.BLACK.transparentColor(), width: Int = 2) {
+fun PolylineConfig.enableBorder(
+    isEnable: Boolean,
+    color: Int = Color.BLACK.transparentColor(),
+    width: Int = 2
+) {
     this.enableBorder(isEnable, color, width)
 }

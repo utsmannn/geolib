@@ -115,3 +115,19 @@ fun Location.toCameraUpdate(zoom: Float = 16f): CameraUpdate =
 
 fun LatLng.toCameraUpdate(zoom: Float = 16f): CameraUpdate =
     CameraUpdateFactory.newLatLngZoom(this, zoom)
+
+val List<Double>.toLatLng: LatLng get() {
+    return LatLng(this[0], this[1])
+}
+
+val List<Double>.toLocation: Location get() {
+    return Location("").apply {
+        latitude =  this@toLocation[0]
+        longitude =  this@toLocation[0]
+    }
+}
+
+val uki = Location("").apply {
+    latitude = -6.248133
+    longitude = 106.8698257
+}

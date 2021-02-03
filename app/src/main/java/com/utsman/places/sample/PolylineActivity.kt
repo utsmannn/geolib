@@ -135,7 +135,7 @@ class PolylineActivity : AppCompatActivity() {
                         point3 = polylineAnimator.startAnimate(third.geometries) {
                             duration = 10000
                             stackAnimationMode = StackAnimationMode.OffStackAnimation
-                            drawMode = PolylineDrawMode.Curved
+                            polylineDrawMode = PolylineDrawMode.Curved
                             withPrimaryPolyline {
                                 width(8f)
                                 color(Color.GREEN)

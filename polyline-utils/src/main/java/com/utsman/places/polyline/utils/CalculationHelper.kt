@@ -74,9 +74,9 @@ internal object CalculationHelper {
             val heading = SphericalUtil.computeHeading(first, last)
 
             val radius = if (heading < 0) {
-                2.0
+                3.0
             } else {
-                0.2
+                0.3
             }
 
             val midPoint = SphericalUtil.computeOffset(first, distances * 0.5, heading)

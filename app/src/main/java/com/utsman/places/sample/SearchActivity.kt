@@ -62,7 +62,7 @@ class SearchActivity : AppCompatActivity() {
 
     private val placesLocation by lazy {
         LocationServices.getFusedLocationProviderClient(this)
-            .createPlacesLocation(getString(strings.here_maps_api))
+            .createPlacesLocation(getString(R.string.here_maps_api))
     }
 
     private val searchAdapter by lazy { Adapter() }
