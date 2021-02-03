@@ -72,15 +72,6 @@ val isRemoveSuccess = point.remove(nextGeometries)
 |`doOnEndAnimation(action: (LatLng) -> Unit)`|`Unit`|Do action when animation is finish|
 |`doOnUpdateAnimation(action: (latLng: LatLng, mapCameraDuration: Int) -> Unit)`|`Unit`|Do action when animation is update with duration for camera movement|
 
-### Polyline draw mode
-This library able to customize polyline draw mode
-
-![](/images/draw_polyline.gif)
-
-- Button 1: `PolylineDrawMode.Normal` (this default configuration)
-- Button 2: `PolylineDrawMode.Curved`
-- Button 2: `PolylineDrawMode.Lank`
-
 ### Stack Animation Mode
 This is animation type of polyline
 
@@ -89,6 +80,15 @@ This is animation type of polyline
 - Button 1: `StackAnimationMode.BlockStackAnimation` (this default configuration)
 - Button 2: `StackAnimationMode.WaitStackEndAnimation`
 - Button 2: `StackAnimationMode.OffStackAnimation`
+
+### Polyline draw mode
+This library able to customize polyline draw mode
+
+![](/images/draw_polyline.gif)
+
+- Button 1: `PolylineDrawMode.Normal` (this default configuration)
+- Button 2: `PolylineDrawMode.Curved`
+- Button 2: `PolylineDrawMode.Lank`
 
 ## Sample
 ```kotlin
@@ -131,6 +131,7 @@ val middle = start.addPoints(middleGeometries) {
 
 val end = middle.addPoints(endGeometries) {
         stackAnimationMode = StackAnimationMode.WaitStackEndAnimation
+        polylineDrawMode = PolylineDrawMode.Curved
         duration = 2000
         doOnEndAnimation { latLng ->
             googleMap.addMarker {
