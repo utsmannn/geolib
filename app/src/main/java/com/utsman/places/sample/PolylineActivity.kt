@@ -98,6 +98,10 @@ class PolylineActivity : AppCompatActivity() {
                                 width(8f)
                                 color(Color.BLUE)
                             }
+                            withAccentPolyline {
+                                width(8f)
+                                color(Color.GREEN)
+                            }
                             doOnStartAnimation {
                                 toast("start...")
                                 googleMap.addMarker {
@@ -135,7 +139,6 @@ class PolylineActivity : AppCompatActivity() {
                         point3 = polylineAnimator.startAnimate(third.geometries) {
                             duration = 10000
                             stackAnimationMode = StackAnimationMode.OffStackAnimation
-                            polylineDrawMode = PolylineDrawMode.Curved
                             withPrimaryPolyline {
                                 width(8f)
                                 color(Color.GREEN)

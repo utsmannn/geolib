@@ -14,12 +14,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLngBounds
-import com.google.android.gms.maps.model.PolylineOptions
-import com.google.android.gms.maps.model.RoundCap
+import com.google.android.gms.maps.model.*
 import com.google.maps.android.ktx.awaitMap
 import com.utsman.places.polyline.data.PolylineDrawMode
 import com.utsman.places.polyline.data.StackAnimationMode
+import com.utsman.places.polyline.utils.addPolyline
+import com.utsman.places.polyline.utils.buildAnimationConfig
 import com.utsman.places.polyline.utils.withAnimate
 import com.utsman.places.polyline.utils.withPrimaryPolyline
 import com.utsman.places.routes.createPlacesRoute
@@ -77,21 +77,20 @@ class RouteActivity : AppCompatActivity() {
                     }
 
                     val geometriesRoute = routeData.geometries
-                    val polylineOptions = PolylineOptions()
-                        /*.add(cakung.toLatLng())
-                        .add(buaran.toLatLng())*/
-                        .addAll(geometriesRoute)
 
-                    googleMap.addPolyline(polylineOptions).withAnimate(googleMap) {
+                    val pattern = listOf(Dot(), Gap(10f))
+                    val polylineOptions = PolylineOptions()
+                        .addAll(geometriesRoute)
+                        .color(Color.BLUE)
+
+                    googleMap.addPolyline(polylineOptions).withAnimate(googleMap, polylineOptions) {
                         stackAnimationMode = StackAnimationMode.BlockStackAnimation
                         polylineDrawMode = PolylineDrawMode.Curved
-                        withPrimaryPolyline {
-                            color(Color.RED)
+                        /*withPrimaryPolyline {
                             startCap(RoundCap())
                             endCap(RoundCap())
-                        }
-
-                        //enableBorder(true, color = Color.GREEN, width = 10)
+                            color(Color.GREEN)
+                        }*/
                     }
                     btnGetRoute.isEnabled = true
                 }

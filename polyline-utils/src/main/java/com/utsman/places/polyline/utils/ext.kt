@@ -16,8 +16,13 @@ import com.google.maps.android.ktx.model.polylineOptions
 import com.utsman.places.polyline.PolylineAnimatorBuilder
 import com.utsman.places.polyline.data.PolylineConfig
 import com.utsman.places.polyline.data.PolylineIdentifier
+import com.utsman.places.polyline.point.PointPolyline
+import com.utsman.places.polyline.point.PointPolylineImpl
 import com.utsman.places.polyline.polyline.PolylineAnimator
 import com.utsman.places.polyline.polyline.PolylineAnimatorOptions
+import com.utsman.places.utils.GeolibException
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.contract
 
 fun GoogleMap.createPolylineAnimatorBuilder(
     primaryColor: Int = Color.BLACK,
@@ -40,15 +45,16 @@ internal fun Int.transparentColor(alpha: Int = trans35): Int {
 }
 
 internal fun PolylineOptions.copyPolylineOptions(): PolylineOptions {
-    return PolylineOptions()
-        .color(this.color)
-        .width(this.width)
-        .startCap(this.startCap)
-        .endCap(this.endCap)
-        .clickable(this.isClickable)
-        .jointType(this.jointType)
-        .visible(this.isVisible)
-        .pattern(this.pattern)
+    return PolylineOptions().apply {
+        color(this@copyPolylineOptions.color)
+        width(this@copyPolylineOptions.width)
+        startCap(this@copyPolylineOptions.startCap)
+        endCap(this@copyPolylineOptions.endCap)
+        clickable(this@copyPolylineOptions.isClickable)
+        jointType(this@copyPolylineOptions.jointType)
+        visible(this@copyPolylineOptions.isVisible)
+        pattern(this@copyPolylineOptions.pattern)
+    }
 }
 
 internal fun List<LatLng>.toGeoId(): String {
@@ -79,21 +85,47 @@ fun Polyline.withAnimate(
     }
 }
 
+fun PolylineOptions.buildAnimationConfig(actionConfig: PolylineConfig.() -> Unit): PolylineConfig {
+    return PolylineConfig(polylineOptions1 = this).apply(actionConfig)
+}
+
+fun GoogleMap.addPolyline(polylineConfig: PolylineConfig): PointPolyline {
+    val primaryColor = polylineConfig.polylineOptions1?.color ?: Color.BLACK
+    val accentColor = polylineConfig.polylineOptions2?.color ?: primaryColor.transparentColor()
+    val polylineAnimator = createPolylineAnimatorBuilder(primaryColor, accentColor)
+        .createPolylineAnimator()
+    val points = polylineConfig.polylineOptions1?.points
+    return if (!points.isNullOrEmpty()) {
+        polylineAnimator.startAnimate(points)
+    } else {
+        throw GeolibException("Point must be added")
+    }
+
+}
+
 fun Polyline.withAnimate(
     googleMap: GoogleMap,
+    polylineOptions: PolylineOptions? = null,
     actionConfig: (PolylineConfig.() -> Unit)? = null
 ): Polyline {
     val config = if (actionConfig != null) {
-        PolylineConfig().apply(actionConfig)
+        PolylineConfig().apply(actionConfig).apply {
+            if (polylineOptions != null) {
+                polylineOptions1 = polylineOptions.copyPolylineOptions()
+            }
+        }
     } else {
-        null
+        PolylineConfig()
     }
 
-    val primaryColor = config?.polylineOptions1?.color ?: Color.BLACK
-    val accentColor = config?.polylineOptions2?.color ?: primaryColor.transparentColor()
+    actionConfig?.invoke(config)
+    val primaryColor = config.polylineOptions1?.color ?: Color.BLACK
+    val accentColor = config.polylineOptions2?.color ?: primaryColor.transparentColor()
     val builder = PolylineAnimatorBuilder(googleMap, primaryColor, accentColor)
-    val placePolyline = builder.createPolylineAnimator()
-    placePolyline.startAnimate(points, actionConfig)
+    val polylineAnimator = builder.createPolylineAnimator() as PolylineAnimatorOptions
+
+    val pointPolyline: PointPolyline = PointPolylineImpl(polylineAnimator, config.stackAnimationMode)
+    pointPolyline.addPoints(points, config)
     return this.apply {
         points = emptyList()
     }
@@ -101,12 +133,12 @@ fun Polyline.withAnimate(
 
 fun PolylineConfig.withPrimaryPolyline(optionsActions: PolylineOptions.() -> Unit) {
     val options = polylineOptions(optionsActions)
-    polylineOptions1 = options
+    if (polylineOptions1 == null) polylineOptions1 = options
 }
 
 fun PolylineConfig.withAccentPolyline(optionsActions: PolylineOptions.() -> Unit) {
     val options = polylineOptions(optionsActions)
-    polylineOptions2 = options
+    if (polylineOptions2 == null) polylineOptions2 = options
 }
 
 fun PolylineConfig.doOnStartAnimation(action: (LatLng) -> Unit) {

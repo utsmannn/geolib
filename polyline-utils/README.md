@@ -3,7 +3,7 @@
 
 ## Download
 ```groovy
-implementation 'com.utsman.geolib:polyline:1.1.0'
+implementation 'com.utsman.geolib:polyline:1.2.0'
 ```
 
 ## Create `PlacesPolyline`
@@ -29,16 +29,23 @@ val point = polylineAnimator.startAnimate(geometries, 2000)
 ```
 
 ### Start with existing Polyline
+With `PolylineOptions`
 ```kotlin
 val polyline = googleMap.addPolyline(polylineOptions)
-polyline.withAnimate(googleMap) {
-         stackAnimationMode = StackAnimationMode.BlockStackAnimation
-         withPrimaryPolyline {
-             color(Color.RED)
-             startCap(RoundCap())
-             endCap(RoundCap())
-         }
-     }
+
+polyline.withAnimate(googleMap, polylineOptions) {
+        stackAnimationMode = StackAnimationMode.BlockStackAnimation
+    }
+```
+
+Or with `PolylineAnimator`
+```kotlin
+val polylineAnimator = polylineBuilder.createAnimatePolyline()
+
+val polyline = googleMap.addPolyline(options)
+polyline.withAnimate(polylineAnimator) {
+        polylineDrawMode = PolylineDrawMode.Normal
+    }
 ```
 
 ### Add points in polyline
@@ -58,7 +65,7 @@ Or by geometries
 val isRemoveSuccess = point.remove(nextGeometries)
 ```
 
-## Configuration DSL
+## Configuration with DSL
 |Param|return|desc|
 |---|---|---|
 |`withPrimaryPolyline(PolylineOptions.() -> Unit)`|`Unit`|DSL param for add primary polyline|

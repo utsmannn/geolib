@@ -4,7 +4,7 @@ This feature include ***observer location***, ***get current location***, ***get
 
 ## Download
 ```groovy
-implementation 'com.utsman.geolib:location:1.1.0'
+implementation 'com.utsman.geolib:location:1.2.0'
 ```
 
 ## Prerequisite

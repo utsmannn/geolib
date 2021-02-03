@@ -11,7 +11,7 @@ import com.utsman.places.polyline.data.PolylineConfig
 interface PointPolyline {
     fun addPoints(
         newGeometries: List<LatLng>,
-        actionConfig: (PolylineConfig.() -> Unit)? = null
+        polylineConfig: PolylineConfig
     ): PointPolyline
 
     fun remove(withGeometries: List<LatLng>? = null): Boolean

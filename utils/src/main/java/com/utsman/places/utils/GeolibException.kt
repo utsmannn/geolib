@@ -5,5 +5,5 @@
 
 package com.utsman.places.utils
 
-class HelperPlacesException(override val message: String? = "Fused provider client failed, check documentation!") :
+class GeolibException(override val message: String? = "Fused provider client failed, check documentation!") :
     Throwable(message)

@@ -13,7 +13,7 @@ suspend fun <T>fetch(call: suspend () -> T): T? {
     return try {
         call.invoke()
     } catch (e: Throwable) {
-        HelperPlacesException(e.message)
+        GeolibException(e.message)
             .printStackTrace()
         null
     }

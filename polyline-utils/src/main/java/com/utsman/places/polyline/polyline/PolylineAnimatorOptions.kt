@@ -47,7 +47,13 @@ internal class PolylineAnimatorOptions(
         actionConfig: (PolylineConfig.() -> Unit)?
     ): PointPolyline {
         val result = PointPolylineImpl(this, stackAnimationMode)
-        result.addPoints(geometries, actionConfig)
+        val config = if (actionConfig != null) {
+            PolylineConfig().apply(actionConfig)
+        } else {
+            PolylineConfig()
+        }
+
+        result.addPoints(geometries, config)
         return result
     }
 

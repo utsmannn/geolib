@@ -15,6 +15,7 @@ import com.utsman.places.polyline.data.PolylineDrawMode
 import com.utsman.places.polyline.data.StackAnimationMode
 import com.utsman.places.polyline.polyline.PolylineAnimatorOptions
 import com.utsman.places.polyline.utils.CalculationHelper
+import com.utsman.places.polyline.utils.logd
 import com.utsman.places.polyline.utils.toGeoId
 import com.utsman.places.polyline.utils.transparentColor
 
@@ -22,18 +23,17 @@ internal class PointPolylineImpl(
     private val polylineAnimatorOptions: PolylineAnimatorOptions,
     private val stackAnimationMode: StackAnimationMode?
 ) : PointPolyline {
-
     private lateinit var geometries: List<LatLng>
 
     override fun addPoints(
         newGeometries: List<LatLng>,
-        actionConfig: (PolylineConfig.() -> Unit)?
+        polylineConfig: PolylineConfig
     ): PointPolyline {
-        val polylineConfig = if (actionConfig != null) {
+        /*val polylineConfig = if (actionConfig != null) {
             PolylineConfig().apply(actionConfig)
         } else {
             PolylineConfig()
-        }
+        }*/
 
         val geometriesWithMode = when (polylineConfig.polylineDrawMode) {
             is PolylineDrawMode.Normal -> newGeometries
@@ -94,6 +94,8 @@ internal class PointPolylineImpl(
 
         val drawMode = polylineConfig.polylineDrawMode
 
+        logd("pattern impl is --> ${polylineAnimatorOptions.polylineOption1?.pattern}")
+        logd("pattern impl 2 is --> ${polylineAnimatorOptions.polylineOption2?.pattern}")
         when (animationMode) {
             is StackAnimationMode.WaitStackEndAnimation -> {
                 polylineAnimatorOptions.waitEndAnimate(
