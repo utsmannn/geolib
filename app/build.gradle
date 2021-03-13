@@ -48,9 +48,9 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    implementation project(":location")
-    implementation project(":routes")
-    implementation project(":polyline-utils")
+    implementation 'com.utsman.geolib:location:1.4.0'
+    implementation 'com.utsman.geolib:polyline:1.4.0'
+    implementation 'com.utsman.geolib:routes:1.4.0'
 
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.2.0'
 

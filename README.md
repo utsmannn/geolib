@@ -52,28 +52,17 @@ implementation 'com.google.maps.android:maps-ktx:2.1.1'
 implementation 'com.google.android.gms:play-services-location:17.1.0'
 ```
 
-### Maven repositories (if needed)
-````groovy
-allprojects {
-  repositories {
-
-    // maven url
-    maven { url 'https://dl.bintray.com/kucingapes/utsman' }
-  }
-}
-````
-
 ### All dependencies
 ```groovy
 
 // location
-implementation 'com.utsman.geolib:location:1.2.0'
+implementation 'com.utsman.geolib:location:1.4.0'
 
 // routes
-implementation 'com.utsman.geolib:routes:1.2.0'
+implementation 'com.utsman.geolib:routes:1.4.0'
 
 // polyline utils
-implementation 'com.utsman.geolib:polyline:1.2.0'
+implementation 'com.utsman.geolib:polyline:1.4.0'
 ```
 
 ## License

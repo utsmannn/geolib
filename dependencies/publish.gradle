@@ -5,6 +5,6 @@
 
 
 if (project.rootProject.file('local.properties').exists()) {
-    apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
-    apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+    apply from: 'https://raw.githubusercontent.com/utsmannn/gradle-jcenter/master/installv1.gradle'
+    apply from: 'https://raw.githubusercontent.com/utsmannn/gradle-jcenter/master/bintrayv1.gradle'
 }

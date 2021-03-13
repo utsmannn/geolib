@@ -42,6 +42,6 @@ ext {
     compileSdk = 29
     minSdk = 21
     targetSdk = 29
-    versionCode = 1
-    versionName = "1.2.0"
+    versionCode = 4
+    versionName = "1.4.0"
 }
