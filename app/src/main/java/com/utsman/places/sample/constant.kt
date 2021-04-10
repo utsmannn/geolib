@@ -19,6 +19,8 @@ fun logd(message: String) = Log.d("SAMPLE", message)
 
 val Context.HERE_API get() = this.getString(R.string.here_maps_api)
 
+fun Location.simpleString(): String = "$latitude - $longitude"
+
 infix fun Context.intent(clazz: Class<*>) {
     startActivity(Intent(this, clazz))
 }

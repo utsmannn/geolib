@@ -10,17 +10,24 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.android.gms.maps.model.RoundCap
+import com.google.maps.android.ktx.addMarker
 import com.google.maps.android.ktx.awaitMap
+import com.utsman.places.location.createPlacesLocation
+import com.utsman.places.marker.MarkerRatio
+import com.utsman.places.marker.dp
+import com.utsman.places.marker.moveMarker
 import com.utsman.places.polyline.data.PolylineDrawMode
 import com.utsman.places.polyline.data.StackAnimationMode
 import com.utsman.places.polyline.utils.createPolylineAnimatorBuilder
 import com.utsman.places.polyline.utils.withAnimate
 import com.utsman.places.routes.createPlacesRoute
 import com.utsman.places.routes.data.TransportMode
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class DrawModePolyline : AppCompatActivity() {
@@ -42,6 +49,9 @@ class DrawModePolyline : AppCompatActivity() {
         val mapsFragment =
             supportFragmentManager.findFragmentById(R.id.maps_view) as SupportMapFragment
 
+        val fusedProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        val placesLocation = fusedProviderClient.createPlacesLocation(HERE_API)
+
         lifecycleScope.launch {
             val googleMap = mapsFragment.awaitMap().apply {
                 uiSettings.isZoomControlsEnabled = true
@@ -49,6 +59,21 @@ class DrawModePolyline : AppCompatActivity() {
             }
 
             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(center.toLatLng(), 14f))
+
+            val markerAdapter = DrawMarkerAdapter(this@DrawModePolyline).run {
+                setupMarkerRatio(MarkerRatio(60.dp, 60.dp))
+            }
+
+            val marker = googleMap.addMarker {
+                position(center.toLatLng())
+                icon(markerAdapter.getIconView())
+            }
+
+            placesLocation.getComparisonLocation()
+                .collect { comparisonLocation ->
+                    marker.moveMarker(comparisonLocation.currentLocation.toLatLng())
+                    logd("current -> ${comparisonLocation.previousLocation?.simpleString()} | ${comparisonLocation.currentLocation.simpleString()}")
+                }
 
             val polylineAnimator = googleMap.createPolylineAnimatorBuilder()
                 .createPolylineAnimator()

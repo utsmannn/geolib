@@ -12,6 +12,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
+import com.utsman.places.location.data.ComparisonLocation
 import com.utsman.places.location.data.ConstantValues
 import com.utsman.places.location.data.Mapper
 import com.utsman.places.location.data.PlaceData
@@ -80,6 +81,37 @@ internal class PlacesLocationImpl(
         return data?.items?.map {
             Mapper.mapToPlaceData(it)
         } ?: emptyList()
+    }
+
+    @SuppressLint("MissingPermission")
+    override suspend fun getComparisonLocation(): Flow<ComparisonLocation> {
+        var oldLocation: Location? = null
+        val callbackFlow: Flow<ComparisonLocation> = callbackFlow {
+            val locationCallback = object : LocationCallback() {
+                override fun onLocationResult(result: LocationResult?) {
+                    if (result != null) {
+                        for (location in result.locations) {
+                            offer(ComparisonLocation(oldLocation, location))
+                        }
+                    }
+                }
+            }
+
+            fusedProviderClient.requestLocationUpdates(
+                locationRequest, locationCallback, Looper.getMainLooper()
+            ).addOnCanceledListener {
+                cancel("Cancel request", Throwable("Cancel request by user"))
+            }.addOnFailureListener {
+                cancel("Failure request location", it)
+            }
+
+            awaitClose { fusedProviderClient.removeLocationUpdates(locationCallback) }
+        }
+
+        return callbackFlow.distinctUntilChanged { old, new ->
+            oldLocation = old.currentLocation
+            old.currentLocation.distanceTo(new.currentLocation) < distanceValidator
+        }
     }
 
     override suspend fun searchPlaces(location: Location, query: String): List<PlaceData> {

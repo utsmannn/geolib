@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Created on 4/10/21 1:02 AM
+  ~ Copyright (c) Muhammad Utsman 2021 All rights reserved.
+  -->
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.utsman.places.marker">
+
+</manifest>
