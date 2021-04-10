@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-  <a href="https://bintray.com/kucingapes/utsman/com.utsman.geolib/_latestVersion"><img alt="bintray" src="https://api.bintray.com/packages/kucingapes/utsman/com.utsman.geolib/images/download.svg"></a>
+  <a href="https://jitpack.io/#utsmannn/geolib"><img alt="bintray" src="https://jitpack.io/v/utsmannn/geolib.svg"></a>
   <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"></a>
   <a href="https://github.com/utsmannn/geolib/pulls"><img alt="Pull request" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat"></a>
   <a href="https://developer.android.com/kotlin"><img alt="Fcm docs" src="https://img.shields.io/badge/Kotlin-Coroutine-orange?logo=kotlin&style=flat"></a>
@@ -52,17 +52,31 @@ implementation 'com.google.maps.android:maps-ktx:2.1.1'
 implementation 'com.google.android.gms:play-services-location:17.1.0'
 ```
 
+### Jitpack repository
+```groovy
+allprojects {
+    repositories {
+
+        // add this url
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+
 ### All dependencies
 ```groovy
 
 // location
-implementation 'com.utsman.geolib:location:1.4.0'
+implementation 'com.github.utsmannn.geolib:location:{last_version}'
 
 // routes
-implementation 'com.utsman.geolib:routes:1.4.0'
+implementation 'com.github.utsmannn.geolib:routes:{last_version}'
 
 // polyline utils
-implementation 'com.utsman.geolib:polyline:1.4.0'
+implementation 'com.github.utsmannn.geolib:polyline:{last_version}'
+
+// google maps marker utils
+implementation 'com.github.utsmannn.geolib:marker:{last_version}'
 ```
 
 ## License

@@ -9,12 +9,12 @@ import android.animation.ValueAnimator
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 
-fun Marker.moveMarker(newLatLng: LatLng) {
+fun Marker.moveMarker(newLatLng: LatLng, rotate: Boolean = true) {
     val animator: ValueAnimator = moveMarkerSmoothly(this, newLatLng)
     animator.start()
     val f = getAngle(
         LatLng(this.position.latitude, this.position.longitude),
         LatLng(newLatLng.latitude, newLatLng.longitude)
     ).toFloat()
-    rotateMarker(this, f, true)
+    rotateMarker(this, f, rotate)
 }

@@ -4,7 +4,7 @@ This feature include ***observer location***, ***get current location***, ***get
 
 ## Download
 ```groovy
-implementation 'com.utsman.geolib:location:1.4.0'
+implementation 'com.github.utsmannn.geolib:location:{last_version}'
 ```
 
 ## Prerequisite
@@ -34,6 +34,17 @@ MainScope().launch {
 ```kotlin
 MainScope().launch {
     val location = placesLocation.getLocationFlow().first()
+}
+```
+
+## Get comparator location (prev and current)
+```kotlin
+MainScope().launch {
+placesLocation.getComparisonLocation()
+    .collect { comparisonLocation ->
+        val prevLocation = comparisonLocation.previousLocation
+        val currentLocation = comparisonLocation.currentLocation
+    }
 }
 ```
 

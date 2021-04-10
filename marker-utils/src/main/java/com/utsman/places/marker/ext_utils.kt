@@ -8,20 +8,26 @@ package com.utsman.places.marker
 import android.animation.ValueAnimator
 import android.content.Context
 import android.content.res.Resources
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Paint
+import android.graphics.*
 import android.location.Location
+import android.os.Build
 import android.os.Handler
 import android.os.SystemClock
+import android.view.PixelCopy
 import android.view.View
+import android.view.View.MeasureSpec.EXACTLY
+import android.view.View.MeasureSpec.makeMeasureSpec
+import android.view.Window
 import android.view.animation.LinearInterpolator
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
+import androidx.core.view.drawToBitmap
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlin.coroutines.resume
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin
@@ -56,27 +62,36 @@ internal fun rotateMarker(marker: Marker, toRotation: Float, rotate: Boolean? = 
     }
 }
 
-private fun createBitmapFromView(view: View) : Bitmap {
-    view.measure(view.measuredWidth, view.measuredHeight)
+fun createBitmapFromView(view: View, width: Int, height: Int): Bitmap {
+    if (width > 0 && height > 0) {
+        view.measure(
+            makeMeasureSpec(
+                width, EXACTLY
+            ),
+            makeMeasureSpec(
+                height, EXACTLY
+            )
+        )
+    }
     view.layout(0, 0, view.measuredWidth, view.measuredHeight)
+
     val bitmap = Bitmap.createBitmap(
         view.measuredWidth,
-        view.measuredHeight,
-        Bitmap.Config.ARGB_8888
+        view.measuredHeight, Bitmap.Config.ARGB_8888
     )
     val canvas = Canvas(bitmap)
-    val paint = Paint()
-    paint.isFilterBitmap = true
+    val background = view.background
 
-    view.background?.draw(canvas)
+    background?.draw(canvas)
     view.draw(canvas)
+
     return bitmap
 }
 
-internal fun createBitmapMarkerFromLayout(viewAdapter: MarkerViewAdapter): Bitmap {
-    val bitmap = createBitmapFromView(viewAdapter.view)
-    val maxWidth = viewAdapter.markerRatio.width
-    val maxHeight = viewAdapter.markerRatio.height
+internal suspend fun createBitmapMarkerFromLayout(viewAdapter: MarkerViewAdapter): Bitmap {
+    val bitmap = createBitmapFromView(viewAdapter.createView(), 200.dp, 200.dp)
+    val maxWidth = viewAdapter.maxWidth()
+    val maxHeight = viewAdapter.maxHeight()
     return scale(bitmap, maxWidth, maxHeight)
 }
 

@@ -47,6 +47,10 @@ class MainActivity : AppCompatActivity() {
                     findViewById<Button>(R.id.btn_draw_polyline).setOnClickListener {
                         this@MainActivity intent DrawModePolyline::class.java
                     }
+
+                    findViewById<Button>(R.id.btn_marker_util).setOnClickListener {
+                        this@MainActivity intent MarkerActivity::class.java
+                    }
                 }
 
                 override fun onPermissionDenied(p0: PermissionDeniedResponse?) {

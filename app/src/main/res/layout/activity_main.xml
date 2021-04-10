@@ -41,4 +41,10 @@
         android:text="Draw mode polyline"
         android:id="@+id/btn_draw_polyline"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Marker utils"
+        android:id="@+id/btn_marker_util"/>
+
 </LinearLayout>
