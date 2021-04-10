@@ -13,6 +13,7 @@ import android.location.Location
 import android.os.Build
 import android.os.Handler
 import android.os.SystemClock
+import android.util.Log
 import android.view.PixelCopy
 import android.view.View
 import android.view.View.MeasureSpec.EXACTLY
@@ -34,6 +35,8 @@ import kotlin.math.sin
 
 
 fun Location.toLatLng() = LatLng(latitude, longitude)
+
+internal fun logd(message: String) = Log.d("SAMPLE", message)
 
 val Int.dp: Int
     get() = (this * Resources.getSystem().displayMetrics.density).toInt()

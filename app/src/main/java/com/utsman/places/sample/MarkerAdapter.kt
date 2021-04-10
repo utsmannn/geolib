@@ -9,6 +9,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
+import com.airbnb.lottie.LottieAnimationView
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.utsman.places.marker.MarkerViewAdapter
@@ -62,6 +63,28 @@ class CustomMarkerAdapter(private val context: Context) : MarkerViewAdapter() {
 
     override fun maxWidth(): Int {
         return 70.dp
+    }
+
+    override fun maxHeight(): Int {
+        return 70.dp
+    }
+}
+
+class LottieMarkerAdapter(private val context: Context) : MarkerViewAdapter() {
+    override suspend fun createView(): View {
+        val view = LayoutInflater.from(context).inflate(R.layout.marker_lottie, null)
+        val lottieView = view.findViewById<LottieAnimationView>(R.id.lottie_view)
+        lottieView.addAnimatorUpdateListener { animator ->
+            logd("animator --> ${animator.animatedValue}")
+        }
+        lottieView.playAnimation()
+        delay(1000)
+        logd("view laoaded...")
+        return view
+    }
+
+    override fun maxWidth(): Int {
+        return 50.dp
     }
 
     override fun maxHeight(): Int {
