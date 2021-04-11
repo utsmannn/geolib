@@ -6,6 +6,7 @@
 package com.utsman.places.sample
 
 import android.annotation.SuppressLint
+import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -23,11 +24,9 @@ import com.google.maps.android.ktx.addMarker
 import com.google.maps.android.ktx.awaitMap
 import com.utsman.places.location.PlacesLocation
 import com.utsman.places.location.createPlacesLocation
-import com.utsman.places.marker.dp
-import com.utsman.places.marker.moveMarker
-import com.utsman.places.marker.moveMarkerLottie
-import com.utsman.places.marker.addMarkerView
+import com.utsman.places.marker.*
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -45,10 +44,7 @@ class MarkerActivity : AppCompatActivity() {
     private var marker2Job: Job? = null
     private var marker3Job: Job? = null
 
-    private val parentLayout by lazy {
-        //findViewById<RelativeLayout>(R.id.parent_layout)
-        findViewById<ViewGroup>(android.R.id.content)
-    }
+    private val markerViewAdapter by lazy { MarkerViewAdapter(this) }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,6 +72,11 @@ class MarkerActivity : AppCompatActivity() {
             }
 
             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(center.toLatLng(), 14f))
+            markerViewAdapter.bindGoogleMaps(googleMap)
+
+            markerViewAdapter.setOnCameraMoveListener {
+                logd("move........")
+            }
 
             btnMarker1.setOnClickListener {
                 /*logd("setup..")
@@ -147,19 +148,24 @@ class MarkerActivity : AppCompatActivity() {
         lottieView.loop(true)
         lottieView.playAnimation()
 
+        markerViewAdapter.addMarker {
+            view = lottieView
+            latLng = center.toLatLng()
+        }
+
         /*val param = RelativeLayout.LayoutParams(100.dp, 100.dp)
         param.addRule(RelativeLayout.ALIGN_PARENT_TOP)*/
 
         //containerLottie.addView(lottieView, param)
 
-        val markerAdapter = CatMarkerAdapter(this)
+        //val markerAdapter = CatMarkerAdapter(this)
 
         /*markerCat = googleMap.addMarker {
             position(center.toLatLng())
             //icon(markerAdapter.getIconView())
         }*/
 
-        googleMap.addMarkerView(center.toLatLng(), lottieView, parentLayout, "lottie_2")
+        //googleMap.addMarkerView(center.toLatLng(), lottieView, parentLayout, "lottie_2")
 
         /*placesLocation.getComparisonLocation().collect { comparisonLocation ->
             val point = googleMap.projection.toScreenLocation(comparisonLocation.currentLocation.toLatLng())
@@ -194,7 +200,24 @@ class MarkerActivity : AppCompatActivity() {
         lottieView.loop(true)
         lottieView.playAnimation()
 
-        googleMap.addMarkerView(firstPoint1.toLatLng(), lottieView, parentLayout, "lottie_1")
+        val marker = markerViewAdapter.addMarker {
+            view = lottieView
+            latLng = firstPoint1.toLatLng()
+        }
+
+        MainScope().launch {
+            placesLocation.getComparisonLocation().collect { comparator ->
+                logd("comparator -> ${(comparator.previousLocation ?: Location("")).simpleString()} | ${comparator.currentLocation.simpleString()} == ${comparator.previousLocation?.distanceTo(comparator.currentLocation)}")
+                //marker.moveMarker(comparator.previousLocation?.toLatLng(), comparator.currentLocation, googleMap)
+                val prevLatLng = comparator.previousLocation?.toLatLng()
+                val newLatLng = comparator.currentLocation.toLatLng()
+                if (prevLatLng != null) {
+                    marker.moveMarker(prevLatLng, newLatLng, googleMap)
+                }
+            }
+        }
+
+        //googleMap.addMarkerView(firstPoint1.toLatLng(), lottieView, parentLayout, "lottie_1")
     }
 
     private suspend fun setupMarkerLottie(googleMap: GoogleMap, placesLocation: PlacesLocation) {
@@ -216,14 +239,7 @@ class MarkerActivity : AppCompatActivity() {
             val lottieAnimLayout = LayoutInflater.from(this).inflate(R.layout.marker_lottie, null)
             val lottieAnimView = lottieAnimLayout.findViewById<LottieAnimationView>(R.id.lottie_view)
 
-            markerLottie?.moveMarkerLottie(
-                newLatLng = updatedLatLng,
-                parent = parentLayout,
-                lottieView = lottieAnimView,
-                updated = {
-                    logd("haaaaaaaaaaaa----")
-                }
-            )
+
             logd("current -> ${comparisonLocation.previousLocation?.simpleString()} | ${comparisonLocation.currentLocation.simpleString()}")
         }
     }

@@ -13,6 +13,7 @@ import com.airbnb.lottie.LottieAnimationView
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.utsman.places.marker.MarkerBitmapAdapter
+import com.utsman.places.marker.MarkerViewAdapter
 import com.utsman.places.marker.dp
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.coroutines.MainScope

@@ -11,12 +11,12 @@ import java.util.*
 
 data class MarkerView(
     val view: View,
-    val latLng: LatLng,
-    val tag: String? = "marker_view_${UUID.randomUUID()}"
+    var position: LatLng,
+    var onMoved: Boolean = false
 ) {
     data class MarkerViewConfig(
         var view: View? = null,
-        val latLng: LatLng? = null,
-        val tag: String? = "marker_view_${UUID.randomUUID()}"
+        var latLng: LatLng? = null,
+        var tag: String = UUID.randomUUID().toString()
     )
 }

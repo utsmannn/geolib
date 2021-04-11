@@ -5,33 +5,45 @@
 
 package com.utsman.places.marker
 
+import android.util.Log
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isInvisible
 import com.google.android.gms.maps.GoogleMap
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-abstract class MarkerViewAdapter {
+class MarkerViewAdapter {
     private lateinit var googleMap: GoogleMap
     private val moveFlow: MutableStateFlow<(() -> Unit)?> = MutableStateFlow(null)
     private val markerViews: MutableList<MarkerView> = mutableListOf()
-    private lateinit var parent: ViewGroup
+    private var parent: ViewGroup
 
-    fun bindGoogleMaps(googleMap: GoogleMap, activity: AppCompatActivity) {
+    constructor(activity: AppCompatActivity) {
+        this.parent = activity.findViewById(android.R.id.content)
+    }
+
+    constructor(parentView: ViewGroup) {
+        this.parent = parentView
+    }
+
+
+    fun bindGoogleMaps(googleMap: GoogleMap) {
         this.googleMap = googleMap
-        parent = activity.findViewById(android.R.id.content)
-        googleMap.setOnCameraMoveListener {
-            MainScope().launch {
-                moveFlow.collect { unit ->
-                    unit?.invoke()
+        if (this::googleMap.isInitialized) {
+            googleMap.setOnCameraMoveListener {
+                markerViews.forEach { mark ->
+                    mark.view.moveJust(googleMap.getCurrentPointF(mark.position))
                 }
 
-                markerViews.forEach {
-                    val point = googleMap.getCurrentPointF(it.latLng)
-                    it.view.moveJust(point)
+                MainScope().launch {
+                    moveFlow.collect { unit ->
+                        unit?.invoke()
+                    }
                 }
             }
         }
@@ -41,22 +53,27 @@ abstract class MarkerViewAdapter {
         moveFlow.value = onCameraMove
     }
 
-    fun addMarker(config: (MarkerView.MarkerViewConfig) -> Unit): MarkerView {
+    fun addMarker(config: MarkerView.MarkerViewConfig.() -> Unit): MarkerView {
         val markerViewConfig = MarkerView.MarkerViewConfig().apply(config)
         return if (markerViewConfig.view == null && markerViewConfig.latLng == null) {
             throw IllegalAccessError("")
         } else {
             MarkerView(
                 view = markerViewConfig.view!!,
-                latLng = markerViewConfig.latLng!!,
-                tag = markerViewConfig.tag
+                position = markerViewConfig.latLng!!
             ).apply {
-                if (!markerViews.map { it.latLng }.contains(latLng)) {
-                    markerViews.add(this)
-                }
-
+                view.tag = "marker_view_${markerViewConfig.tag}"
+                markerViews.add(this)
                 val param = RelativeLayout.LayoutParams(60.dp, 60.dp)
+                view.isInvisible = true
                 parent.addView(view, param)
+
+                MainScope().launch {
+                    delay(70)
+                    val point = googleMap.getCurrentPointF(position)
+                    view.moveJust(point)
+                    view.isInvisible = false
+                }
             }
         }
     }

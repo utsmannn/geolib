@@ -19,6 +19,7 @@ import android.view.View.MeasureSpec.makeMeasureSpec
 import android.view.animation.LinearInterpolator
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
@@ -29,6 +30,10 @@ import kotlin.math.sin
 
 
 fun Location.toLatLng() = LatLng(latitude, longitude)
+fun LatLng.toLocation() = Location("").apply {
+    latitude = this@toLocation.latitude
+    longitude = this@toLocation.longitude
+}
 
 internal fun logd(message: String) = Log.d("SAMPLE", message)
 
@@ -147,6 +152,29 @@ internal fun moveMarkerSmoothly(marker: Marker, newLatLng: LatLng) : ValueAnimat
             marker.position.longitude + deltaStep * deltaLongitude * 1.0 / 100
         )
         marker.position = latLng
+    }
+
+    return animator
+}
+
+internal fun moveMarkerSmoothly(marker: MarkerView, googleMap: GoogleMap, newLatLng: LatLng) : ValueAnimator {
+    val animator = ValueAnimator.ofFloat(0f, 100f)
+
+    val deltaLatitude = doubleArrayOf(newLatLng.latitude - marker.position.latitude)
+    val deltaLongitude = newLatLng.longitude - marker.position.longitude
+    val prevStep = floatArrayOf(0f)
+    animator.duration = 1500
+
+    animator.addUpdateListener { animation ->
+        val deltaStep = (animation.animatedValue as Float - prevStep[0]).toDouble()
+        prevStep[0] = animation.animatedValue as Float
+
+        val latLng = LatLng(
+            marker.position.latitude + deltaLatitude[0] * deltaStep * 1.0 / 100,
+            marker.position.longitude + deltaStep * deltaLongitude * 1.0 / 100
+        )
+        val point = googleMap.getCurrentPointF(latLng)
+        marker.view.moveJust(point)
     }
 
     return animator
