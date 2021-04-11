@@ -78,7 +78,7 @@ class MarkerActivity : AppCompatActivity() {
             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(center.toLatLng(), 14f))
 
             btnMarker1.setOnClickListener {
-                logd("setup..")
+                /*logd("setup..")
                 markerCat?.remove()
                 marker2Job?.cancel()
 
@@ -88,7 +88,11 @@ class MarkerActivity : AppCompatActivity() {
                     }
                 } else {
                     marker1Job?.cancel()
-                }
+                }*/
+                /*lifecycleScope.launch {
+
+                }*/
+                setupMarkerCustom(googleMap, placesLocation)
             }
 
             btnMarker2.setOnClickListener {
@@ -116,9 +120,8 @@ class MarkerActivity : AppCompatActivity() {
 
                 ///ObjectAnimator.ofFloa
 
-                lifecycleScope.launch {
-                    setupMarkerCat(googleMap, mapsFragment.view, placesLocation)
-                }
+
+                setupMarkerCat(googleMap, mapsFragment.view, placesLocation)
             }
 
             // 540 | 725
@@ -135,7 +138,7 @@ class MarkerActivity : AppCompatActivity() {
         }
     }
 
-    private suspend fun setupMarkerCat(googleMap: GoogleMap, mapView: View?, placesLocation: PlacesLocation) {
+    private fun setupMarkerCat(googleMap: GoogleMap, mapView: View?, placesLocation: PlacesLocation) {
        /* val lottieAnimLayout = LayoutInflater.from(this).inflate(R.layout.marker_lottie, null)
         val lottieAnimView = lottieAnimLayout.findViewById<LottieAnimationView>(R.id.lottie_view)*/
         val lottieView = LottieAnimationView(this)
@@ -156,7 +159,7 @@ class MarkerActivity : AppCompatActivity() {
             //icon(markerAdapter.getIconView())
         }*/
 
-        googleMap.addMarkerView(center.toLatLng(), lottieView, parentLayout)
+        googleMap.addMarkerView(center.toLatLng(), lottieView, parentLayout, "lottie_2")
 
         /*placesLocation.getComparisonLocation().collect { comparisonLocation ->
             val point = googleMap.projection.toScreenLocation(comparisonLocation.currentLocation.toLatLng())
@@ -168,8 +171,10 @@ class MarkerActivity : AppCompatActivity() {
 
     }
 
-    private suspend fun setupMarkerCustom(googleMap: GoogleMap, placesLocation: PlacesLocation) {
-        logd("setup custom..")
+    private val cameraMoveListener = GoogleMap.OnCameraMoveListener { }
+
+    private fun setupMarkerCustom(googleMap: GoogleMap, placesLocation: PlacesLocation) {
+        /*logd("setup custom..")
         val markerAdapter = CustomMarkerAdapter(this)
 
         markerCustom = googleMap.addMarker {
@@ -181,7 +186,15 @@ class MarkerActivity : AppCompatActivity() {
             val updatedLatLng = comparisonLocation.currentLocation.toLatLng()
             markerCustom?.moveMarker(newLatLng = updatedLatLng, rotate = false)
             logd("current -> ${comparisonLocation.previousLocation?.simpleString()} | ${comparisonLocation.currentLocation.simpleString()}")
-        }
+        }*/
+
+        val lottieView = LottieAnimationView(this)
+        lottieView.setAnimation(R.raw.marker)
+        lottieView.setPadding(0, 0, 0, (-20).dp)
+        lottieView.loop(true)
+        lottieView.playAnimation()
+
+        googleMap.addMarkerView(firstPoint1.toLatLng(), lottieView, parentLayout, "lottie_1")
     }
 
     private suspend fun setupMarkerLottie(googleMap: GoogleMap, placesLocation: PlacesLocation) {

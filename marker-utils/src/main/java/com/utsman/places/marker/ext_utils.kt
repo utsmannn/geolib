@@ -10,25 +10,19 @@ import android.content.Context
 import android.content.res.Resources
 import android.graphics.*
 import android.location.Location
-import android.os.Build
 import android.os.Handler
 import android.os.SystemClock
 import android.util.Log
-import android.view.PixelCopy
 import android.view.View
 import android.view.View.MeasureSpec.EXACTLY
 import android.view.View.MeasureSpec.makeMeasureSpec
-import android.view.Window
 import android.view.animation.LinearInterpolator
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
-import androidx.core.view.drawToBitmap
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
-import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlin.coroutines.resume
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin
@@ -91,10 +85,10 @@ fun createBitmapFromView(view: View, width: Int, height: Int): Bitmap {
     return bitmap
 }
 
-internal suspend fun createBitmapMarkerFromLayout(viewAdapter: MarkerViewAdapter): Bitmap {
-    val bitmap = createBitmapFromView(viewAdapter.createView(), 200.dp, 200.dp)
-    val maxWidth = viewAdapter.maxWidth()
-    val maxHeight = viewAdapter.maxHeight()
+internal suspend fun createBitmapMarkerFromLayout(bitmapAdapter: MarkerBitmapAdapter): Bitmap {
+    val bitmap = createBitmapFromView(bitmapAdapter.createView(), 200.dp, 200.dp)
+    val maxWidth = bitmapAdapter.maxWidth()
+    val maxHeight = bitmapAdapter.maxHeight()
     return scale(bitmap, maxWidth, maxHeight)
 }
 

@@ -16,15 +16,20 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import androidx.core.graphics.toPointF
 import androidx.core.graphics.unaryMinus
+import androidx.core.view.children
 import androidx.core.view.contains
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
+import com.google.maps.android.ktx.addMarker
+import com.google.maps.android.ktx.cameraEvents
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.util.*
 import kotlin.math.min
 
 fun Marker.moveMarker(newLatLng: LatLng, rotate: Boolean = true) {
@@ -69,33 +74,31 @@ fun Marker.moveMarkerLottie(newLatLng: LatLng, parent: ViewGroup, lottieView: Lo
     rotateMarker(this, f, rotate)
 }
 
-fun GoogleMap.addMarkerView(latLng: LatLng, view: View, parent: ViewGroup) {
+fun GoogleMap.addMarkerView(latLng: LatLng, view: View, parent: ViewGroup, id: String) {
     val param = RelativeLayout.LayoutParams(60.dp, 60.dp)
+    view.tag = "marker_view_${UUID.randomUUID()}"
     parent.addView(view, param)
-
-    //marker.alpha = 0.2f
     val currentPointMarker = projection.toScreenLocation(latLng)
-    /*MainScope().launch {
-        val xView = currentPointMarker.x
-        val yView = currentPointMarker.y
-
+    MainScope().launch {
         delay(70)
-        view.move(currentPointMarker.toPointF())
-        logd("v position -> ${view.measuredWidth} | ${view.measuredHeight}")
-        logd("current position -> ${xView} | ${yView}")
-    }*/
+        view.moveJust(currentPointMarker.toPointF())
+    }
 
-    val xView = currentPointMarker.x
-    val yView = currentPointMarker.y
-
-    view.moveJust(getCurrentPointF(latLng))
+    //view.moveJust(currentPointMarker.toPointF())
+    //view.move(currentPointMarker.toPointF())
     logd("v position -> ${view.measuredWidth} | ${view.measuredHeight}")
-    logd("current position -> ${xView} | ${yView}")
 
     setOnCameraMoveListener {
         val point = getCurrentPointF(latLng)
-        logd("move... -> $point")
-        view.moveJust(point)
+        val childCount = parent.childCount
+        for (i in 0..childCount) {
+            val child = parent.getChildAt(i)
+            if (child != null && child.tag != null) {
+                if (child.tag.toString().contains("marker_view")) {
+                    child.moveJust(point)
+                }
+            }
+        }
     }
 
     /*setOnCameraMoveStartedListener {
@@ -118,11 +121,11 @@ fun GoogleMap.addMarkerView(latLng: LatLng, view: View, parent: ViewGroup) {
     //view.move(currentPointMarker.toPointF())
 }
 
-private fun GoogleMap.getCurrentPointF(latLng: LatLng): PointF {
+internal fun GoogleMap.getCurrentPointF(latLng: LatLng): PointF {
     return projection.toScreenLocation(latLng).toPointF()
 }
 
-private fun View.moveJust(point: PointF) {
+internal fun View.moveJust(point: PointF) {
     translationX = point.x-(measuredWidth/2)
     translationY = point.y-measuredHeight
 }

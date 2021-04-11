@@ -12,7 +12,7 @@ import android.widget.ImageView
 import com.airbnb.lottie.LottieAnimationView
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-import com.utsman.places.marker.MarkerViewAdapter
+import com.utsman.places.marker.MarkerBitmapAdapter
 import com.utsman.places.marker.dp
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import kotlinx.coroutines.MainScope
@@ -22,7 +22,7 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import java.lang.Exception
 import kotlin.coroutines.resume
 
-class CatMarkerAdapter(private val context: Context) : MarkerViewAdapter() {
+class CatMarkerAdapter(private val context: Context) : MarkerBitmapAdapter() {
     override suspend fun createView(): View {
         return LayoutInflater.from(context).inflate(R.layout.marker_cat, null)
     }
@@ -36,7 +36,7 @@ class CatMarkerAdapter(private val context: Context) : MarkerViewAdapter() {
     }
 }
 
-class CustomMarkerAdapter(private val context: Context) : MarkerViewAdapter() {
+class CustomMarkerAdapter(private val context: Context) : MarkerBitmapAdapter() {
     private val catUrl = "https://asset.kompas.com/crops/AOqycoSV_pH5eU51rYStWW_zVFY=/1x0:1000x666/750x500/data/photo/2019/11/04/5dbfff829ebe6.jpg"
     override suspend fun createView(): View = suspendCancellableCoroutine { task ->
         val view = LayoutInflater.from(context).inflate(R.layout.marker_custom, null)
@@ -70,7 +70,7 @@ class CustomMarkerAdapter(private val context: Context) : MarkerViewAdapter() {
     }
 }
 
-class LottieMarkerAdapter(private val context: Context) : MarkerViewAdapter() {
+class LottieMarkerAdapter(private val context: Context) : MarkerBitmapAdapter() {
     override suspend fun createView(): View {
         val view = LayoutInflater.from(context).inflate(R.layout.marker_lottie, null)
         val lottieView = view.findViewById<LottieAnimationView>(R.id.lottie_view)
