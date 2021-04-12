@@ -12,6 +12,8 @@ import androidx.core.graphics.toPointF
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
+import com.utsman.places.marker.config.AnchorPoint
+import com.utsman.places.marker.data.MarkerView
 
 fun Marker.moveMarker(newLatLng: LatLng, rotate: Boolean = false) {
     val animator: ValueAnimator = moveMarkerSmoothly(this, newLatLng)
@@ -38,9 +40,17 @@ internal fun GoogleMap.getCurrentPointF(latLng: LatLng): PointF {
     return projection.toScreenLocation(latLng).toPointF()
 }
 
-internal fun View.moveJust(point: PointF) {
-    translationX = point.x-(measuredWidth/2)
-    translationY = point.y-measuredHeight
+internal fun View.moveJust(point: PointF, anchorPoint: AnchorPoint) {
+    when (anchorPoint) {
+        AnchorPoint.NORMAL -> {
+            translationX = point.x-(measuredWidth/2)
+            translationY = point.y-measuredHeight
+        }
+        AnchorPoint.CENTER -> {
+            translationX = point.x-(measuredWidth/2)
+            translationY = point.y-(measuredHeight/2)
+        }
+    }
 }
 
 internal fun View.move(point: PointF) {

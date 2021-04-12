@@ -29,7 +29,8 @@
         <activity android:name=".CurrentLocationActivity"/>
         <activity android:name=".RouteActivity"/>
         <activity android:name=".DrawModePolyline"/>
-        <activity android:name=".MarkerActivity"/>
+        <activity android:name=".MarkerBitmapActivity"/>
+        <activity android:name=".MarkerViewActivity"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

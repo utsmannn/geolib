@@ -16,9 +16,6 @@ buildscript {
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
-
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.5'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
     }
 }
 
@@ -34,15 +31,11 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-subprojects {
-    tasks.withType(Javadoc).all { enabled = false }
-}
-
 ext {
     buildTools = "30.0.2"
     compileSdk = 29
     minSdk = 21
     targetSdk = 29
     versionCode = 5
-    versionName = "2.0.1"
+    versionName = "2.1.1"
 }

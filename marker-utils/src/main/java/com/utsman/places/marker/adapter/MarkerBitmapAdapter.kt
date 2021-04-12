@@ -1,13 +1,14 @@
 /*
- * Created on 4/10/21 1:55 AM
+ * Created on 4/13/21 1:46 AM
  * Copyright (c) Muhammad Utsman 2021 All rights reserved.
  */
 
-package com.utsman.places.marker
+package com.utsman.places.marker.adapter
 
 import android.view.View
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.utsman.places.marker.createBitmapMarkerFromLayout
 
 abstract class MarkerBitmapAdapter {
 

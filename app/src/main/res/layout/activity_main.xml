@@ -44,7 +44,13 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Marker utils"
-        android:id="@+id/btn_marker_util"/>
+        android:text="Marker Bitmap"
+        android:id="@+id/btn_marker_bitmap"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Marker View"
+        android:id="@+id/btn_marker_view"/>
 
 </LinearLayout>

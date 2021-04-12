@@ -24,6 +24,8 @@ import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
+import com.utsman.places.marker.adapter.MarkerBitmapAdapter
+import com.utsman.places.marker.data.MarkerView
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin
@@ -203,7 +205,7 @@ internal fun moveMarkerSmoothly(marker: MarkerView, googleMap: GoogleMap, newLat
         )
         val point = googleMap.getCurrentPointF(latLng)
         marker.position = latLng
-        marker.view.moveJust(point)
+        marker.view.moveJust(point, marker.anchorPoint)
     }
 
     return animator
