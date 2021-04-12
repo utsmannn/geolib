@@ -11,8 +11,7 @@ import java.util.*
 
 data class MarkerView(
     val view: View,
-    var position: LatLng,
-    var onMoved: Boolean = false
+    var position: LatLng
 ) {
     data class MarkerViewConfig(
         var view: View? = null,

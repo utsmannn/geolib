@@ -13,7 +13,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 
-fun Marker.moveMarker(newLatLng: LatLng, rotate: Boolean = true) {
+fun Marker.moveMarker(newLatLng: LatLng, rotate: Boolean = false) {
     val animator: ValueAnimator = moveMarkerSmoothly(this, newLatLng)
     animator.start()
     val f = getAngle(
@@ -23,20 +23,15 @@ fun Marker.moveMarker(newLatLng: LatLng, rotate: Boolean = true) {
     rotateMarker(this, f, rotate)
 }
 
-fun MarkerView.moveMarker(prevLatLng: LatLng, newLatLng: LatLng, googleMap: GoogleMap, rotate: Boolean = true) {
-    onMoved = true
-    position = newLatLng
+fun MarkerView.moveMarker(newLatLng: LatLng, googleMap: GoogleMap, rotate: Boolean = false) {
     val animator: ValueAnimator = moveMarkerSmoothly(this, googleMap, newLatLng)
     animator.start()
-    //view.move(googleMap.getCurrentPointF(newLatLng))
-    if (prevLatLng.toLocation().distanceTo(newLatLng.toLocation()) < 10f) {
-        onMoved = false
-    }
-    /*val f = getAngle(
+
+    val f = getAngle(
         LatLng(this.position.latitude, this.position.longitude),
         LatLng(newLatLng.latitude, newLatLng.longitude)
-    ).toFloat()*/
-    //rotateMarker(this, f, rotate)
+    ).toFloat()
+    rotateMarker(this, f, rotate)
 }
 
 internal fun GoogleMap.getCurrentPointF(latLng: LatLng): PointF {
@@ -50,6 +45,7 @@ internal fun View.moveJust(point: PointF) {
 
 internal fun View.move(point: PointF) {
     animate()
+        .setDuration(1500)
         .translationX(point.x-(measuredWidth/2))
         .translationY(point.y-measuredHeight)
         .start()

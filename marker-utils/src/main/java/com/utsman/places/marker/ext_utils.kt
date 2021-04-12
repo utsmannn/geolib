@@ -64,6 +64,34 @@ internal fun rotateMarker(marker: Marker, toRotation: Float, rotate: Boolean? = 
     }
 }
 
+internal fun rotateMarker(marker: MarkerView, toRotation: Float, rotate: Boolean? = true) {
+    marker.view.run {
+        pivotX = width.toFloat() / 2
+        pivotY = height.toFloat()
+    }
+
+    if (rotate != null && rotate) {
+        val handler = Handler()
+        val start = SystemClock.uptimeMillis()
+        val startRotation = marker.view.rotation
+        val duration: Long = 300
+
+        handler.post(object : Runnable {
+            override fun run() {
+                val elapsed = SystemClock.uptimeMillis() - start
+                val t = LinearInterpolator().getInterpolation(elapsed.toFloat() / duration)
+
+                val rot = t * toRotation + (1 - t) * startRotation
+
+                marker.view.rotation = if (-rot > 180) rot / 2 else rot
+                if (t < 1.0) {
+                    handler.postDelayed(this, 16)
+                }
+            }
+        })
+    }
+}
+
 fun createBitmapFromView(view: View, width: Int, height: Int): Bitmap {
     if (width > 0 && height > 0) {
         view.measure(
@@ -174,10 +202,30 @@ internal fun moveMarkerSmoothly(marker: MarkerView, googleMap: GoogleMap, newLat
             marker.position.longitude + deltaStep * deltaLongitude * 1.0 / 100
         )
         val point = googleMap.getCurrentPointF(latLng)
+        marker.position = latLng
         marker.view.moveJust(point)
     }
 
     return animator
+}
+
+internal fun moveMarkerViewSmoothly(marker: MarkerView, prevPointF: PointF, nextPointF: PointF) {
+    val animatorX = ValueAnimator.ofFloat(prevPointF.x, nextPointF.x)
+    val animatorY = ValueAnimator.ofFloat(prevPointF.y, nextPointF.y)
+
+    animatorX.addUpdateListener { animation ->
+        val value = animation.animatedValue as Float
+        marker.view.translationX = value
+    }
+
+    animatorY.addUpdateListener { animation ->
+        val value = animation.animatedValue as Float
+        marker.view.translationY = value
+    }
+
+    animatorX.start()
+    animatorY.start()
+
 }
 
 private fun computeHeading(from: LatLng, to: LatLng): Double {

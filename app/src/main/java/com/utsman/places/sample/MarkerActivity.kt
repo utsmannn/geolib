@@ -180,20 +180,6 @@ class MarkerActivity : AppCompatActivity() {
     private val cameraMoveListener = GoogleMap.OnCameraMoveListener { }
 
     private fun setupMarkerCustom(googleMap: GoogleMap, placesLocation: PlacesLocation) {
-        /*logd("setup custom..")
-        val markerAdapter = CustomMarkerAdapter(this)
-
-        markerCustom = googleMap.addMarker {
-            position(center.toLatLng())
-            icon(markerAdapter.getIconView())
-        }
-
-        placesLocation.getComparisonLocation().collect { comparisonLocation ->
-            val updatedLatLng = comparisonLocation.currentLocation.toLatLng()
-            markerCustom?.moveMarker(newLatLng = updatedLatLng, rotate = false)
-            logd("current -> ${comparisonLocation.previousLocation?.simpleString()} | ${comparisonLocation.currentLocation.simpleString()}")
-        }*/
-
         val lottieView = LottieAnimationView(this)
         lottieView.setAnimation(R.raw.marker)
         lottieView.setPadding(0, 0, 0, (-20).dp)
@@ -205,19 +191,17 @@ class MarkerActivity : AppCompatActivity() {
             latLng = firstPoint1.toLatLng()
         }
 
-        MainScope().launch {
-            placesLocation.getComparisonLocation().collect { comparator ->
-                logd("comparator -> ${(comparator.previousLocation ?: Location("")).simpleString()} | ${comparator.currentLocation.simpleString()} == ${comparator.previousLocation?.distanceTo(comparator.currentLocation)}")
-                //marker.moveMarker(comparator.previousLocation?.toLatLng(), comparator.currentLocation, googleMap)
-                val prevLatLng = comparator.previousLocation?.toLatLng()
-                val newLatLng = comparator.currentLocation.toLatLng()
-                if (prevLatLng != null) {
-                    marker.moveMarker(prevLatLng, newLatLng, googleMap)
-                }
-            }
+        val originMarker = googleMap.addMarker {
+            position(firstPoint1.toLatLng())
         }
 
-        //googleMap.addMarkerView(firstPoint1.toLatLng(), lottieView, parentLayout, "lottie_1")
+        MainScope().launch {
+            placesLocation.getComparisonLocation().collect { comparator ->
+                val newLatLng = comparator.currentLocation.toLatLng()
+                marker.moveMarker(newLatLng, googleMap, true)
+                //originMarker.moveMarker(newLatLng, true)
+            }
+        }
     }
 
     private suspend fun setupMarkerLottie(googleMap: GoogleMap, placesLocation: PlacesLocation) {
