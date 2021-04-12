@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Created on 4/10/21 4:40 PM
+  ~ Copyright (c) Muhammad Utsman 2021 All rights reserved.
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:background="#7E2ABF25"
+    android:id="@+id/lottie_container"/>

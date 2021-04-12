@@ -1,31 +1,9 @@
 apply plugin: 'com.android.library'
 apply from: "$rootDir/dependencies/plugins.gradle"
 
-ext {
-    bintrayRepo = "utsman"
-    bintrayName = "com.utsman.geolib"
-
-    libraryName = 'polyline'
-    artifact = 'polyline'
-
-    publishedGroupId = 'com.utsman.geolib'
-    libraryVersion = versionName
-
-    libraryDescription = 'Android helper libraries for place, location and polyline utils'
-    siteUrl = 'https://github.com/utsmannn/geolib'
-    gitUrl = 'https://github.com/utsmannn/geolib.git'
-    developerId = 'utsman'
-    developerName = 'Muhammad Utsman'
-    developerEmail = 'utsmannn@gmail.com'
-    licenseName = 'The Apache Software License, Version 2.0'
-    licenseUrl = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
-    allLicenses = ["Apache-2.0"]
-}
-
 apply from: "$rootDir/dependencies/android.gradle"
 apply from: "$rootDir/dependencies/commons.gradle"
 apply from: "$rootDir/dependencies/externals.gradle"
-apply from: "$rootDir/dependencies/publish.gradle"
 
 dependencies {
     // another dependencies

@@ -110,7 +110,7 @@ internal class PlacesLocationImpl(
 
         return callbackFlow.distinctUntilChanged { old, new ->
             oldLocation = old.currentLocation
-            old.currentLocation.distanceTo(new.currentLocation) < distanceValidator
+            old.currentLocation.distanceTo(new.currentLocation) < 5f
         }
     }
 

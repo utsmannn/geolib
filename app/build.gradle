@@ -57,11 +57,13 @@ dependencies {
     implementation 'com.github.utsmannn.geolib:routes:2.0.0'
     //implementation 'com.github.utsmannn.geolib:marker:2.0.0'
     implementation project(":marker-utils")
-    implementation 'com.github.utsmannn.geolib:location:2.0.0'
+    implementation project(":location")
     implementation 'com.github.utsmannn.geolib:polyline:2.0.0'
 
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'jp.wasabeef:picasso-transformations:2.4.0'
+
+    implementation 'com.airbnb.android:lottie:3.7.0'
 
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.2.0'
 

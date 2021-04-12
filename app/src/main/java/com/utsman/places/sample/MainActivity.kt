@@ -48,8 +48,12 @@ class MainActivity : AppCompatActivity() {
                         this@MainActivity intent DrawModePolyline::class.java
                     }
 
-                    findViewById<Button>(R.id.btn_marker_util).setOnClickListener {
-                        this@MainActivity intent MarkerActivity::class.java
+                    findViewById<Button>(R.id.btn_marker_bitmap).setOnClickListener {
+                        this@MainActivity intent MarkerBitmapActivity::class.java
+                    }
+
+                    findViewById<Button>(R.id.btn_marker_view).setOnClickListener {
+                        this@MainActivity intent MarkerViewActivity::class.java
                     }
                 }
 

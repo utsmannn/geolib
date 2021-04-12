@@ -10,30 +10,34 @@ import android.content.Context
 import android.content.res.Resources
 import android.graphics.*
 import android.location.Location
-import android.os.Build
 import android.os.Handler
 import android.os.SystemClock
-import android.view.PixelCopy
+import android.util.Log
 import android.view.View
 import android.view.View.MeasureSpec.EXACTLY
 import android.view.View.MeasureSpec.makeMeasureSpec
-import android.view.Window
 import android.view.animation.LinearInterpolator
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
-import androidx.core.view.drawToBitmap
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
-import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlin.coroutines.resume
+import com.utsman.places.marker.adapter.MarkerBitmapAdapter
+import com.utsman.places.marker.data.MarkerView
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin
 
 
 fun Location.toLatLng() = LatLng(latitude, longitude)
+fun LatLng.toLocation() = Location("").apply {
+    latitude = this@toLocation.latitude
+    longitude = this@toLocation.longitude
+}
+
+internal fun logd(message: String) = Log.d("SAMPLE", message)
 
 val Int.dp: Int
     get() = (this * Resources.getSystem().displayMetrics.density).toInt()
@@ -54,6 +58,34 @@ internal fun rotateMarker(marker: Marker, toRotation: Float, rotate: Boolean? = 
                 val rot = t * toRotation + (1 - t) * startRotation
 
                 marker.rotation = if (-rot > 180) rot / 2 else rot
+                if (t < 1.0) {
+                    handler.postDelayed(this, 16)
+                }
+            }
+        })
+    }
+}
+
+internal fun rotateMarker(marker: MarkerView, toRotation: Float, rotate: Boolean? = true) {
+    marker.view.run {
+        pivotX = width.toFloat() / 2
+        pivotY = height.toFloat()
+    }
+
+    if (rotate != null && rotate) {
+        val handler = Handler()
+        val start = SystemClock.uptimeMillis()
+        val startRotation = marker.view.rotation
+        val duration: Long = 300
+
+        handler.post(object : Runnable {
+            override fun run() {
+                val elapsed = SystemClock.uptimeMillis() - start
+                val t = LinearInterpolator().getInterpolation(elapsed.toFloat() / duration)
+
+                val rot = t * toRotation + (1 - t) * startRotation
+
+                marker.view.rotation = if (-rot > 180) rot / 2 else rot
                 if (t < 1.0) {
                     handler.postDelayed(this, 16)
                 }
@@ -88,10 +120,10 @@ fun createBitmapFromView(view: View, width: Int, height: Int): Bitmap {
     return bitmap
 }
 
-internal suspend fun createBitmapMarkerFromLayout(viewAdapter: MarkerViewAdapter): Bitmap {
-    val bitmap = createBitmapFromView(viewAdapter.createView(), 200.dp, 200.dp)
-    val maxWidth = viewAdapter.maxWidth()
-    val maxHeight = viewAdapter.maxHeight()
+internal suspend fun createBitmapMarkerFromLayout(bitmapAdapter: MarkerBitmapAdapter): Bitmap {
+    val bitmap = createBitmapFromView(bitmapAdapter.createView(), 200.dp, 200.dp)
+    val maxWidth = bitmapAdapter.maxWidth()
+    val maxHeight = bitmapAdapter.maxHeight()
     return scale(bitmap, maxWidth, maxHeight)
 }
 
@@ -153,6 +185,49 @@ internal fun moveMarkerSmoothly(marker: Marker, newLatLng: LatLng) : ValueAnimat
     }
 
     return animator
+}
+
+internal fun moveMarkerSmoothly(marker: MarkerView, googleMap: GoogleMap, newLatLng: LatLng) : ValueAnimator {
+    val animator = ValueAnimator.ofFloat(0f, 100f)
+
+    val deltaLatitude = doubleArrayOf(newLatLng.latitude - marker.position.latitude)
+    val deltaLongitude = newLatLng.longitude - marker.position.longitude
+    val prevStep = floatArrayOf(0f)
+    animator.duration = 1500
+
+    animator.addUpdateListener { animation ->
+        val deltaStep = (animation.animatedValue as Float - prevStep[0]).toDouble()
+        prevStep[0] = animation.animatedValue as Float
+
+        val latLng = LatLng(
+            marker.position.latitude + deltaLatitude[0] * deltaStep * 1.0 / 100,
+            marker.position.longitude + deltaStep * deltaLongitude * 1.0 / 100
+        )
+        val point = googleMap.getCurrentPointF(latLng)
+        marker.position = latLng
+        marker.view.moveJust(point, marker.anchorPoint)
+    }
+
+    return animator
+}
+
+internal fun moveMarkerViewSmoothly(marker: MarkerView, prevPointF: PointF, nextPointF: PointF) {
+    val animatorX = ValueAnimator.ofFloat(prevPointF.x, nextPointF.x)
+    val animatorY = ValueAnimator.ofFloat(prevPointF.y, nextPointF.y)
+
+    animatorX.addUpdateListener { animation ->
+        val value = animation.animatedValue as Float
+        marker.view.translationX = value
+    }
+
+    animatorY.addUpdateListener { animation ->
+        val value = animation.animatedValue as Float
+        marker.view.translationY = value
+    }
+
+    animatorX.start()
+    animatorY.start()
+
 }
 
 private fun computeHeading(from: LatLng, to: LatLng): Double {
