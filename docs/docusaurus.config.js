@@ -1,0 +1,84 @@
+/** @type {import('@docusaurus/types').DocusaurusConfig} */
+module.exports = {
+  title: 'Geolib',
+  tagline: 'Android helper libraries for geolocation, places, animating polyline and markering',
+  url: 'https://utsmannn.github.io',
+  baseUrl: '/',
+  onBrokenLinks: 'throw',
+  onBrokenMarkdownLinks: 'warn',
+  favicon: 'img/favicon.ico',
+  organizationName: 'utsmannn', // Usually your GitHub org/user name.
+  projectName: 'geolib', // Usually your repo name.
+  themeConfig: {
+    navbar: {
+      title: 'Geolib',
+      logo: {
+        alt: 'Geolib',
+        src: 'img/logo.svg',
+      },
+      items: [
+        {
+          href: 'https://github.com/utsmannn/geolib',
+          label: 'GitHub',
+          position: 'right',
+        },
+      ],
+    },
+    footer: {
+      style: 'dark',
+      links: [
+        {
+          title: 'Other android library',
+          items: [
+            {
+              label: 'Painless Paging Library',
+              href: 'https://github.com/utsmannn/painless-paging-library',
+            },
+            {
+              label: 'Networkism',
+              href: 'https://github.com/utsmannn/networkism',
+            },
+            {
+              label: 'And more on github...',
+              href: 'https://github.com/utsmannn',
+            },
+          ],
+        },
+        {
+          title: 'Links',
+          items: [
+            {
+              label: 'GitHub',
+              href: 'https://github.com/utsmannn',
+            },
+            {
+              label: 'Linkedin',
+              href: 'https://www.linkedin.com/in/utsmannn/',
+            },
+            {
+              label: 'Youtube',
+              href: 'https://www.youtube.com/c/utsmannnkoding',
+            },
+          ],
+        },
+      ],
+      copyright: `Copyright © ${new Date().getFullYear()} Muhammad Utsman. Built with Docusaurus.`,
+    },
+  },
+  presets: [
+    [
+      '@docusaurus/preset-classic',
+      {
+        docs: {
+          sidebarPath: require.resolve('./sidebars.js'),
+          // Please change this to your repo.
+          editUrl:
+            'https://github.com/utsmannn/geolib',
+        },
+        theme: {
+          customCss: require.resolve('./src/css/custom.css'),
+        },
+      },
+    ],
+  ],
+};
