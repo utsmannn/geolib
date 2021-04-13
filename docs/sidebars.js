@@ -5,6 +5,7 @@ module.exports = {
       label: 'Overview',
       items: [
         'overview/getting-started',
+        'overview/prerequisite',
       ],
     },
     {
@@ -12,6 +13,9 @@ module.exports = {
       label: 'Artifacts Library',
       items: [
         'artifacts/location-lib',
+        'artifacts/routes-lib',
+        'artifacts/polyline-help',
+        'artifacts/marker-lib',
       ],
     },
   ],

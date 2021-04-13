@@ -5,11 +5,13 @@ title: Location Library
 With location library you can access current location, observer current location and get place or address of current and specified location (search).
 
 ## Download
+![](https://jitpack.io/v/utsmannn/geolib.svg)
 ```jsx
 implementation 'com.github.utsmannn.geolib:location:{last_version}'
 ```
+---
 
-## Prerequisite
+## Prerequisite class
 You need `FusedLocationProviderClient`
 ```jsx
 val fusedLocation = LocationServices.getFusedLocationProviderClient(context)
@@ -19,6 +21,7 @@ val fusedLocation = LocationServices.getFusedLocationProviderClient(context)
 ```jsx
 val placesLocation = fusedLocation.createPlacesLocation(HERE_API_KEY)
 ```
+---
 
 ## Observer location
 This function build under `CoroutineScope` with return `Flow`
@@ -49,6 +52,7 @@ placesLocation.getComparisonLocation()
     }
 }
 ```
+---
 
 ### Place Data
 |Param|type|desc|
@@ -72,3 +76,4 @@ Search place is searching nearby place on location by query with data result `Li
 ```jsx
 val data = placesLocation.searchPlaces(location, query)
 ```
+---

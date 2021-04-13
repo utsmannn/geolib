@@ -19,7 +19,7 @@ const features = [
     title: 'Problem Solution',
     description: (
       <>
-        This libraries is problem solution for code pain of location watcher, polyline animation and search location (powered by HERE Maps API).
+        This libraries is problem solution for code pain of location watcher, search place location, polyline animation and marker animation (powered by HERE Maps API).
       </>
     ),
   },
@@ -66,8 +66,21 @@ export default function Home() {
                 styles.getStarted,
               )}
               to={useBaseUrl('docs/')}>
-              Get Started v2.1.3
+              Get Started
             </Link>
+          </div>
+          <div>
+            <br></br>
+            <a href="https://jitpack.io/#utsmannn/geolib">
+              <img src="https://jitpack.io/v/utsmannn/geolib.svg"></img> &nbsp;
+            </a>
+
+            <a href="https://github.com/utsmannn/geolib">
+              <img src="https://img.shields.io/github/forks/utsmannn/geolib.svg?style=social"></img> &nbsp;
+            </a>
+            <a href="https://github.com/utsmannn/geolib">
+              <img src="https://img.shields.io/github/stars/utsmannn/geolib.svg?style=social"></img>
+            </a>
           </div>
         </div>
       </header>

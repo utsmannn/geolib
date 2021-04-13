@@ -10,12 +10,12 @@ module.exports = {
   organizationName: 'utsmannn', // Usually your GitHub org/user name.
   projectName: 'geolib', // Usually your repo name.
   themeConfig: {
+    colorMode: {
+      defaultMode: 'dark',
+      disableSwitch: true,
+    },
     navbar: {
       title: 'Geolib',
-      logo: {
-        alt: 'Geolib',
-        src: 'img/logo.svg',
-      },
       items: [
         {
           href: 'https://github.com/utsmannn/geolib/releases',
@@ -33,7 +33,7 @@ module.exports = {
       style: 'dark',
       links: [
         {
-          title: 'Other android library',
+          title: 'Other Android Library',
           items: [
             {
               label: 'Painless Paging Library',
@@ -50,7 +50,7 @@ module.exports = {
           ],
         },
         {
-          title: 'Links',
+          title: 'Socials',
           items: [
             {
               label: 'GitHub',
@@ -66,6 +66,15 @@ module.exports = {
             },
           ],
         },
+        {
+          title: 'Business Contact',
+          items: [
+            {
+              label: 'Email',
+              href: 'mailto:utsmannn@gmail.com',
+            },
+          ],
+        }
       ],
       copyright: `Copyright © ${new Date().getFullYear()} Muhammad Utsman. Built with Docusaurus.`,
     },
@@ -78,7 +87,7 @@ module.exports = {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
           editUrl:
-            'https://github.com/utsmannn/geolib/docs',
+            'https://github.com/utsmannn/geolib/blob/master/docs/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
