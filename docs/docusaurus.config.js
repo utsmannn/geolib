@@ -3,7 +3,7 @@ module.exports = {
   title: 'Geolib',
   tagline: 'Android helper libraries for geolocation, places, animating polyline and markering',
   url: 'https://utsmannn.github.io',
-  baseUrl: '/',
+  baseUrl: '/geolib/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
@@ -18,8 +18,13 @@ module.exports = {
       },
       items: [
         {
+          href: 'https://github.com/utsmannn/geolib/releases',
+          label: 'v2.1.3',
+          position: 'right',
+        },
+        {
           href: 'https://github.com/utsmannn/geolib',
-          label: 'GitHub',
+          label: 'GitHub Repository',
           position: 'right',
         },
       ],
@@ -73,7 +78,7 @@ module.exports = {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
           editUrl:
-            'https://github.com/utsmannn/geolib',
+            'https://github.com/utsmannn/geolib/docs',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),

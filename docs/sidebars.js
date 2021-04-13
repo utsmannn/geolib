@@ -2,20 +2,16 @@ module.exports = {
   docs: [
     {
       type: 'category',
-      label: 'Docusaurus Tutorial',
+      label: 'Overview',
       items: [
-        'getting-started',
-        'create-a-page',
-        'create-a-document',
+        'overview/getting-started',
       ],
     },
     {
       type: 'category',
-      label: 'Docusaurus Tutorial 2',
+      label: 'Artifacts Library',
       items: [
-        'installation',
-        'markdown-features',
-        'thank-you',
+        'artifacts/location-lib',
       ],
     },
   ],

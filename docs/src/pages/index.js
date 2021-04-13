@@ -9,7 +9,6 @@ import styles from './styles.module.css';
 const features = [
   {
     title: 'Easy to Use',
-    imageUrl: 'img/undraw_docusaurus_mountain.svg',
     description: (
       <>
         Easy to implementation with Google Maps SDK, Kotlin Coroutine and Modern Android Architecture.
@@ -18,7 +17,6 @@ const features = [
   },
   {
     title: 'Problem Solution',
-    imageUrl: 'img/undraw_docusaurus_tree.svg',
     description: (
       <>
         This libraries is problem solution for code pain of location watcher, polyline animation and search location (powered by HERE Maps API).
@@ -27,7 +25,6 @@ const features = [
   },
   {
     title: 'Advanced Marker Setup',
-    imageUrl: 'img/undraw_docusaurus_react.svg',
     description: (
       <>
         Enable creating marker with any view!
@@ -69,7 +66,7 @@ export default function Home() {
                 styles.getStarted,
               )}
               to={useBaseUrl('docs/')}>
-              Get Started
+              Get Started v2.1.3
             </Link>
           </div>
         </div>
