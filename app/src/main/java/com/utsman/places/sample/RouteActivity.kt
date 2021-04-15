@@ -78,7 +78,7 @@ class RouteActivity : AppCompatActivity() {
                         transportMode = TransportMode.CAR
                     }
 
-                    /*result.doOnSuccess {
+                    result.doOnSuccess {
                         logd(it.toString())
                         val geometriesRoute = it.geometries
 
@@ -101,7 +101,7 @@ class RouteActivity : AppCompatActivity() {
 
                     result.doOnFailure {
                         toast(it.message ?: "Error")
-                    }*/
+                    }
                 }
             }
         }

@@ -5,6 +5,7 @@
 
 package com.utsman.places.routes
 
+import com.utsman.places.routes.data.Mapper
 import com.utsman.places.routes.data.RouteData
 import com.utsman.places.routes.data.RouteRequest
 import com.utsman.places.routes.network.HereService
@@ -20,7 +21,7 @@ internal class PlacesRouteImpl(
             .create(HereService::class.java)
     }
 
-    override suspend fun searchRoute(request: RouteRequest.() -> Unit): RouteData? {
+    override suspend fun searchRoute(request: RouteRequest.() -> Unit): ResultState<RouteData> {
         val routeRequest = RouteRequest().apply(request)
 
         val errorMessage = "Search route error!"
@@ -35,14 +36,6 @@ internal class PlacesRouteImpl(
                 )
             }
 
-            /*val dataPolyline = if (hereDataPolyline.mapToSuccess() != null) {
-                hereDataPolyline.mapToSuccess()
-            } else {
-                null
-            }*/
-
-            //logd("data --> ${dataPolyline}")
-
             val resultLength = fetch(errorMessage) {
                 provideService().getRoutes(
                     transportMode = routeRequest.transportMode?.getString()!!,
@@ -53,34 +46,19 @@ internal class PlacesRouteImpl(
                 )
             }
 
-            /*val data = RouteData(
-                encodedPolyline = dataPolyline ?: "",
-                length = dataLength ?: 0f
-            )*/
-
             if (resultPolyline is ResultState.Success && resultLength is ResultState.Success) {
-                val dataPolyline = resultPolyline.data
+                val dataPolyline = Mapper.mapPolylineAlgorithm(resultPolyline.data.getPolyline())
                 val dataLength = resultLength.data
                 val data = RouteData(
-                    encodedPolyline = dataPolyline.getPolyline() ?: "",
+                    encodedPolyline = dataPolyline ?: "",
                     length = dataLength.getLength() ?: 0f
                 )
-                //ResultState.Success(data)
-
-                data
-            } else {
-               null
-            }
-
-            /*if (data.encodedPolyline != "") {
                 ResultState.Success(data)
             } else {
-                val throwable = hereDataPolyline.mapToException() ?: hereDataLength.mapToException() ?: GeolibException("")
-
-            }*/
-
+                ResultState.Failure(GeolibException(resultPolyline.mapToException()?.message ?: errorMessage))
+            }
         } else {
-            null
+            ResultState.Failure(GeolibException(errorMessage))
         }
     }
 

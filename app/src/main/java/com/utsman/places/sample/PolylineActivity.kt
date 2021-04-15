@@ -72,19 +72,7 @@ class PolylineActivity : AppCompatActivity() {
                         transportMode = TransportMode.BIKE
                     }
 
-                    if (result != null) {
-                        if (!poly1HasRender) {
-                            point1 = polylineAnimator.startAnimate(result.geometries) {
-                                stackAnimationMode = StackAnimationMode.BlockStackAnimation
-                            }
-                            poly1HasRender = true
-                        } else {
-                            point1.remove()
-                            poly1HasRender = false
-                        }
-                    }
-
-                    /*result.doOnSuccess { first ->
+                    result.doOnSuccess { first ->
                         if (!poly1HasRender) {
                             point1 = polylineAnimator.startAnimate(first.geometries) {
                                 stackAnimationMode = StackAnimationMode.BlockStackAnimation
@@ -98,7 +86,7 @@ class PolylineActivity : AppCompatActivity() {
 
                     result.doOnFailure {
                         it.printStackTrace()
-                    }*/
+                    }
                 }
             }
 
@@ -110,42 +98,7 @@ class PolylineActivity : AppCompatActivity() {
                         transportMode = TransportMode.BIKE
                     }
 
-                    if (result != null) {
-
-
-                        if (!poly2HasRender) {
-                            point2 = polylineAnimator.startAnimate(result.geometries) {
-                                stackAnimationMode = StackAnimationMode.WaitStackEndAnimation
-                                enableBorder(true, Color.RED)
-                                withPrimaryPolyline {
-                                    width(8f)
-                                    color(Color.BLUE)
-                                }
-                                withAccentPolyline {
-                                    width(8f)
-                                    color(Color.GREEN)
-                                }
-                                doOnStartAnimation {
-                                    toast("start...")
-                                    googleMap.addMarker {
-                                        this.position(it)
-                                    }
-                                }
-                                doOnEndAnimation {
-                                    googleMap.addMarker {
-                                        this.position(it)
-                                    }
-                                    toast("end...")
-                                }
-                            }
-                            poly2HasRender = true
-                        } else {
-                            point2.remove()
-                            poly2HasRender = false
-                        }
-                    }
-
-                    /*result.doOnSuccess { second ->
+                    result.doOnSuccess { second ->
                         if (!poly2HasRender) {
                             point2 = polylineAnimator.startAnimate(second.geometries) {
                                 stackAnimationMode = StackAnimationMode.WaitStackEndAnimation
@@ -180,7 +133,7 @@ class PolylineActivity : AppCompatActivity() {
 
                     result.doOnFailure {
                         it.printStackTrace()
-                    }*/
+                    }
                 }
             }
 
@@ -192,34 +145,7 @@ class PolylineActivity : AppCompatActivity() {
                         transportMode = TransportMode.BIKE
                     }
 
-                    if (result != null) {
-                        if (!poly3HasRender) {
-                            markerPoly3 = googleMap.addMarker {
-                                position(thirdPoint1.toLatLng())
-                            }
-
-                            point3 = polylineAnimator.startAnimate(result.geometries) {
-                                duration = 10000
-                                stackAnimationMode = StackAnimationMode.OffStackAnimation
-                                withPrimaryPolyline {
-                                    width(8f)
-                                    color(Color.GREEN)
-                                }
-                                enableBorder(true, Color.RED, 5)
-                                doOnUpdateAnimation { latLng, _ ->
-                                    markerPoly3?.position = latLng
-                                }
-                            }
-                            poly3HasRender = true
-                        } else {
-                            point3.remove()
-                            markerPoly3?.remove()
-                            markerPoly3 = null
-                            poly3HasRender = false
-                        }
-                    }
-
-                    /*result.doOnSuccess { third ->
+                    result.doOnSuccess { third ->
                         if (!poly3HasRender) {
                             markerPoly3 = googleMap.addMarker {
                                 position(thirdPoint1.toLatLng())
@@ -248,7 +174,7 @@ class PolylineActivity : AppCompatActivity() {
 
                     result.doOnFailure {
                         it.printStackTrace()
-                    }*/
+                    }
                 }
             }
         }
