@@ -24,12 +24,7 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven {
-            url 'https://jitpack.io'
-            metadataSources {
-                artifact()
-            }
-        }
+        maven { url 'https://jitpack.io' }
     }
 }
 
