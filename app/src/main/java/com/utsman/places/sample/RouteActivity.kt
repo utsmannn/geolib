@@ -78,9 +78,9 @@ class RouteActivity : AppCompatActivity() {
                         transportMode = TransportMode.CAR
                     }
 
-                    result.doOnSuccess {
+                    /*result.doOnSuccess {
                         logd(it.toString())
-                        /*val geometriesRoute = it.geometries
+                        val geometriesRoute = it.geometries
 
                         val pattern = listOf(Dot(), Gap(10f))
                         val polylineOptions = PolylineOptions()
@@ -90,18 +90,18 @@ class RouteActivity : AppCompatActivity() {
                         googleMap.addPolyline(polylineOptions).withAnimate(googleMap, polylineOptions) {
                             stackAnimationMode = StackAnimationMode.BlockStackAnimation
                             polylineDrawMode = PolylineDrawMode.Curved
-                            *//*withPrimaryPolyline {
+                            withPrimaryPolyline {
                                 startCap(RoundCap())
                                 endCap(RoundCap())
                                 color(Color.GREEN)
-                            }*//*
+                            }
                         }
-                        btnGetRoute.isEnabled = true*/
+                        btnGetRoute.isEnabled = true
                     }
 
                     result.doOnFailure {
                         toast(it.message ?: "Error")
-                    }
+                    }*/
                 }
             }
         }

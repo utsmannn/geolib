@@ -69,7 +69,7 @@ class DrawModePolyline : AppCompatActivity() {
                         transportMode = TransportMode.BIKE
                     }
 
-                    result.doOnSuccess { first ->
+                    /*result.doOnSuccess { first ->
                         val options = PolylineOptions()
                             .addAll(first.geometries)
                             .color(Color.BLUE)
@@ -79,10 +79,20 @@ class DrawModePolyline : AppCompatActivity() {
                         googleMap.addPolyline(options).withAnimate(polylineAnimator) {
                             polylineDrawMode = PolylineDrawMode.Normal
                         }
-                    }
+                    }*/
 
-                    result.doOnFailure {
+                    /*result.doOnFailure {
                         it.printStackTrace()
+                    }*/
+
+                    val options = PolylineOptions()
+                        .addAll(result?.geometries)
+                        .color(Color.BLUE)
+                        .startCap(RoundCap())
+                        .endCap(RoundCap())
+
+                    googleMap.addPolyline(options).withAnimate(polylineAnimator) {
+                        polylineDrawMode = PolylineDrawMode.Normal
                     }
                 }
             }
@@ -95,7 +105,17 @@ class DrawModePolyline : AppCompatActivity() {
                         transportMode = TransportMode.BIKE
                     }
 
-                    result.doOnSuccess { second ->
+                    val options = PolylineOptions()
+                        .addAll(result?.geometries)
+                        .color(Color.RED)
+                        .startCap(RoundCap())
+                        .endCap(RoundCap())
+
+                    googleMap.addPolyline(options).withAnimate(polylineAnimator) {
+                        polylineDrawMode = PolylineDrawMode.Curved
+                    }
+
+                    /*result.doOnSuccess { second ->
                         val options = PolylineOptions()
                             .addAll(second.geometries)
                             .color(Color.RED)
@@ -109,7 +129,7 @@ class DrawModePolyline : AppCompatActivity() {
 
                     result.doOnFailure {
                         it.printStackTrace()
-                    }
+                    }*/
                 }
             }
 
@@ -121,7 +141,21 @@ class DrawModePolyline : AppCompatActivity() {
                         transportMode = TransportMode.BIKE
                     }
 
-                    result.doOnSuccess { third ->
+                    lifecycleScope.launch {
+                        delay(4000)
+                        val options = PolylineOptions()
+                            .addAll(result?.geometries)
+                            .color(Color.GRAY)
+                            .startCap(RoundCap())
+                            .endCap(RoundCap())
+
+                        googleMap.addPolyline(options).withAnimate(polylineAnimator) {
+                            stackAnimationMode = StackAnimationMode.BlockStackAnimation
+                            polylineDrawMode = PolylineDrawMode.Lank
+                        }
+                    }
+
+                    /*result.doOnSuccess { third ->
                         logd("data is ----> $third")
                         toast("loaded..")
 
@@ -142,7 +176,7 @@ class DrawModePolyline : AppCompatActivity() {
 
                     result.doOnFailure {
                         it.printStackTrace()
-                    }
+                    }*/
                 }
             }
 
