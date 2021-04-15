@@ -23,6 +23,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.location.LocationServices
 import com.utsman.places.location.createPlacesLocation
 import com.utsman.places.location.data.PlaceData
+import com.utsman.places.utils.doOnFailure
+import com.utsman.places.utils.doOnSuccess
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -94,6 +96,7 @@ class SearchActivity : AppCompatActivity() {
                 }
 
                 override fun afterTextChanged(s: Editable?) {
+
                 }
             })
 
@@ -102,9 +105,15 @@ class SearchActivity : AppCompatActivity() {
 
     private fun searchPlace(query: String, currentLocation: Location) {
         MainScope().launch {
-            val data = placesLocation.searchPlaces(currentLocation, query)
-            searchAdapter.items = data
-            searchAdapter.notifyDataSetChanged()
+            val result = placesLocation.searchPlaces(currentLocation, query)
+            result.doOnSuccess {
+                val data = it
+                searchAdapter.items = data
+                searchAdapter.notifyDataSetChanged()
+            }
+            result.doOnFailure {
+                toast("failure -> ${it.message}")
+            }
         }
     }
 }

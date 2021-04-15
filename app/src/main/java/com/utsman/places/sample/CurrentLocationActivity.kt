@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.location.LocationServices
 import com.utsman.places.location.createPlacesLocation
+import com.utsman.places.utils.doOnFailure
+import com.utsman.places.utils.doOnSuccess
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -31,13 +33,16 @@ class CurrentLocationActivity : AppCompatActivity() {
 
         btnGetCurrentLocation.setOnClickListener {
             lifecycleScope.launch {
-                try {
-                    val currentLocation = placesLocation.getLocationFlow().first()
-                    txtResult.text = "${currentLocation.longitude},${currentLocation.longitude}"
-                    val currentPlace = placesLocation.getPlacesLocation(currentLocation).first()
+                val currentLocation = placesLocation.getLocationFlow().first()
+                txtResult.text = "${currentLocation.longitude},${currentLocation.longitude}"
+                val result = placesLocation.getPlacesLocation(currentLocation)
+                result.doOnSuccess {
+                    val currentPlace = it.first()
                     txtResult.append("\n${currentPlace.title} - ${currentPlace.address}")
-                } catch (e: Throwable) {
-                    e.printStackTrace()
+                }
+                result.doOnFailure {
+                    toast("Failure -> ${it.message}")
+                    it.printStackTrace()
                 }
             }
         }

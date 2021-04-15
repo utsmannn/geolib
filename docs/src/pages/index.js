@@ -74,7 +74,11 @@ export default function Home() {
             <a href="https://jitpack.io/#utsmannn/geolib">
               <img src="https://jitpack.io/v/utsmannn/geolib.svg"></img> &nbsp;
             </a>
+            <a href="https://jitpack.io/#utsmannn/geolib">
+              <img src="https://img.shields.io/badge/Android%20SDK-21-green"></img>
+            </a>
 
+            <br></br>
             <a href="https://github.com/utsmannn/geolib">
               <img src="https://img.shields.io/github/forks/utsmannn/geolib.svg?style=social"></img> &nbsp;
             </a>

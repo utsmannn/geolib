@@ -9,10 +9,7 @@ import com.utsman.places.routes.data.Mapper
 import com.utsman.places.routes.data.RouteData
 import com.utsman.places.routes.data.RouteRequest
 import com.utsman.places.routes.network.HereService
-import com.utsman.places.utils.GeolibException
-import com.utsman.places.utils.Network
-import com.utsman.places.utils.fetch
-import com.utsman.places.utils.toStringService
+import com.utsman.places.utils.*
 
 internal class PlacesRouteImpl(
     private val hereMapsApi: String,
@@ -24,11 +21,12 @@ internal class PlacesRouteImpl(
             .create(HereService::class.java)
     }
 
-    override suspend fun searchRoute(request: RouteRequest.() -> Unit): RouteData {
+    override suspend fun searchRoute(request: RouteRequest.() -> Unit): ResultState<RouteData> {
         val routeRequest = RouteRequest().apply(request)
 
+        val errorMessage = "Search route error!"
         return if (routeRequest.isNullSafe()) {
-            val hereDataPolyline = fetch {
+            val resultPolyline = fetch(errorMessage) {
                 provideService().getRoutes(
                     transportMode = routeRequest.transportMode?.getString()!!,
                     origin = routeRequest.startLocation?.toStringService()!!,
@@ -36,11 +34,9 @@ internal class PlacesRouteImpl(
                     returnResult = ConstantValues.ReturnResult.POLYLINE,
                     apiKey = hereMapsApi
                 )
-            }?.getPolyline()
+            }
 
-            val dataPolyline = Mapper.mapPolylineAlgorithm(hereDataPolyline)
-
-            val dataLength = fetch {
+            val resultLength = fetch(errorMessage) {
                 provideService().getRoutes(
                     transportMode = routeRequest.transportMode?.getString()!!,
                     origin = routeRequest.startLocation?.toStringService()!!,
@@ -48,14 +44,21 @@ internal class PlacesRouteImpl(
                     returnResult = ConstantValues.ReturnResult.LENGTH,
                     apiKey = hereMapsApi
                 )
-            }?.getLength()
+            }
 
-            RouteData(
-                encodedPolyline = dataPolyline ?: "",
-                length = dataLength ?: 0f
-            )
+            if (resultPolyline is ResultState.Success && resultLength is ResultState.Success) {
+                val dataPolyline = Mapper.mapPolylineAlgorithm(resultPolyline.data.getPolyline())
+                val dataLength = resultLength.data
+                val data = RouteData(
+                    encodedPolyline = dataPolyline ?: "",
+                    length = dataLength.getLength() ?: 0f
+                )
+                ResultState.Success(data)
+            } else {
+                ResultState.Failure(GeolibException(resultPolyline.mapToException()?.message ?: errorMessage))
+            }
         } else {
-            throw GeolibException()
+            ResultState.Failure(GeolibException(errorMessage))
         }
     }
 

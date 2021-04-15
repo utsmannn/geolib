@@ -1,5 +1,5 @@
 ---
-title: Marker Library
+title: Marker
 ---
 Parse layout to original marker or you can create any view as marker. I added the layer for create any view as marker instead original marker.
 

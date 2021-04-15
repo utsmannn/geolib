@@ -23,6 +23,9 @@ import com.utsman.places.polyline.utils.createPolylineAnimatorBuilder
 import com.utsman.places.polyline.utils.withAnimate
 import com.utsman.places.routes.createPlacesRoute
 import com.utsman.places.routes.data.TransportMode
+import com.utsman.places.utils.doOnFailure
+import com.utsman.places.utils.doOnSuccess
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class DrawModePolyline : AppCompatActivity() {
@@ -60,61 +63,87 @@ class DrawModePolyline : AppCompatActivity() {
 
             btnPoly1.setOnClickListener {
                 lifecycleScope.launch {
-                    val first = placesRoute.searchRoute {
+                    val result = placesRoute.searchRoute {
                         startLocation = firstPoint1
                         endLocation = firstPoint2
                         transportMode = TransportMode.BIKE
                     }
 
-                    val options = PolylineOptions()
-                        .addAll(first.geometries)
-                        .color(Color.BLUE)
-                        .startCap(RoundCap())
-                        .endCap(RoundCap())
+                    result.doOnSuccess { first ->
+                        val options = PolylineOptions()
+                            .addAll(first.geometries)
+                            .color(Color.BLUE)
+                            .startCap(RoundCap())
+                            .endCap(RoundCap())
 
-                    googleMap.addPolyline(options).withAnimate(polylineAnimator) {
-                        polylineDrawMode = PolylineDrawMode.Normal
+                        googleMap.addPolyline(options).withAnimate(polylineAnimator) {
+                            polylineDrawMode = PolylineDrawMode.Normal
+                        }
+                    }
+
+                    result.doOnFailure {
+                        it.printStackTrace()
                     }
                 }
             }
 
             btnPoly2.setOnClickListener {
                 lifecycleScope.launch {
-                    val second = placesRoute.searchRoute {
+                    val result = placesRoute.searchRoute {
                         startLocation = secondPoint1
                         endLocation = uki
                         transportMode = TransportMode.BIKE
                     }
 
-                    val options = PolylineOptions()
-                        .addAll(second.geometries)
-                        .color(Color.RED)
-                        .startCap(RoundCap())
-                        .endCap(RoundCap())
+                    result.doOnSuccess { second ->
+                        val options = PolylineOptions()
+                            .addAll(second.geometries)
+                            .color(Color.RED)
+                            .startCap(RoundCap())
+                            .endCap(RoundCap())
 
-                    googleMap.addPolyline(options).withAnimate(polylineAnimator) {
-                        polylineDrawMode = PolylineDrawMode.Curved
+                        googleMap.addPolyline(options).withAnimate(polylineAnimator) {
+                            polylineDrawMode = PolylineDrawMode.Curved
+                        }
+                    }
+
+                    result.doOnFailure {
+                        it.printStackTrace()
                     }
                 }
             }
 
             btnPoly3.setOnClickListener {
                 lifecycleScope.launch {
-                    val third = placesRoute.searchRoute {
+                    val result = placesRoute.searchRoute {
                         startLocation = thirdPoint1
                         endLocation = secondPoint2
                         transportMode = TransportMode.BIKE
                     }
 
-                    val options = PolylineOptions()
-                        .addAll(third.geometries)
-                        .color(Color.GRAY)
-                        .startCap(RoundCap())
-                        .endCap(RoundCap())
 
-                    googleMap.addPolyline(options).withAnimate(polylineAnimator) {
-                        stackAnimationMode = StackAnimationMode.BlockStackAnimation
-                        polylineDrawMode = PolylineDrawMode.Lank
+                    result.doOnSuccess { third ->
+                        logd("data is ----> $third")
+                        toast("loaded..")
+
+                        lifecycleScope.launch {
+                            delay(4000)
+                            val options = PolylineOptions()
+                                .addAll(third.geometries)
+                                .color(Color.GRAY)
+                                .startCap(RoundCap())
+                                .endCap(RoundCap())
+
+                            googleMap.addPolyline(options).withAnimate(polylineAnimator) {
+                                stackAnimationMode = StackAnimationMode.BlockStackAnimation
+                                polylineDrawMode = PolylineDrawMode.Lank
+                            }
+                        }
+                    }
+
+                    result.doOnFailure {
+                        toast(it.localizedMessage ?: "hah")
+                        it.printStackTrace()
                     }
                 }
             }

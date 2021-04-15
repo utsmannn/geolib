@@ -24,6 +24,8 @@ import com.utsman.places.polyline.utils.withAnimate
 import com.utsman.places.polyline.utils.withPrimaryPolyline
 import com.utsman.places.routes.createPlacesRoute
 import com.utsman.places.routes.data.TransportMode
+import com.utsman.places.utils.doOnFailure
+import com.utsman.places.utils.doOnSuccess
 import kotlinx.coroutines.launch
 
 class RouteActivity : AppCompatActivity() {
@@ -70,29 +72,36 @@ class RouteActivity : AppCompatActivity() {
             btnGetRoute.setOnClickListener {
                 btnGetRoute.isEnabled = false
                 lifecycleScope.launch {
-                    val routeData = placeRoute.searchRoute {
+                    val result = placeRoute.searchRoute {
                         startLocation = cakung
                         endLocation = buaran
                         transportMode = TransportMode.CAR
                     }
 
-                    val geometriesRoute = routeData.geometries
+                    result.doOnSuccess {
+                        logd(it.toString())
+                        val geometriesRoute = it.geometries
 
-                    val pattern = listOf(Dot(), Gap(10f))
-                    val polylineOptions = PolylineOptions()
-                        .addAll(geometriesRoute)
-                        .color(Color.BLUE)
+                        val pattern = listOf(Dot(), Gap(10f))
+                        val polylineOptions = PolylineOptions()
+                            .addAll(geometriesRoute)
+                            .color(Color.BLUE)
 
-                    googleMap.addPolyline(polylineOptions).withAnimate(googleMap, polylineOptions) {
-                        stackAnimationMode = StackAnimationMode.BlockStackAnimation
-                        polylineDrawMode = PolylineDrawMode.Curved
-                        /*withPrimaryPolyline {
-                            startCap(RoundCap())
-                            endCap(RoundCap())
-                            color(Color.GREEN)
-                        }*/
+                        googleMap.addPolyline(polylineOptions).withAnimate(googleMap, polylineOptions) {
+                            stackAnimationMode = StackAnimationMode.BlockStackAnimation
+                            polylineDrawMode = PolylineDrawMode.Curved
+                            withPrimaryPolyline {
+                                startCap(RoundCap())
+                                endCap(RoundCap())
+                                color(Color.GREEN)
+                            }
+                        }
+                        btnGetRoute.isEnabled = true
                     }
-                    btnGetRoute.isEnabled = true
+
+                    result.doOnFailure {
+                        toast(it.message ?: "Error")
+                    }
                 }
             }
         }
