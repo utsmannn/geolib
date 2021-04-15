@@ -26,5 +26,5 @@ apply from: 'https://raw.githubusercontent.com/utsmannn/gradle-jcenter/master/in
 dependencies {
     // another dependencies
 
-    implementation project(":utils")
+    implementation 'com.github.utsmannn.geolib:core:2.2.1@aar'
 }

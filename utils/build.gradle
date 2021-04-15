@@ -31,7 +31,7 @@ android {
         minSdkVersion rootProject.ext.minSdk
         targetSdkVersion rootProject.ext.targetSdk
         versionCode rootProject.ext.versionCode
-        versionName '2.2.1'
+        versionName '2.2.4'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
