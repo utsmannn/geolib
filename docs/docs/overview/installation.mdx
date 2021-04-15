@@ -1,0 +1,87 @@
+---
+title: Installation
+---
+
+This repository deploy with Jitpack. Required Google Play Services, Here Maps REST Api and Kotlin Coroutine.
+
+## Prequisite
+### Dependencies
+```jsx
+// Kotlin coroutine
+implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2-native-mt'
+
+// Google maps if needed
+implementation 'com.google.android.gms:play-services-maps:17.0.0'
+implementation 'com.google.maps.android:android-maps-utils:0.5'
+implementation 'com.google.maps.android:maps-ktx:2.1.1'
+
+// Google play location
+implementation 'com.google.android.gms:play-services-location:17.1.0'
+```
+
+### Jitpack Repository
+```jsx
+allprojects {
+    repositories {
+
+        // add this url
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+
+### Here maps API Key
+You need HERE Api, open https://developer.here.com/. Create new account or login and create REST api key.
+
+---
+
+## Download
+
+![](https://jitpack.io/v/utsmannn/geolib.svg)
+
+````mdx-code-block
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+  defaultValue="location"
+  values={[
+    { label: 'Location', value: 'location', },
+    { label: 'Routes', value: 'routes', },
+    { label: 'Polyline', value: 'polyline', },
+    { label: 'Marker', value: 'marker', },
+  ]
+}>
+
+<TabItem value="location">
+
+```groovy
+implementation 'com.github.utsmannn.geolib:location:{last_version}'
+```
+
+</TabItem>
+<TabItem value="routes">
+
+```groovy
+implementation 'com.github.utsmannn.geolib:routes:{last_version}'
+```
+
+</TabItem>
+<TabItem value="polyline">
+
+```groovy
+implementation 'com.github.utsmannn.geolib:polyline:{last_version}'
+```
+
+</TabItem>
+<TabItem value="marker">
+
+```groovy
+implementation 'com.github.utsmannn.geolib:marker:{last_version}'
+```
+
+</TabItem>
+</Tabs>
+
+````
+---

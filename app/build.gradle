@@ -54,10 +54,11 @@ dependencies {
     implementation 'com.utsman.geolib:polyline:1.4.0'
     implementation 'com.utsman.geolib:routes:1.4.0'*/
 
-    implementation 'com.github.utsmannn.geolib:location:2.1.3'
-    implementation 'com.github.utsmannn.geolib:routes:2.1.3'
-    implementation 'com.github.utsmannn.geolib:polyline:2.1.3'
-    implementation 'com.github.utsmannn.geolib:marker:2.1.3'
+    implementation project(":utils")
+    implementation project(":location")
+    implementation project(":routes")
+    implementation project(":polyline-utils")
+    implementation project(":marker-utils")
 
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'jp.wasabeef:picasso-transformations:2.4.0'

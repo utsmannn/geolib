@@ -5,7 +5,7 @@ module.exports = {
       label: 'Overview',
       items: [
         'overview/getting-started',
-        'overview/prerequisite',
+        'overview/installation',
       ],
     },
     {

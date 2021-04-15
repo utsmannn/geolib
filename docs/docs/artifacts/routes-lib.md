@@ -1,5 +1,5 @@
 ---
-title: Routes Library
+title: Routes
 ---
 You able to search route between two location.
 

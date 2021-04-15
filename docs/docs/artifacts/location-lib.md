@@ -1,31 +1,31 @@
 ---
-title: Location Library
+title: Location
 ---
 
 With location library you can access current location, observer current location and get place or address of current and specified location (search).
 
 ## Download
 ![](https://jitpack.io/v/utsmannn/geolib.svg)
-```jsx
+```kotlin
 implementation 'com.github.utsmannn.geolib:location:{last_version}'
 ```
 ---
 
 ## Prerequisite class
 You need `FusedLocationProviderClient`
-```jsx
+```kotlin
 val fusedLocation = LocationServices.getFusedLocationProviderClient(context)
 ```
 
 ## Create `PlaceLocation`
-```jsx
+```kotlin
 val placesLocation = fusedLocation.createPlacesLocation(HERE_API_KEY)
 ```
 ---
 
 ## Observer location
 This function build under `CoroutineScope` with return `Flow`
-```jsx
+```kotlin
 MainScope().launch {
     // start observer location
     placesLocation.getLocationFlow()
@@ -36,14 +36,14 @@ MainScope().launch {
 ```
 
 ## Get current location 
-```jsx
+```kotlin
 MainScope().launch {
     val location = placesLocation.getLocationFlow().first()
 }
 ```
 
 ## Get comparator location (prev and current)
-```jsx
+```kotlin
 MainScope().launch {
 placesLocation.getComparisonLocation()
     .collect { comparisonLocation ->
@@ -67,13 +67,13 @@ placesLocation.getComparisonLocation()
 |`category`|`String` nullable |Category of place|
 
 ## Get place data from location
-```jsx
+```kotlin
 val places = placesLocation.getPlacesLocation(location)
 ```
 
 ## Search nearby place
 Search place is searching nearby place on location by query with data result `List<PlaceData>`
-```jsx
+```kotlin
 val data = placesLocation.searchPlaces(location, query)
 ```
 ---

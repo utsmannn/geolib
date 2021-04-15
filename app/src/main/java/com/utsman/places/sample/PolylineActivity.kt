@@ -21,6 +21,8 @@ import com.utsman.places.polyline.data.StackAnimationMode
 import com.utsman.places.polyline.utils.*
 import com.utsman.places.routes.*
 import com.utsman.places.routes.data.TransportMode
+import com.utsman.places.utils.doOnFailure
+import com.utsman.places.utils.doOnSuccess
 import kotlinx.coroutines.launch
 
 class PolylineActivity : AppCompatActivity() {
@@ -64,96 +66,114 @@ class PolylineActivity : AppCompatActivity() {
             btnPoly1.setOnClickListener {
                 lifecycleScope.launch {
 
-                    val first = placesRoute.searchRoute {
+                    val result = placesRoute.searchRoute {
                         startLocation = firstPoint1
                         endLocation = firstPoint2
                         transportMode = TransportMode.BIKE
                     }
 
-                    if (!poly1HasRender) {
-                        point1 = polylineAnimator.startAnimate(first.geometries) {
-                            stackAnimationMode = StackAnimationMode.BlockStackAnimation
+                    result.doOnSuccess { first ->
+                        if (!poly1HasRender) {
+                            point1 = polylineAnimator.startAnimate(first.geometries) {
+                                stackAnimationMode = StackAnimationMode.BlockStackAnimation
+                            }
+                            poly1HasRender = true
+                        } else {
+                            point1.remove()
+                            poly1HasRender = false
                         }
-                        poly1HasRender = true
-                    } else {
-                        point1.remove()
-                        poly1HasRender = false
+                    }
+
+                    result.doOnFailure {
+                        it.printStackTrace()
                     }
                 }
             }
 
             btnPoly2.setOnClickListener {
                 lifecycleScope.launch {
-                    val second = placesRoute.searchRoute {
+                    val result = placesRoute.searchRoute {
                         startLocation = secondPoint1
                         endLocation = secondPoint2
                         transportMode = TransportMode.BIKE
                     }
 
-                    if (!poly2HasRender) {
-                        point2 = polylineAnimator.startAnimate(second.geometries) {
-                            stackAnimationMode = StackAnimationMode.WaitStackEndAnimation
-                            enableBorder(true, Color.RED)
-                            withPrimaryPolyline {
-                                width(8f)
-                                color(Color.BLUE)
-                            }
-                            withAccentPolyline {
-                                width(8f)
-                                color(Color.GREEN)
-                            }
-                            doOnStartAnimation {
-                                toast("start...")
-                                googleMap.addMarker {
-                                    this.position(it)
+                    result.doOnSuccess { second ->
+                        if (!poly2HasRender) {
+                            point2 = polylineAnimator.startAnimate(second.geometries) {
+                                stackAnimationMode = StackAnimationMode.WaitStackEndAnimation
+                                enableBorder(true, Color.RED)
+                                withPrimaryPolyline {
+                                    width(8f)
+                                    color(Color.BLUE)
+                                }
+                                withAccentPolyline {
+                                    width(8f)
+                                    color(Color.GREEN)
+                                }
+                                doOnStartAnimation {
+                                    toast("start...")
+                                    googleMap.addMarker {
+                                        this.position(it)
+                                    }
+                                }
+                                doOnEndAnimation {
+                                    googleMap.addMarker {
+                                        this.position(it)
+                                    }
+                                    toast("end...")
                                 }
                             }
-                            doOnEndAnimation {
-                                googleMap.addMarker {
-                                    this.position(it)
-                                }
-                                toast("end...")
-                            }
+                            poly2HasRender = true
+                        } else {
+                            point2.remove()
+                            poly2HasRender = false
                         }
-                        poly2HasRender = true
-                    } else {
-                        point2.remove()
-                        poly2HasRender = false
+                    }
+
+                    result.doOnFailure {
+                        it.printStackTrace()
                     }
                 }
             }
 
             btnPoly3.setOnClickListener {
                 lifecycleScope.launch {
-                    val third = placesRoute.searchRoute {
+                    val result = placesRoute.searchRoute {
                         startLocation = thirdPoint1
                         endLocation = thirdPoint2
                         transportMode = TransportMode.BIKE
                     }
 
-                    if (!poly3HasRender) {
-                        markerPoly3 = googleMap.addMarker {
-                            position(thirdPoint1.toLatLng())
-                        }
+                    result.doOnSuccess { third ->
+                        if (!poly3HasRender) {
+                            markerPoly3 = googleMap.addMarker {
+                                position(thirdPoint1.toLatLng())
+                            }
 
-                        point3 = polylineAnimator.startAnimate(third.geometries) {
-                            duration = 10000
-                            stackAnimationMode = StackAnimationMode.OffStackAnimation
-                            withPrimaryPolyline {
-                                width(8f)
-                                color(Color.GREEN)
+                            point3 = polylineAnimator.startAnimate(third.geometries) {
+                                duration = 10000
+                                stackAnimationMode = StackAnimationMode.OffStackAnimation
+                                withPrimaryPolyline {
+                                    width(8f)
+                                    color(Color.GREEN)
+                                }
+                                enableBorder(true, Color.RED, 5)
+                                doOnUpdateAnimation { latLng, _ ->
+                                    markerPoly3?.position = latLng
+                                }
                             }
-                            enableBorder(true, Color.RED, 5)
-                            doOnUpdateAnimation { latLng, _ ->
-                                markerPoly3?.position = latLng
-                            }
+                            poly3HasRender = true
+                        } else {
+                            point3.remove()
+                            markerPoly3?.remove()
+                            markerPoly3 = null
+                            poly3HasRender = false
                         }
-                        poly3HasRender = true
-                    } else {
-                        point3.remove()
-                        markerPoly3?.remove()
-                        markerPoly3 = null
-                        poly3HasRender = false
+                    }
+
+                    result.doOnFailure {
+                        it.printStackTrace()
                     }
                 }
             }

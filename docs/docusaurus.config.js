@@ -14,6 +14,9 @@ module.exports = {
       defaultMode: 'dark',
       disableSwitch: true,
     },
+    prism: {
+      additionalLanguages: ['kotlin', 'groovy', 'java'],
+    },
     navbar: {
       title: 'Geolib',
       items: [

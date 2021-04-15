@@ -1,5 +1,5 @@
 ---
-title: Polyline Helper
+title: Polyline
 ---
 You can animating the polyline with easier code. There is a feature to determine the draw of the animation.
 

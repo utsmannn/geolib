@@ -17,9 +17,7 @@ import com.utsman.places.location.data.ConstantValues
 import com.utsman.places.location.data.Mapper
 import com.utsman.places.location.data.PlaceData
 import com.utsman.places.location.network.HereService
-import com.utsman.places.utils.Network
-import com.utsman.places.utils.fetch
-import com.utsman.places.utils.toStringService
+import com.utsman.places.utils.*
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -73,14 +71,19 @@ internal class PlacesLocationImpl(
         }
     }
 
-    override suspend fun getPlacesLocation(location: Location): List<PlaceData> {
+    override suspend fun getPlacesLocation(location: Location): ResultState<List<PlaceData>> {
         val locationString = location.toStringService()
-        val data = fetch {
-            provideService().getPlaceLocation(locationString, hereMapsApi)
+        val errorMessage = "Get place failure!"
+
+        return fetch(errorMessage) {
+            val response = provideService().getPlaceLocation(locationString, hereMapsApi)
+            if (response.errorDescription != null) {
+                throw GeolibException(response.errorDescription)
+            }
+            response
+        }.mapData {
+            it.items?.map { d -> Mapper.mapToPlaceData(d) } ?: emptyList()
         }
-        return data?.items?.map {
-            Mapper.mapToPlaceData(it)
-        } ?: emptyList()
     }
 
     @SuppressLint("MissingPermission")
@@ -114,13 +117,13 @@ internal class PlacesLocationImpl(
         }
     }
 
-    override suspend fun searchPlaces(location: Location, query: String): List<PlaceData> {
+    override suspend fun searchPlaces(location: Location, query: String): ResultState<List<PlaceData>> {
         val locationString = location.toStringService()
-        val data = fetch {
+        val errorMessage = "Search place failure!"
+        return fetch(errorMessage) {
             provideService().searchPlace(locationString, query, hereMapsApi)
+        }.mapData {
+            it.items?.map { d -> Mapper.mapToPlaceData(d) } ?: emptyList()
         }
-        return data?.items?.map {
-            Mapper.mapToPlaceData(it)
-        } ?: emptyList()
     }
 }
