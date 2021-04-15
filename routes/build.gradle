@@ -32,6 +32,5 @@ apply from: 'https://raw.githubusercontent.com/utsmannn/gradle-jcenter/master/in
 dependencies {
     // another dependencies
 
-    //noinspection GradleDependency
-    implementation 'com.utsman.geolib:core:develop~result_state-87f0800fe9-1'
+    implementation project(":utils")
 }
