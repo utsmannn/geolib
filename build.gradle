@@ -24,7 +24,12 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven { url 'https://jitpack.io' }
+        maven {
+            url 'https://jitpack.io'
+            metadataSources {
+                artifact()
+            }
+        }
     }
 }
 
@@ -38,5 +43,5 @@ ext {
     minSdk = 21
     targetSdk = 29
     versionCode = 5
-    versionName = "2.2.0"
+    versionName = "2.2.1"
 }
