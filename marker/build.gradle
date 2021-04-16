@@ -1,0 +1,20 @@
+/*
+ * Created on 4/10/21 1:02 AM
+ * Copyright (c) Muhammad Utsman 2021 All rights reserved.
+ */
+
+apply plugin: 'com.android.library'
+apply from: "$rootDir/dependencies/plugins.gradle"
+
+ext {
+    artifactName = 'marker'
+}
+
+apply from: "$rootDir/dependencies/android.gradle"
+apply from: "$rootDir/dependencies/commons.gradle"
+apply from: "$rootDir/dependencies/externals.gradle"
+apply from: "$rootDir/dependencies/publish.gradle"
+
+dependencies {
+    // another dependencies
+}

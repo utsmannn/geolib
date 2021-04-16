@@ -1,0 +1,17 @@
+apply plugin: 'com.android.library'
+apply from: "$rootDir/dependencies/plugins.gradle"
+
+ext {
+    artifactName = 'polyline'
+}
+
+apply from: "$rootDir/dependencies/android.gradle"
+apply from: "$rootDir/dependencies/commons.gradle"
+apply from: "$rootDir/dependencies/externals.gradle"
+apply from: "$rootDir/dependencies/publish.gradle"
+
+dependencies {
+    // another dependencies
+
+    implementation 'com.utsman.geolib:core:2.2.4'
+}

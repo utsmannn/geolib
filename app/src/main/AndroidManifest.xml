@@ -5,7 +5,7 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.utsman.places.sample">
+    package="com.utsman.geolib.sample">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
@@ -17,20 +17,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CoroutinePlacesHelper">
-        <activity android:name=".MainActivity">
+        <activity android:name="com.utsman.geolib.sample.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SearchActivity"/>
-        <activity android:name=".PolylineActivity"/>
-        <activity android:name=".CurrentLocationActivity"/>
-        <activity android:name=".RouteActivity"/>
-        <activity android:name=".DrawModePolyline"/>
-        <activity android:name=".MarkerBitmapActivity"/>
-        <activity android:name=".MarkerViewActivity"/>
+        <activity android:name="com.utsman.geolib.sample.SearchActivity"/>
+        <activity android:name="com.utsman.geolib.sample.PolylineActivity"/>
+        <activity android:name="com.utsman.geolib.sample.CurrentLocationActivity"/>
+        <activity android:name="com.utsman.geolib.sample.RouteActivity"/>
+        <activity android:name="com.utsman.geolib.sample.DrawModePolyline"/>
+        <activity android:name="com.utsman.geolib.sample.MarkerBitmapActivity"/>
+        <activity android:name="com.utsman.geolib.sample.MarkerViewActivity"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
