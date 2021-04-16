@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isInvisible
+import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.GoogleMap
 import com.utsman.places.marker.config.SizeLayer
 import com.utsman.places.marker.data.MarkerView
@@ -67,6 +68,17 @@ class MarkerViewAdapter {
                 markerViews.removeAt(index)
                 return true
             }
+        }
+        return false
+    }
+
+    fun removeAllMarkerView(): Boolean {
+        if (markerViews.isNotEmpty()) {
+            markerViews.forEach { marker ->
+                parent.removeView(marker.view)
+            }
+            markerViews.clear()
+            return true
         }
         return false
     }

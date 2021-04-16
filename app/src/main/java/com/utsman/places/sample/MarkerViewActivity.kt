@@ -77,13 +77,7 @@ class MarkerViewActivity : AppCompatActivity() {
             }
 
             btnMarker3.setOnClickListener {
-                lifecycleScope.launch {
-                    val markerRadar = markerViewAdapter.getMarkerView("marker_radar")
-                    /*toast("has marker radar -> ${markerRadar != null}")
-                    markerRadar?.isVisible = false
-                    delay(2000)
-                    toast("marker radar is visible -> ${markerRadar?.isVisible}")*/
-                }
+                googleMap.clearAllLayers(markerViewAdapter)
             }
         }
     }

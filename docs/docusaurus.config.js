@@ -22,7 +22,7 @@ module.exports = {
       items: [
         {
           href: 'https://github.com/utsmannn/geolib/releases',
-          label: 'v2.1.3',
+          label: 'v2.2.5',
           position: 'right',
         },
         {

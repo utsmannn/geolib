@@ -12,6 +12,7 @@ import androidx.core.graphics.toPointF
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
+import com.utsman.places.marker.adapter.MarkerViewAdapter
 import com.utsman.places.marker.config.AnchorPoint
 import com.utsman.places.marker.data.MarkerView
 
@@ -34,6 +35,15 @@ fun MarkerView.moveMarker(newLatLng: LatLng, googleMap: GoogleMap, rotate: Boole
         LatLng(newLatLng.latitude, newLatLng.longitude)
     ).toFloat()
     rotateMarker(this, f, rotate)
+}
+
+fun GoogleMap.clearAllLayers(vararg markerViewAdapters: MarkerViewAdapter) {
+    clear()
+    if (markerViewAdapters.isNotEmpty()) {
+        markerViewAdapters.forEach { adapter ->
+            adapter.removeAllMarkerView()
+        }
+    }
 }
 
 internal fun GoogleMap.getCurrentPointF(latLng: LatLng): PointF {
