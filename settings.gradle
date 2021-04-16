@@ -2,10 +2,10 @@
  * Created on 31/1/21 5:51 PM
  * Copyright (c) Muhammad Utsman 2021 All rights reserved.
  */
-include ':marker-utils'
-include ':polyline-utils'
-include ':utils'
+include ':marker'
+include ':polyline'
+include ':core'
 include ':routes'
 include ':location'
 include ':app'
-rootProject.name = "Coroutine Places Helper"
+rootProject.name = "geolib"

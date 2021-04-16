@@ -16,7 +16,7 @@ buildscript {
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.11.0"
     }
 }
 
@@ -25,6 +25,7 @@ allprojects {
         google()
         jcenter()
         maven { url 'https://jitpack.io' }
+        maven { url 'https://utsmannn.jfrog.io/artifactory/android' }
     }
 }
 
@@ -37,6 +38,6 @@ ext {
     compileSdk = 29
     minSdk = 21
     targetSdk = 29
-    versionCode = 5
-    versionName = "2.2.6"
+    versionCode = 7
+    versionName = "2.3.0"
 }
