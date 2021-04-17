@@ -20,12 +20,13 @@
 
 
 ## Documentation libraries
+Check docs in https://utsmannn.github.io/geolib
+
+## Artifact libraries
 - [Location library](https://utsmannn.github.io/geolib/docs/artifacts/location-lib)
 - [Routes Library](https://utsmannn.github.io/geolib/docs/artifacts/routes-lib)
 - [Polyline utils](https://utsmannn.github.io/geolib/docs/artifacts/polyline-help)
 - [Marker utils](https://utsmannn.github.io/geolib/docs/artifacts/marker-lib)
-
-Check docs in https://utsmannn.github.io/geolib
 
 ## Screenshot
 |Get location|Search location|
