@@ -1,5 +1,6 @@
 
 <p align="center">
+  <img src="docs/static/img/icon/geolib.svg"></img>
   <h1 align="center">Geolib</h1>
 </p>
 

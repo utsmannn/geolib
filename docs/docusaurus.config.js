@@ -6,7 +6,7 @@ module.exports = {
   baseUrl: '/geolib/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/icon/geolib.ico',
   organizationName: 'utsmannn', // Usually your GitHub org/user name.
   projectName: 'geolib', // Usually your repo name.
   themeConfig: {
@@ -19,10 +19,14 @@ module.exports = {
     },
     navbar: {
       title: 'Geolib',
+      logo: {
+        alt: 'Geolib',
+        src: 'img/icon/geolib.svg',
+      },
       items: [
         {
           href: 'https://github.com/utsmannn/geolib/releases',
-          label: 'v2.3.0',
+          label: 'v2.3.1',
           position: 'right',
         },
         {

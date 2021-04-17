@@ -64,9 +64,12 @@ export default function Home() {
     <Layout
       title={`${siteConfig.title}`}
       description="Description will go into a meta tag in <head />">
-      <header className={clsx('hero hero--primary', styles.heroBanner)}>
+      <header className={clsx('hero hero--primary bg-custom', styles.heroBanner)}>
         <div className="container">
-          <h1 className="hero__title">{siteConfig.title}</h1>
+          <div className="box">
+            <img src="img/icon/geolib.svg"></img>
+            <h1 className="hero__title">{siteConfig.title}</h1>
+          </div>
           <p className="hero__subtitle">{siteConfig.tagline}</p>
           <div className={styles.buttons}>
             <Link
@@ -81,7 +84,7 @@ export default function Home() {
           <div>
             <br></br>
             <a href="https://utsmannn.jfrog.io/artifactory/android/com/utsman/geolib/">
-              <img src="https://img.shields.io/badge/Artifactory-2.3.0-green"></img> &nbsp;
+              <img src="https://artifactory-badge.herokuapp.com/artifactory?url=https://utsmannn.jfrog.io/artifactory/android/com/utsman/geolib/location/"></img> &nbsp;
             </a>
             <a href="https://jitpack.io/#utsmannn/geolib">
               <img src="https://img.shields.io/badge/Android%20SDK-21-green"></img>

@@ -17,4 +17,6 @@ apply from: "$rootDir/dependencies/publish.gradle"
 
 dependencies {
     // another dependencies
+
+    implementation 'com.utsman.geolib:core:2.3.0'
 }

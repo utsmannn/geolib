@@ -39,5 +39,5 @@ ext {
     minSdk = 21
     targetSdk = 29
     versionCode = 7
-    versionName = "2.3.0"
+    versionName = "2.3.1"
 }

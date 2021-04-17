@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isInvisible
 import com.google.android.gms.maps.GoogleMap
+import com.utsman.geolib.core.GeolibException
 import com.utsman.geolib.marker.config.SizeLayer
 import com.utsman.geolib.marker.data.MarkerView
 import com.utsman.geolib.marker.dp
@@ -83,41 +84,56 @@ class MarkerViewAdapter {
     }
 
     fun addMarkerView(config: MarkerView.MarkerViewConfig.() -> Unit): MarkerView {
-        val markerViewConfig = MarkerView.MarkerViewConfig().apply(config)
-        return if (markerViewConfig.view == null && markerViewConfig.latLng == null) {
-            throw IllegalAccessError("")
-        } else {
-            MarkerView(
-                id = markerViewConfig.id,
-                view = markerViewConfig.view!!,
-                position = markerViewConfig.latLng!!,
-                anchorPoint = markerViewConfig.anchorPoint
-            ).apply {
-                if (!markerViews.map { marks -> marks.id }.contains(markerViewConfig.id)) {
-                    view.tag = "marker_view_${markerViewConfig.tag}"
-                    markerViews.add(this)
-                    val param = when (markerViewConfig.sizeLayer) {
-                        is SizeLayer.Marker -> ViewGroup.LayoutParams(60.dp, 60.dp)
-                        is SizeLayer.Normal -> ViewGroup.LayoutParams(120.dp, 120.dp)
-                        is SizeLayer.Custom -> {
-                            val width = (markerViewConfig.sizeLayer as SizeLayer.Custom).width
-                            val height = (markerViewConfig.sizeLayer as SizeLayer.Custom).height
-                            ViewGroup.LayoutParams(width, height)
-                        }
-                    }
-                    view.isInvisible = true
-                    parent.addView(view, param)
 
-                    MainScope().launch {
-                        delay(70)
-                        val point = googleMap.getCurrentPointF(position)
-                        view.moveJust(point, markerViewConfig.anchorPoint)
-                        view.isInvisible = false
+        if (this::googleMap.isInitialized) {
+            val markerViewConfig = MarkerView.MarkerViewConfig().apply(config)
+            return if (markerViewConfig.view == null && markerViewConfig.latLng == null) {
+                when {
+                    markerViewConfig .view == null -> {
+                        throw GeolibException("view is null, don't forget to set your `view`")
                     }
-                } else {
-                    Log.e("MarkerView Error", "id: ${markerViewConfig.id} has been added")
+                    markerViewConfig.latLng == null -> {
+                        throw GeolibException("LatLng is null, don't forget to set your `latLng`")
+                    }
+                    else -> {
+                        throw GeolibException("Something error! See documentation on https://utsmannn.github.io/geolib/docs/artifacts/marker-lib#any-view-marker")
+                    }
+                }
+            } else {
+                MarkerView(
+                    id = markerViewConfig.id,
+                    view = markerViewConfig.view!!,
+                    position = markerViewConfig.latLng!!,
+                    anchorPoint = markerViewConfig.anchorPoint
+                ).apply {
+                    if (!markerViews.map { marks -> marks.id }.contains(markerViewConfig.id)) {
+                        view.tag = "marker_view_${markerViewConfig.tag}"
+                        markerViews.add(this)
+                        val param = when (markerViewConfig.sizeLayer) {
+                            is SizeLayer.Marker -> ViewGroup.LayoutParams(60.dp, 60.dp)
+                            is SizeLayer.Normal -> ViewGroup.LayoutParams(120.dp, 120.dp)
+                            is SizeLayer.Custom -> {
+                                val width = (markerViewConfig.sizeLayer as SizeLayer.Custom).width
+                                val height = (markerViewConfig.sizeLayer as SizeLayer.Custom).height
+                                ViewGroup.LayoutParams(width, height)
+                            }
+                        }
+                        view.isInvisible = true
+                        parent.addView(view, param)
+
+                        MainScope().launch {
+                            delay(70)
+                            val point = googleMap.getCurrentPointF(position)
+                            view.moveJust(point, markerViewConfig.anchorPoint)
+                            view.isInvisible = false
+                        }
+                    } else {
+                        Log.e("MarkerView Error", "id: ${markerViewConfig.id} has been added")
+                    }
                 }
             }
+        } else {
+            throw GeolibException("Google maps is not initialized, don't forget to `bindGoogleMaps` into the adapter, see https://utsmannn.github.io/geolib/docs/artifacts/marker-lib#any-view-marker")
         }
     }
 }
