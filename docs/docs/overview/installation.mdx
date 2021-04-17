@@ -19,13 +19,13 @@ implementation 'com.google.maps.android:maps-ktx:2.1.1'
 implementation 'com.google.android.gms:play-services-location:17.1.0'
 ```
 
-### Jitpack Repository
+### JFrog Repository
 ```jsx
 allprojects {
     repositories {
 
         // add this url
-        maven { url 'https://jitpack.io' }
+        maven { url 'https://utsmannn.jfrog.io/artifactory/android' }
     }
 }
 ```
@@ -37,7 +37,7 @@ You need HERE Api, open https://developer.here.com/. Create new account or login
 
 ## Download
 
-![](https://jitpack.io/v/utsmannn/geolib.svg)
+![](https://artifactory-badge.herokuapp.com/artifactory?url=https://utsmannn.jfrog.io/artifactory/android/com/utsman/geolib/location/)
 
 ````mdx-code-block
 import Tabs from '@theme/Tabs';
@@ -56,28 +56,28 @@ import TabItem from '@theme/TabItem';
 <TabItem value="location">
 
 ```groovy
-implementation 'com.github.utsmannn.geolib:location:{last_version}'
+implementation 'com.utsman.geolib:location:{last_version}'
 ```
 
 </TabItem>
 <TabItem value="routes">
 
 ```groovy
-implementation 'com.github.utsmannn.geolib:routes:{last_version}'
+implementation 'com.utsman.geolib:routes:{last_version}'
 ```
 
 </TabItem>
 <TabItem value="polyline">
 
 ```groovy
-implementation 'com.github.utsmannn.geolib:polyline:{last_version}'
+implementation 'com.utsman.geolib:polyline:{last_version}'
 ```
 
 </TabItem>
 <TabItem value="marker">
 
 ```groovy
-implementation 'com.github.utsmannn.geolib:marker:{last_version}'
+implementation 'com.utsman.geolib:marker:{last_version}'
 ```
 
 </TabItem>

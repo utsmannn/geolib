@@ -4,9 +4,9 @@ title: Marker
 Parse layout to original marker or you can create any view as marker. I added the layer for create any view as marker instead original marker.
 
 ## Download
-![](https://jitpack.io/v/utsmannn/geolib.svg)
+![](https://artifactory-badge.herokuapp.com/artifactory?url=https://utsmannn.jfrog.io/artifactory/android/com/utsman/geolib/location/)
 ```jsx
-implementation 'com.github.utsmannn.geolib:marker:{last_version}'
+implementation 'com.utsman.geolib:marker:{last_version}'
 ```
 
 ---
@@ -58,3 +58,6 @@ val melbourne = map.addMarker(
 
 ## Any View Marker
 This feature is enabling posibility create any view (not bitmap) as a marker. But this marker is not original marker from Google Maps. If you create **animate marker** with **gif** file or **Lottie** file, use this feature.
+
+### RESERVED
+---

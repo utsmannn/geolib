@@ -8,10 +8,10 @@ This is collection libraries of utility Google Maps SDK for Android. Build for m
 Layer customization on Google Maps SDK is not easy. I've done a lot of code work with it. I try to summarize my research in a library which contains several artifacts. The artifacts become a standalone library.
 
 ## Artifact and feature
-- Location (`com.github.utsmannn.geolib:location`)
-- Routes (`com.github.utsmannn.geolib:routes`)
-- Polyline Helper (`com.github.utsmannn.geolib:polyline`)
-- Marker View (`com.github.utsmannn.geolib:marker`)
+- Location (`com.utsman.geolib:location`)
+- Routes (`com.utsman.geolib:routes`)
+- Polyline Helper (`com.utsman.geolib:polyline`)
+- Marker View (`com.utsman.geolib:marker`)
 
 ### [Location](/docs/artifacts/location-lib)
 With location library you can access current location, observer current location and get place or address of current and specified location (search).

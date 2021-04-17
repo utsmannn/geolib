@@ -4,9 +4,9 @@ title: Routes
 You able to search route between two location.
 
 ## Download
-![](https://jitpack.io/v/utsmannn/geolib.svg)
+![](https://artifactory-badge.herokuapp.com/artifactory?url=https://utsmannn.jfrog.io/artifactory/android/com/utsman/geolib/location/)
 ```jsx
-implementation 'com.github.utsmannn.geolib:routes:{last_version}'
+implementation 'com.utsman.geolib:routes:{last_version}'
 ```
 ---
 
@@ -18,11 +18,31 @@ val placesRoute = createPlacesRoute(HERE_MAPS_API)
 ## Search route between locations
 For search a route, use `searchRoute` DSL builder.
 ```jsx
-val route = placesRoute.searchRoute {
+
+val buaran: Location = Location("").apply {
+    latitude = -6.2220484
+    longitude = 106.9217385
+}
+
+val depok: Location = Location("").apply {
+    latitude = -6.4090897
+    longitude = 106.8122967
+}
+
+val result: ResultState<RouteData> = placesRoute.searchRoute {
     startLocation = buaran // location start
-    endLocation = rawamangun // location end
+    endLocation = depok // location end
     transportMode = TransportMode.BIKE
 }
+
+result.doOnSuccess { routes ->
+    // handle success
+}
+
+result.doOnFailure {
+    // handler failure
+}
+
 ```
 ---
 
