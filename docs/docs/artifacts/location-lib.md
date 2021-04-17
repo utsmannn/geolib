@@ -5,9 +5,9 @@ title: Location
 With location library you can access current location, observer current location and get place or address of current and specified location (search).
 
 ## Download
-![](https://jitpack.io/v/utsmannn/geolib.svg)
+![](https://artifactory-badge.herokuapp.com/artifactory?url=https://utsmannn.jfrog.io/artifactory/android/com/utsman/geolib/location/)
 ```kotlin
-implementation 'com.github.utsmannn.geolib:location:{last_version}'
+implementation 'com.utsman.geolib:location:{last_version}'
 ```
 ---
 
@@ -23,7 +23,9 @@ val placesLocation = fusedLocation.createPlacesLocation(HERE_API_KEY)
 ```
 ---
 
-## Observer location
+## Current location
+
+### Observer current location
 This function build under `CoroutineScope` with return `Flow`
 ```kotlin
 MainScope().launch {
@@ -35,14 +37,14 @@ MainScope().launch {
 }
 ```
 
-## Get current location 
+### Get current location 
 ```kotlin
 MainScope().launch {
     val location = placesLocation.getLocationFlow().first()
 }
 ```
 
-## Get comparator location (prev and current)
+### Get comparator current location (prev and current)
 ```kotlin
 MainScope().launch {
 placesLocation.getComparisonLocation()
@@ -54,7 +56,9 @@ placesLocation.getComparisonLocation()
 ```
 ---
 
-### Place Data
+## Place Location
+
+### Structure class of `PlaceData`
 |Param|type|desc|
 |---|---|---|
 |`hereId`|`String`|Id place from Here API|
@@ -66,14 +70,30 @@ placesLocation.getComparisonLocation()
 |`distance`|`Double`|Distance of current location and place|
 |`category`|`String` nullable |Category of place|
 
-## Get place data from location
+### Get place from location
 ```kotlin
-val places = placesLocation.getPlacesLocation(location)
+val result: ResultState<List<PlaceData>> = placesLocation.getPlacesLocation(location)
+
+result.doOnSuccess { places ->
+    // handle success
+}
+
+result.doOnFailure {
+    // handler failure
+}
 ```
 
-## Search nearby place
+### Search nearby place
 Search place is searching nearby place on location by query with data result `List<PlaceData>`
 ```kotlin
-val data = placesLocation.searchPlaces(location, query)
+val result: ResultState<List<PlaceData>> = placesLocation.searchPlaces(location, query)
+
+result.doOnSuccess { places ->
+    // handle success
+}
+
+result.doOnFailure {
+    // handler failure
+}
 ```
 ---

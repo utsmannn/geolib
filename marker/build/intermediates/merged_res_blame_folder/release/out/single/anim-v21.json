@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "/Users/utsman/AndroidStudioProjects/geolib/marker/build/intermediates/res/merged/release/anim-v21/mtrl_bottom_sheet_slide_in.xml",
+        "source": "/Users/utsman/.gradle/caches/transforms-2/files-2.1/f2dd27f527d6c616483da66d3600342d/material-1.2.1/res/anim-v21/mtrl_bottom_sheet_slide_in.xml"
+    },
+    {
+        "merged": "/Users/utsman/AndroidStudioProjects/geolib/marker/build/intermediates/res/merged/release/anim-v21/design_bottom_sheet_slide_out.xml",
+        "source": "/Users/utsman/.gradle/caches/transforms-2/files-2.1/f2dd27f527d6c616483da66d3600342d/material-1.2.1/res/anim-v21/design_bottom_sheet_slide_out.xml"
+    },
+    {
+        "merged": "/Users/utsman/AndroidStudioProjects/geolib/marker/build/intermediates/res/merged/release/anim-v21/fragment_fast_out_extra_slow_in.xml",
+        "source": "/Users/utsman/.gradle/caches/transforms-2/files-2.1/92370bbc58d7df3a5ac8b0c23cc52439/fragment-1.2.5/res/anim-v21/fragment_fast_out_extra_slow_in.xml"
+    },
+    {
+        "merged": "/Users/utsman/AndroidStudioProjects/geolib/marker/build/intermediates/res/merged/release/anim-v21/mtrl_bottom_sheet_slide_out.xml",
+        "source": "/Users/utsman/.gradle/caches/transforms-2/files-2.1/f2dd27f527d6c616483da66d3600342d/material-1.2.1/res/anim-v21/mtrl_bottom_sheet_slide_out.xml"
+    },
+    {
+        "merged": "/Users/utsman/AndroidStudioProjects/geolib/marker/build/intermediates/res/merged/release/anim-v21/design_bottom_sheet_slide_in.xml",
+        "source": "/Users/utsman/.gradle/caches/transforms-2/files-2.1/f2dd27f527d6c616483da66d3600342d/material-1.2.1/res/anim-v21/design_bottom_sheet_slide_in.xml"
+    }
+]

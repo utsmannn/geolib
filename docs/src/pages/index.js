@@ -6,6 +6,15 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import styles from './styles.module.css';
 
+function httpGet(theUrl) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+    xmlHttp.send( null );
+    return xmlHttp.responseText;
+}
+
+
+
 const features = [
   {
     title: 'Easy to Use',
@@ -71,8 +80,8 @@ export default function Home() {
           </div>
           <div>
             <br></br>
-            <a href="https://jitpack.io/#utsmannn/geolib">
-              <img src="https://jitpack.io/v/utsmannn/geolib.svg"></img> &nbsp;
+            <a href="https://utsmannn.jfrog.io/artifactory/android/com/utsman/geolib/">
+              <img src="https://img.shields.io/badge/Artifactory-2.3.0-green"></img> &nbsp;
             </a>
             <a href="https://jitpack.io/#utsmannn/geolib">
               <img src="https://img.shields.io/badge/Android%20SDK-21-green"></img>

@@ -1,0 +1,4 @@
+com/utsman/geolib/marker/BuildConfig.java
+ com.utsman.geolib.marker.BuildConfig
+com/utsman/geolib/marker/databinding/LottieContainerBinding.java
+ com.utsman.geolib.marker.databinding.LottieContainerBinding

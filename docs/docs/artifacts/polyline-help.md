@@ -4,16 +4,16 @@ title: Polyline
 You can animating the polyline with easier code. There is a feature to determine the draw of the animation.
 
 ## Download
-![](https://jitpack.io/v/utsmannn/geolib.svg)
+![](https://artifactory-badge.herokuapp.com/artifactory?url=https://utsmannn.jfrog.io/artifactory/android/com/utsman/geolib/location/)
 ```jsx
-implementation 'com.github.utsmannn.geolib:polyline:{last_version}'
+implementation 'com.utsman.geolib:polyline:{last_version}'
 ```
 ---
 
-## Create `PlacesPolyline`
+## Create Instance
 ```jsx
-val polylineBuilder = googleMap.createPlacesPolylineBuilder()
-val polylineAnimator = polylineBuilder.createAnimatePolyline()
+val animatorBuilder: PolylineAnimatorBuilder = googleMap.createPolylineAnimatorBuilder()
+val polylineAnimator: PolylineAnimtor = animatorBuilder.createPolylineAnimator()
 ```
 
 ### Configuration builder
@@ -46,8 +46,6 @@ polyline.withAnimate(googleMap, polylineOptions) {
 
 Or with `PolylineAnimator`
 ```jsx
-val polylineAnimator = polylineBuilder.createAnimatePolyline()
-
 val polyline = googleMap.addPolyline(options)
 polyline.withAnimate(polylineAnimator) {
         polylineDrawMode = PolylineDrawMode.Normal

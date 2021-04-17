@@ -1,0 +1,2 @@
+com/utsman/geolib/core/BuildConfig.java
+ com.utsman.geolib.core.BuildConfig

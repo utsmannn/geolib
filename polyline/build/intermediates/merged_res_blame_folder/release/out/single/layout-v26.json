@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/Users/utsman/AndroidStudioProjects/geolib/polyline/build/intermediates/res/merged/release/layout-v26/mtrl_calendar_month.xml",
+        "source": "/Users/utsman/.gradle/caches/transforms-2/files-2.1/f2dd27f527d6c616483da66d3600342d/material-1.2.1/res/layout-v26/mtrl_calendar_month.xml"
+    },
+    {
+        "merged": "/Users/utsman/AndroidStudioProjects/geolib/polyline/build/intermediates/res/merged/release/layout-v26/abc_screen_toolbar.xml",
+        "source": "/Users/utsman/.gradle/caches/transforms-2/files-2.1/4651816a821e690a9be9aa212981ca3c/appcompat-1.2.0/res/layout-v26/abc_screen_toolbar.xml"
+    }
+]

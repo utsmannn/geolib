@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "/Users/utsman/AndroidStudioProjects/geolib/marker/build/intermediates/res/merged/release/interpolator-v21/mtrl_fast_out_linear_in.xml",
+        "source": "/Users/utsman/.gradle/caches/transforms-2/files-2.1/f2dd27f527d6c616483da66d3600342d/material-1.2.1/res/interpolator-v21/mtrl_fast_out_linear_in.xml"
+    },
+    {
+        "merged": "/Users/utsman/AndroidStudioProjects/geolib/marker/build/intermediates/res/merged/release/interpolator-v21/mtrl_linear_out_slow_in.xml",
+        "source": "/Users/utsman/.gradle/caches/transforms-2/files-2.1/f2dd27f527d6c616483da66d3600342d/material-1.2.1/res/interpolator-v21/mtrl_linear_out_slow_in.xml"
+    },
+    {
+        "merged": "/Users/utsman/AndroidStudioProjects/geolib/marker/build/intermediates/res/merged/release/interpolator-v21/mtrl_fast_out_slow_in.xml",
+        "source": "/Users/utsman/.gradle/caches/transforms-2/files-2.1/f2dd27f527d6c616483da66d3600342d/material-1.2.1/res/interpolator-v21/mtrl_fast_out_slow_in.xml"
+    }
+]

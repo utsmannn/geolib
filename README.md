@@ -19,9 +19,12 @@
 
 
 ## Documentation libraries
-- [Location library](location)
-- [Routes Library](routes)
-- [Polyline-utils for GoogleMaps](polyline-utils)
+- [Location library](https://utsmannn.github.io/geolib/docs/artifacts/location-lib)
+- [Routes Library](https://utsmannn.github.io/geolib/docs/artifacts/routes-lib)
+- [Polyline utils](https://utsmannn.github.io/geolib/docs/artifacts/polyline-help)
+- [Marker utils](https://utsmannn.github.io/geolib/docs/artifacts/marker-lib)
+
+Check docs in https://utsmannn.github.io/geolib
 
 ## Screenshot
 |Get location|Search location|
@@ -58,7 +61,7 @@ allprojects {
     repositories {
 
         // add this url
-        maven { url 'https://jitpack.io' }
+        maven { url 'https://utsmannn.jfrog.io/artifactory/android' }
     }
 }
 ```
@@ -67,16 +70,16 @@ allprojects {
 ```groovy
 
 // location
-implementation 'com.github.utsmannn.geolib:location:{last_version}'
+implementation 'com.utsman.geolib:location:{last_version}'
 
 // routes
-implementation 'com.github.utsmannn.geolib:routes:{last_version}'
+implementation 'com.utsman.geolib:routes:{last_version}'
 
 // polyline utils
-implementation 'com.github.utsmannn.geolib:polyline:{last_version}'
+implementation 'com.utsman.geolib:polyline:{last_version}'
 
 // google maps marker utils
-implementation 'com.github.utsmannn.geolib:marker:{last_version}'
+implementation 'com.utsman.geolib:marker:{last_version}'
 ```
 
 ## License

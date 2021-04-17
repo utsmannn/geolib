@@ -1,0 +1,17 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<!--
+3  ~ Created on 31/1/21 5:51 PM
+4  ~ Copyright (c) Muhammad Utsman 2021 All rights reserved.
+5-->
+6<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+7    package="com.utsman.geolib.core"
+8    android:versionCode="6"
+9    android:versionName="2.2.4" >
+10
+11    <uses-sdk
+12        android:minSdkVersion="21"
+12-->/Users/utsman/AndroidStudioProjects/geolib/core/src/main/AndroidManifest.xml
+13        android:targetSdkVersion="29" />
+13-->/Users/utsman/AndroidStudioProjects/geolib/core/src/main/AndroidManifest.xml
+14
+15</manifest>
