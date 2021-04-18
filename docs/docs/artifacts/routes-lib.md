@@ -1,22 +1,29 @@
 ---
 title: Routes
 ---
+
 You able to search route between two location.
 
 ## Download
+
 ![](https://artifactory-badge.herokuapp.com/artifactory?url=https://utsmannn.jfrog.io/artifactory/android/com/utsman/geolib/location/)
+
 ```jsx
 implementation 'com.utsman.geolib:routes:{last_version}'
 ```
+
 ---
 
 ## Create `PlaceRoute`
+
 ```jsx
 val placesRoute = createPlacesRoute(HERE_MAPS_API)
 ```
 
 ## Search route between locations
+
 For search a route, use `searchRoute` DSL builder.
+
 ```jsx
 
 val buaran: Location = Location("").apply {
@@ -44,20 +51,23 @@ result.doOnFailure {
 }
 
 ```
+
 ---
 
 ### Builder
-|Param|type|desc|
-|---|---|---|
-|`startLocation`|`Location`|start destination|
-|`endLocation`|`Location`|end destination|
-|`transportMode`|`TransportMode`|transport mode, available `CAR` and `BIKE`, default is `CAR`|
+
+| Param           | type            | desc                                                         |
+| --------------- | --------------- | ------------------------------------------------------------ |
+| `startLocation` | `Location`      | start destination                                            |
+| `endLocation`   | `Location`      | end destination                                              |
+| `transportMode` | `TransportMode` | transport mode, available `CAR` and `BIKE`, default is `CAR` |
 
 ### Route Data
-|Param|type|desc|
-|---|---|---|
-|`encodedPolyline`|`String`|encoded of geometry|
-|`geometries`|`List<LatLng>`|list LatLng of geometry|
-|`length`|`Float`|Length of polyline decoded|
+
+| Param             | type           | desc                       |
+| ----------------- | -------------- | -------------------------- |
+| `encodedPolyline` | `String`       | encoded of geometry        |
+| `geometries`      | `List<LatLng>` | list LatLng of geometry    |
+| `length`          | `Float`        | Length of polyline decoded |
 
 ---
