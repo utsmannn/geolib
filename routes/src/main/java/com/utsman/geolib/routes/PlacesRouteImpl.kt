@@ -21,7 +21,7 @@ internal class PlacesRouteImpl(
             .create(HereService::class.java)
     }
 
-    override suspend fun searchRoute(request: RouteRequest.() -> Unit): ResultState<RouteData> {
+    override suspend fun searchRoute(request: RouteRequest.() -> Unit): Result<RouteData> {
         val routeRequest = RouteRequest().apply(request)
 
         val errorMessage = "Search route error!"
@@ -46,19 +46,22 @@ internal class PlacesRouteImpl(
                 )
             }
 
-            if (resultPolyline is ResultState.Success && resultLength is ResultState.Success) {
-                val dataPolyline = Mapper.mapPolylineAlgorithm(resultPolyline.data.getPolyline())
-                val dataLength = resultLength.data
+
+            if (resultPolyline.isSuccess && resultLength.isSuccess) {
+                val dataPolyline = Mapper.mapPolylineAlgorithm(resultPolyline.getOrNull()?.getPolyline())
+                val dataLength = resultLength.getOrNull()
                 val data = RouteData(
                     encodedPolyline = dataPolyline ?: "",
-                    length = dataLength.getLength() ?: 0f
+                    length = dataLength?.getLength() ?: 0f
                 )
-                ResultState.Success(data)
+                Result.success(data)
             } else {
-                ResultState.Failure(GeolibException(resultPolyline.mapToException()?.message ?: errorMessage))
+                val throwable = GeolibException(resultPolyline.exceptionOrNull()?.message ?: errorMessage)
+                Result.failure(throwable)
             }
         } else {
-            ResultState.Failure(GeolibException(errorMessage))
+            val throwable = GeolibException(errorMessage)
+            Result.failure(throwable)
         }
     }
 

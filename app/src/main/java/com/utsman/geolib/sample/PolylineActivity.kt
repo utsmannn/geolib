@@ -20,8 +20,6 @@ import com.utsman.geolib.polyline.data.StackAnimationMode
 import com.utsman.geolib.polyline.utils.*
 import com.utsman.geolib.routes.*
 import com.utsman.geolib.routes.data.TransportMode
-import com.utsman.geolib.core.doOnFailure
-import com.utsman.geolib.core.doOnSuccess
 import kotlinx.coroutines.launch
 
 class PolylineActivity : AppCompatActivity() {
@@ -71,7 +69,7 @@ class PolylineActivity : AppCompatActivity() {
                         transportMode = TransportMode.BIKE
                     }
 
-                    result.doOnSuccess { first ->
+                    result.onSuccess { first ->
                         if (!poly1HasRender) {
                             point1 = polylineAnimator.startAnimate(first.geometries) {
                                 stackAnimationMode = StackAnimationMode.BlockStackAnimation
@@ -83,7 +81,7 @@ class PolylineActivity : AppCompatActivity() {
                         }
                     }
 
-                    result.doOnFailure {
+                    result.onFailure {
                         it.printStackTrace()
                     }
                 }
@@ -97,7 +95,7 @@ class PolylineActivity : AppCompatActivity() {
                         transportMode = TransportMode.BIKE
                     }
 
-                    result.doOnSuccess { second ->
+                    result.onSuccess { second ->
                         if (!poly2HasRender) {
                             point2 = polylineAnimator.startAnimate(second.geometries) {
                                 stackAnimationMode = StackAnimationMode.WaitStackEndAnimation
@@ -130,7 +128,7 @@ class PolylineActivity : AppCompatActivity() {
                         }
                     }
 
-                    result.doOnFailure {
+                    result.onFailure {
                         it.printStackTrace()
                     }
                 }
@@ -144,7 +142,7 @@ class PolylineActivity : AppCompatActivity() {
                         transportMode = TransportMode.BIKE
                     }
 
-                    result.doOnSuccess { third ->
+                    result.onSuccess { third ->
                         if (!poly3HasRender) {
                             markerPoly3 = googleMap.addMarker {
                                 position(thirdPoint1.toLatLng())
@@ -171,7 +169,7 @@ class PolylineActivity : AppCompatActivity() {
                         }
                     }
 
-                    result.doOnFailure {
+                    result.onFailure {
                         it.printStackTrace()
                     }
                 }

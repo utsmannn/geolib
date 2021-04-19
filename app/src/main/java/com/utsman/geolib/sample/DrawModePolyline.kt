@@ -23,8 +23,6 @@ import com.utsman.geolib.polyline.utils.createPolylineAnimatorBuilder
 import com.utsman.geolib.polyline.utils.withAnimate
 import com.utsman.geolib.routes.createPlacesRoute
 import com.utsman.geolib.routes.data.TransportMode
-import com.utsman.geolib.core.doOnFailure
-import com.utsman.geolib.core.doOnSuccess
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -69,7 +67,7 @@ class DrawModePolyline : AppCompatActivity() {
                         transportMode = TransportMode.BIKE
                     }
 
-                    result.doOnSuccess { first ->
+                    result.onSuccess { first ->
                         val options = PolylineOptions()
                             .addAll(first.geometries)
                             .color(Color.BLUE)
@@ -81,7 +79,7 @@ class DrawModePolyline : AppCompatActivity() {
                         }
                     }
 
-                    result.doOnFailure {
+                    result.onFailure {
                         it.printStackTrace()
                     }
                 }
@@ -95,7 +93,7 @@ class DrawModePolyline : AppCompatActivity() {
                         transportMode = TransportMode.BIKE
                     }
 
-                    result.doOnSuccess { second ->
+                    result.onSuccess { second ->
                         val options = PolylineOptions()
                             .addAll(second.geometries)
                             .color(Color.RED)
@@ -107,7 +105,7 @@ class DrawModePolyline : AppCompatActivity() {
                         }
                     }
 
-                    result.doOnFailure {
+                    result.onFailure {
                         it.printStackTrace()
                     }
                 }
@@ -122,7 +120,7 @@ class DrawModePolyline : AppCompatActivity() {
                     }
 
 
-                    result.doOnSuccess { third ->
+                    result.onSuccess { third ->
                         logd("data is ----> $third")
                         toast("loaded..")
 
@@ -141,7 +139,7 @@ class DrawModePolyline : AppCompatActivity() {
                         }
                     }
 
-                    result.doOnFailure {
+                    result.onFailure {
                         toast(it.localizedMessage ?: "hah")
                         it.printStackTrace()
                     }

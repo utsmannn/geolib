@@ -22,8 +22,6 @@ import com.utsman.geolib.polyline.utils.withAnimate
 import com.utsman.geolib.polyline.utils.withPrimaryPolyline
 import com.utsman.geolib.routes.createPlacesRoute
 import com.utsman.geolib.routes.data.TransportMode
-import com.utsman.geolib.core.doOnFailure
-import com.utsman.geolib.core.doOnSuccess
 import kotlinx.coroutines.launch
 
 class RouteActivity : AppCompatActivity() {
@@ -76,7 +74,7 @@ class RouteActivity : AppCompatActivity() {
                         transportMode = TransportMode.CAR
                     }
 
-                    result.doOnSuccess {
+                    result.onSuccess {
                         logd(it.toString())
                         val geometriesRoute = it.geometries
 
@@ -97,7 +95,7 @@ class RouteActivity : AppCompatActivity() {
                         btnGetRoute.isEnabled = true
                     }
 
-                    result.doOnFailure {
+                    result.onFailure {
                         toast(it.message ?: "Error")
                     }
                 }

@@ -29,12 +29,6 @@ internal class PointPolylineImpl(
         newGeometries: List<LatLng>,
         polylineConfig: PolylineConfig
     ): PointPolyline {
-        /*val polylineConfig = if (actionConfig != null) {
-            PolylineConfig().apply(actionConfig)
-        } else {
-            PolylineConfig()
-        }*/
-
         val geometriesWithMode = when (polylineConfig.polylineDrawMode) {
             is PolylineDrawMode.Normal -> newGeometries
             is PolylineDrawMode.Curved -> CalculationHelper.geometriesCurved(newGeometries)

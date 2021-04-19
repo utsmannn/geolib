@@ -23,8 +23,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.location.LocationServices
 import com.utsman.geolib.location.createPlacesLocation
 import com.utsman.geolib.location.data.PlaceData
-import com.utsman.geolib.core.doOnFailure
-import com.utsman.geolib.core.doOnSuccess
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -106,12 +104,12 @@ class SearchActivity : AppCompatActivity() {
     private fun searchPlace(query: String, currentLocation: Location) {
         MainScope().launch {
             val result = placesLocation.searchPlaces(currentLocation, query)
-            result.doOnSuccess {
+            result.onSuccess {
                 val data = it
                 searchAdapter.items = data
                 searchAdapter.notifyDataSetChanged()
             }
-            result.doOnFailure {
+            result.onFailure {
                 toast("failure -> ${it.message}")
             }
         }

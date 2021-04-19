@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <a href="https://utsmannn.jfrog.io/artifactory/android/com/utsman/geolib/location/"><img alt="artifactory" src="https://artifactory-badge.herokuapp.com/artifactory?url=https://utsmannn.jfrog.io/artifactory/android/com/utsman/geolib/location/"></a>
+  <a href="https://utsmannn.jfrog.io/artifactory/android/com/utsman/geolib/location/"><img alt="artifactory" src="https://artifactory-badge.herokuapp.com/artifactory?url=https://utsmannn.jfrog.io/artifactory/android/com/utsman/geolib/core/"></a>
   <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"></a>
   <a href="https://github.com/utsmannn/geolib/pulls"><img alt="Pull request" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat"></a>
   <a href="https://developer.android.com/kotlin"><img alt="Fcm docs" src="https://img.shields.io/badge/Kotlin-Coroutine-orange?logo=kotlin&style=flat"></a>

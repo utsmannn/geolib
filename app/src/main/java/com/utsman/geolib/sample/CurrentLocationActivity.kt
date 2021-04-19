@@ -13,8 +13,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.location.LocationServices
 import com.utsman.geolib.location.createPlacesLocation
-import com.utsman.geolib.core.doOnFailure
-import com.utsman.geolib.core.doOnSuccess
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -36,11 +34,11 @@ class CurrentLocationActivity : AppCompatActivity() {
                 val currentLocation = placesLocation.getLocationFlow().first()
                 txtResult.text = "${currentLocation.longitude},${currentLocation.longitude}"
                 val result = placesLocation.getPlacesLocation(currentLocation)
-                result.doOnSuccess {
+                result.onSuccess {
                     val currentPlace = it.first()
                     txtResult.append("\n${currentPlace.title} - ${currentPlace.address}")
                 }
-                result.doOnFailure {
+                result.onFailure {
                     toast("Failure -> ${it.message}")
                     it.printStackTrace()
                 }

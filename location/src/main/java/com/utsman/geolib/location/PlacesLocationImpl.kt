@@ -71,7 +71,7 @@ internal class PlacesLocationImpl(
         }
     }
 
-    override suspend fun getPlacesLocation(location: Location): ResultState<List<PlaceData>> {
+    override suspend fun getPlacesLocation(location: Location): Result<List<PlaceData>> {
         val locationString = location.toStringService()
         val errorMessage = "Get place failure!"
 
@@ -81,7 +81,7 @@ internal class PlacesLocationImpl(
                 throw GeolibException(response.errorDescription)
             }
             response
-        }.mapData {
+        }.mapCatching {
             it.items?.map { d -> Mapper.mapToPlaceData(d) } ?: emptyList()
         }
     }
@@ -117,12 +117,12 @@ internal class PlacesLocationImpl(
         }
     }
 
-    override suspend fun searchPlaces(location: Location, query: String): ResultState<List<PlaceData>> {
+    override suspend fun searchPlaces(location: Location, query: String): Result<List<PlaceData>> {
         val locationString = location.toStringService()
         val errorMessage = "Search place failure!"
         return fetch(errorMessage) {
             provideService().searchPlace(locationString, query, hereMapsApi)
-        }.mapData {
+        }.mapCatching {
             it.items?.map { d -> Mapper.mapToPlaceData(d) } ?: emptyList()
         }
     }

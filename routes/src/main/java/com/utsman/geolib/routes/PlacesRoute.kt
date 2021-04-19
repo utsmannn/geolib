@@ -7,9 +7,8 @@ package com.utsman.geolib.routes
 
 import com.utsman.geolib.routes.data.RouteData
 import com.utsman.geolib.routes.data.RouteRequest
-import com.utsman.geolib.core.ResultState
 
 interface PlacesRoute {
-    suspend fun searchRoute(request: RouteRequest.() -> Unit): ResultState<RouteData>
+    suspend fun searchRoute(request: RouteRequest.() -> Unit): Result<RouteData>
     var enableLog: Boolean
 }
