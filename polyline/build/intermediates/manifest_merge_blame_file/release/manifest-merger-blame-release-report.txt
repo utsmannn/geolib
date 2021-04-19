@@ -6,7 +6,7 @@
 6<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 7    package="com.utsman.geolib.polyline"
 8    android:versionCode="8"
-9    android:versionName="2.3.2" >
+9    android:versionName="2.3.3" >
 10
 11    <uses-sdk
 12        android:minSdkVersion="21"
