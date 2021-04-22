@@ -27,7 +27,8 @@ internal data class HerePlaceResponse(
         val district: String? = null,
         val subdistrict: String? = null,
         val city: String? = null,
-        val country: String? = null
+        val country: String? = null,
+        val houseNumber: String? = null
     )
 
     data class Position(

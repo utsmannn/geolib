@@ -72,7 +72,7 @@ placesLocation.getComparisonLocation()
 
 ### Get place from location
 ```kotlin
-val result: ResultState<List<PlaceData>> = placesLocation.getPlacesLocation(location)
+val result: Result<List<PlaceData>> = placesLocation.getPlacesLocation(location)
 
 result.doOnSuccess { places ->
     // handle success
@@ -86,7 +86,7 @@ result.doOnFailure {
 ### Search nearby place
 Search place is searching nearby place on location by query with data result `List<PlaceData>`
 ```kotlin
-val result: ResultState<List<PlaceData>> = placesLocation.searchPlaces(location, query)
+val result: Result<List<PlaceData>> = placesLocation.searchPlaces(location, query)
 
 result.doOnSuccess { places ->
     // handle success

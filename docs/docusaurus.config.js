@@ -19,7 +19,7 @@ module.exports = {
       additionalLanguages: ["kotlin", "groovy", "java"],
     },
     navbar: {
-      title: "Geolib",
+      title: "Home",
       logo: {
         alt: "Geolib",
         src: "img/icon/geolib.svg",
@@ -27,7 +27,7 @@ module.exports = {
       items: [
         {
           href: "https://github.com/utsmannn/geolib/releases",
-          label: "v2.3.1",
+          label: "v2.3.3",
           position: "right",
         },
         {

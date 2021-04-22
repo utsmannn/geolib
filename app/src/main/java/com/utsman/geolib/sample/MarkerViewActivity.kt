@@ -6,6 +6,7 @@
 package com.utsman.geolib.sample
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -90,9 +91,16 @@ class MarkerViewActivity : AppCompatActivity() {
         lottieView.loop(true)
         lottieView.playAnimation()
 
+        val markerWindowView = LayoutInflater.from(this).inflate(R.layout.marker_window_view, null)
+
         val marker = markerViewAdapter.addMarkerView {
             id = "marker_animation"
             view = lottieView
+            windowView = {
+                height = 30.dp
+                width = 100.dp
+                view = markerWindowView
+            }
             latLng = firstPoint1.toLatLng()
         }
 
@@ -105,6 +113,10 @@ class MarkerViewActivity : AppCompatActivity() {
 
         marker.addMarkerViewClickListener { id, position ->
             toast("id -> $id, pos -> $position")
+        }
+
+        marker.addWindowMarkerViewClickListener { id, position ->
+            toast("window id -> $id, pos -> $position")
         }
 
         return marker

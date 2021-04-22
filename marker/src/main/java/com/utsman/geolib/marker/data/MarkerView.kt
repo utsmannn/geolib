@@ -16,15 +16,23 @@ data class MarkerView(
     var id: String = UUID.randomUUID().toString(),
     var position: LatLng,
     internal val view: View,
+    internal val windowViewConfig: WindowViewConfig? = null,
     internal var anchorPoint: AnchorPoint = AnchorPoint.NORMAL
 ) {
     data class MarkerViewConfig(
         var id: String = UUID.randomUUID().toString(),
         var view: View? = null,
+        var windowView: (WindowViewConfig.() -> Unit)? = null,
         var latLng: LatLng? = null,
         var tag: String = UUID.randomUUID().toString(),
         var anchorPoint: AnchorPoint = AnchorPoint.NORMAL,
         var sizeLayer: SizeLayer = SizeLayer.Marker
+    )
+
+    data class WindowViewConfig(
+        var width: Int? = null,
+        var height: Int? = null,
+        var view: View? = null
     )
 
     var isVisible: Boolean
@@ -37,5 +45,9 @@ data class MarkerView(
 
     fun addMarkerViewClickListener(onMarkerClick: (id: String, position: LatLng) -> Unit) {
         view.setOnClickListener { onMarkerClick.invoke(id, position) }
+    }
+
+    fun addWindowMarkerViewClickListener(onMarkerClick: (id: String, position: LatLng) -> Unit) {
+        windowViewConfig?.view?.setOnClickListener { onMarkerClick.invoke(id, position) }
     }
 }

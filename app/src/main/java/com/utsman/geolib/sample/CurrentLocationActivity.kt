@@ -36,7 +36,7 @@ class CurrentLocationActivity : AppCompatActivity() {
                 val result = placesLocation.getPlacesLocation(currentLocation)
                 result.onSuccess {
                     val currentPlace = it.first()
-                    txtResult.append("\n${currentPlace.title} - ${currentPlace.address}")
+                    txtResult.append("\n${currentPlace.title} \n\n${currentPlace.address}")
                 }
                 result.onFailure {
                     toast("Failure -> ${it.message}")

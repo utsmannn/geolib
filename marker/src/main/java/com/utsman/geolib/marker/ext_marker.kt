@@ -53,20 +53,37 @@ internal fun GoogleMap.getCurrentPointF(latLng: LatLng): PointF {
 internal fun View.moveJust(point: PointF, anchorPoint: AnchorPoint) {
     when (anchorPoint) {
         AnchorPoint.NORMAL -> {
-            translationX = point.x-(measuredWidth/2)
-            translationY = point.y-measuredHeight
+            translationX = point.x - (measuredWidth / 2)
+            translationY = point.y - measuredHeight
         }
         AnchorPoint.CENTER -> {
-            translationX = point.x-(measuredWidth/2)
-            translationY = point.y-(measuredHeight/2)
+            translationX = point.x - (measuredWidth / 2)
+            translationY = point.y - (measuredHeight / 2)
         }
+    }
+}
+
+internal fun View.moveJustOffset(
+    point: PointF,
+    paddingY: Int = 0.dp,
+    withAnimation: Boolean = false
+) {
+    if (withAnimation) {
+        animate()
+            .setDuration(200)
+            .translationX(point.x - (measuredWidth / 2))
+            .translationY(point.y - (measuredHeight * 2) - paddingY)
+            .start()
+    } else {
+        translationX = point.x - (measuredWidth / 2)
+        translationY = point.y - (measuredHeight * 2) - paddingY
     }
 }
 
 internal fun View.move(point: PointF) {
     animate()
         .setDuration(1500)
-        .translationX(point.x-(measuredWidth/2))
-        .translationY(point.y-measuredHeight)
+        .translationX(point.x - (measuredWidth / 2))
+        .translationY(point.y - measuredHeight)
         .start()
 }

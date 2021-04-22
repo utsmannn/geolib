@@ -36,7 +36,7 @@ val depok: Location = Location("").apply {
     longitude = 106.8122967
 }
 
-val result: ResultState<RouteData> = placesRoute.searchRoute {
+val result: Result<RouteData> = placesRoute.searchRoute {
     startLocation = buaran // location start
     endLocation = depok // location end
     transportMode = TransportMode.BIKE
