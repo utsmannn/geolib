@@ -95,6 +95,13 @@ markerViewAdapter.addMarkerView {
     view = lottieView
     sizeLayer = SizeLayer.Marker
     anchorPoint = AnchorPoint.NORMAL
+
+    // window view like info window in normal marker
+    windowView = {
+        height = 30.dp
+        width = 100.dp
+        view = markerWindowView
+    }
 }
 ```
 

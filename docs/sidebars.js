@@ -18,5 +18,12 @@ module.exports = {
         'artifacts/marker-lib',
       ],
     },
+    {
+      type: 'category',
+      label: 'Use case sample',
+      items: [
+        'sample/grab-picker',
+      ],
+    },
   ],
 };

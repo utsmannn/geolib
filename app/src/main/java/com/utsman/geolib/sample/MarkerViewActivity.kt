@@ -86,6 +86,7 @@ class MarkerViewActivity : AppCompatActivity() {
     private fun addLottieMarker(googleMap: GoogleMap, placesLocation: PlacesLocation): MarkerView {
         val lottieView = LottieAnimationView(this)
         lottieView.setAnimation(R.raw.marker)
+
         // fix padding marker
         lottieView.setPadding(0, 0, 0, (-20).dp)
         lottieView.loop(true)
