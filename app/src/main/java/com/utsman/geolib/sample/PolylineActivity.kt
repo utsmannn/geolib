@@ -10,16 +10,21 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.Marker
 import com.google.maps.android.ktx.addMarker
 import com.google.maps.android.ktx.awaitMap
+import com.utsman.geolib.location.createPlacesLocation
+import com.utsman.geolib.marker.moveMarker
 import com.utsman.geolib.polyline.point.PointPolyline
 import com.utsman.geolib.polyline.data.StackAnimationMode
 import com.utsman.geolib.polyline.utils.*
 import com.utsman.geolib.routes.*
 import com.utsman.geolib.routes.data.TransportMode
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class PolylineActivity : AppCompatActivity() {
@@ -48,6 +53,9 @@ class PolylineActivity : AppCompatActivity() {
 
         val mapsFragment =
             supportFragmentManager.findFragmentById(R.id.maps_view) as SupportMapFragment
+
+        val fusedProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        val placesLocation = fusedProviderClient.createPlacesLocation(HERE_API)
 
         lifecycleScope.launch {
             val googleMap = mapsFragment.awaitMap().apply {
@@ -136,7 +144,38 @@ class PolylineActivity : AppCompatActivity() {
 
             btnPoly3.setOnClickListener {
                 lifecycleScope.launch {
-                    val result = placesRoute.searchRoute {
+                    val initialLatLng = placesLocation.getLocationFlow().first()
+                        .toLatLng()
+
+                    placesLocation.getLocationFlow().collect { location ->
+                        val updatedLatLng = location.toLatLng()
+                        if (markerPoly3 == null) {
+                            markerPoly3 = googleMap.addMarker {
+                                position(updatedLatLng)
+                            }
+                        }
+
+                        if (initialLatLng != updatedLatLng) {
+                            if (!this@PolylineActivity::point3.isInitialized) {
+                                val geometries = listOf(initialLatLng, updatedLatLng)
+                                point3 = polylineAnimator.startAnimate(geometries) {
+                                    stackAnimationMode = StackAnimationMode.OffStackAnimation
+                                    withPrimaryPolyline {
+                                        width(8f)
+                                        color(Color.GREEN)
+                                    }
+                                    enableBorder(true, Color.RED, 5)
+                                    doOnUpdateAnimation { latLng, _ ->
+                                        markerPoly3?.position = latLng
+                                    }
+                                }
+                            } else {
+                                point3.addPoint(updatedLatLng)
+                            }
+                        }
+                    }
+
+                    /*val result = placesRoute.searchRoute {
                         startLocation = thirdPoint1
                         endLocation = thirdPoint2
                         transportMode = TransportMode.BIKE
@@ -171,7 +210,7 @@ class PolylineActivity : AppCompatActivity() {
 
                     result.onFailure {
                         it.printStackTrace()
-                    }
+                    }*/
                 }
             }
         }

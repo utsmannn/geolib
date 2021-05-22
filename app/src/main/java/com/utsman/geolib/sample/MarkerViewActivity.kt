@@ -15,6 +15,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.ktx.awaitMap
 import com.utsman.geolib.location.PlacesLocation
 import com.utsman.geolib.location.createPlacesLocation
@@ -23,6 +24,8 @@ import com.utsman.geolib.marker.adapter.MarkerViewAdapter
 import com.utsman.geolib.marker.config.AnchorPoint
 import com.utsman.geolib.marker.config.SizeLayer
 import com.utsman.geolib.marker.data.MarkerView
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class MarkerViewActivity : AppCompatActivity() {
@@ -61,7 +64,18 @@ class MarkerViewActivity : AppCompatActivity() {
             }
 
             btnMarker1.setOnClickListener {
-                val marker = addLottieMarker(googleMap, placesLocation)
+                //val marker = addLottieMarker(googleMap, placesLocation)
+                //var marker: MarkerView? = null
+
+                lifecycleScope.launch {
+                    val currentLatLng = placesLocation.getLocationFlow().first().toLatLng()
+                    val marker = addLottieMarker(googleMap, currentLatLng)
+                    placesLocation.getLocationFlow().collect {
+                        val updatedLatLng = it.toLatLng()
+                        marker.moveMarker(updatedLatLng, googleMap, true)
+
+                    }
+                }
 
                 /*lifecycleScope.launch {
                     delay(5000)
@@ -83,7 +97,7 @@ class MarkerViewActivity : AppCompatActivity() {
         }
     }
 
-    private fun addLottieMarker(googleMap: GoogleMap, placesLocation: PlacesLocation): MarkerView {
+    private fun addLottieMarker(googleMap: GoogleMap, currentLocation: LatLng): MarkerView {
         val lottieView = LottieAnimationView(this)
         lottieView.setAnimation(R.raw.marker)
 
@@ -102,7 +116,7 @@ class MarkerViewActivity : AppCompatActivity() {
                 width = 100.dp
                 view = markerWindowView
             }
-            latLng = firstPoint1.toLatLng()
+            latLng = currentLocation
         }
 
         /*MainScope().launch {

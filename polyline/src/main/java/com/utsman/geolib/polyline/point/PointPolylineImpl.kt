@@ -24,11 +24,13 @@ internal class PointPolylineImpl(
     private val stackAnimationMode: StackAnimationMode?
 ) : PointPolyline {
     private lateinit var geometries: List<LatLng>
+    private var config: PolylineConfig? = null
 
     override fun addPoints(
         newGeometries: List<LatLng>,
         polylineConfig: PolylineConfig
     ): PointPolyline {
+        config = polylineConfig
         val geometriesWithMode = when (polylineConfig.polylineDrawMode) {
             is PolylineDrawMode.Normal -> newGeometries
             is PolylineDrawMode.Curved -> CalculationHelper.geometriesCurved(newGeometries)
@@ -128,6 +130,16 @@ internal class PointPolylineImpl(
             }
         }
         return this
+    }
+
+    override fun addPoint(newLatLng: LatLng, extend: Boolean): PointPolyline {
+        val currentLatLng = geometries.last()
+        val newGeometries = if (extend) {
+            CalculationHelper.geometriesLank(listOf(currentLatLng, newLatLng))
+        } else {
+            listOf(currentLatLng, newLatLng)
+        }
+        return addPoints(newGeometries, config ?: PolylineConfig())
     }
 
     override fun remove(withGeometries: List<LatLng>?): Boolean {

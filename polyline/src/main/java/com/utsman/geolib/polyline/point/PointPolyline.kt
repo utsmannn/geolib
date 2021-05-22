@@ -14,6 +14,11 @@ interface PointPolyline {
         polylineConfig: PolylineConfig
     ): PointPolyline
 
+    fun addPoint(
+        newLatLng: LatLng,
+        extend: Boolean = true
+    ): PointPolyline
+
     fun remove(withGeometries: List<LatLng>? = null): Boolean
 
 }
