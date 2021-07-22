@@ -19,5 +19,5 @@ apply from: "$rootDir/dependencies/publish.gradle"
 dependencies {
     // another dependencies
 
-    implementation 'com.github.utsmannn.geolib:core:-SNAPSHOT'
+    implementation 'com.github.utsmannn.geolib:core:bb3bc50531'
 }
