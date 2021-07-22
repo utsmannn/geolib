@@ -25,7 +25,6 @@ allprojects {
         google()
         jcenter()
         maven { url 'https://jitpack.io' }
-        maven { url 'https://utsmannn.jfrog.io/artifactory/android' }
     }
 }
 
