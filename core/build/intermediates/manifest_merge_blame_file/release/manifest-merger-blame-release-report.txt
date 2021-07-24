@@ -6,12 +6,12 @@
 6<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 7    package="com.utsman.geolib.core"
 8    android:versionCode="8"
-9    android:versionName="2.3.3" >
+9    android:versionName="2.5.2" >
 10
 11    <uses-sdk
 12        android:minSdkVersion="21"
-12-->/Users/utsman/AndroidStudioProjects/geolib/core/src/main/AndroidManifest.xml
+12-->/Users/ruangguru/AndroidStudioProjects/geolib/core/src/main/AndroidManifest.xml
 13        android:targetSdkVersion="29" />
-13-->/Users/utsman/AndroidStudioProjects/geolib/core/src/main/AndroidManifest.xml
+13-->/Users/ruangguru/AndroidStudioProjects/geolib/core/src/main/AndroidManifest.xml
 14
 15</manifest>

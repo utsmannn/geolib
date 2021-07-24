@@ -3,18 +3,82 @@
  * Copyright (c) Muhammad Utsman 2021 All rights reserved.
  */
 
-//Properties properties = new Properties()
-//properties.load(project.rootProject.file('local.properties').newDataInputStream())
-//
-//ext {
-//    packageName = "com.utsman.geolib"
-//    libVersion = versionName
-//    projectName = project.getName()
-//
-//    url = "https://utsmannn.jfrog.io/artifactory/"
-//    repository = "android"
-//    username = properties.getProperty("jfrog.user")
-//    password = properties.getProperty("jfrog.password")
-//}
-//
-//apply from: 'https://raw.githubusercontent.com/utsmannn/app/master/artifactory-install.gradle'
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+
+task androidSourcesJar(type: Jar) {
+    archiveClassifier.set('sources')
+    if (project.plugins.findPlugin("com.android.library")) {
+        from android.sourceSets.main.java.srcDirs
+    } else {
+        from sourceSets.main.java.srcDirs
+    }
+}
+
+artifacts {
+    archives androidSourcesJar
+}
+
+group = "io.github.utsmannn"
+//group = "geolib"
+version = "2.5.5"
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                // The coordinates of the library, being set from variables that
+                // we'll set up later
+                groupId group
+                artifactId "geolib-" + artifactName
+                version version
+
+                // Two artifacts, the `aar` (or `jar`) and the sources
+                if (project.plugins.findPlugin("com.android.library")) {
+                    from components.release
+                } else {
+                    artifact("$buildDir/libs/${project.getName()}-${version}.jar")
+                }
+
+                artifact androidSourcesJar
+
+                // Mostly self-explanatory metadata
+                pom {
+                    name = artifactName
+                    description = "Android helper libraries for geolocation, places, markering and animating polyline."
+                    url = "https://github.com/utsmannn/geolib"
+                    licenses {
+                        license {
+                            name = "Apache License"
+                            url = "https://github.com/utsmannn/geolib/blob/master/LICENSE"
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = "utsmannn"
+                            name = "Muhammad Utsman"
+                            email = "utsmannn@gmail.com"
+                        }
+                    }
+
+                    // Version control info - if you're using GitHub, follow the
+                    // format as seen here
+                    scm {
+                        connection = "scm:git:github.com/utsmannn/geolib.git"
+                        developerConnection = "scm:git:ssh:github.com/utsmannn/geolib.git"
+                        url = "https://github.com/utsmannn/geolib"
+                    }
+                }
+            }
+        }
+    }
+}
+
+ext["signing.keyId"] = rootProject.ext["signing.keyId"]
+ext["signing.password"] = rootProject.ext["signing.password"]
+ext["signing.secretKeyRingFile"] = rootProject.ext["signing.secretKeyRingFile"]
+
+signing {
+    sign publishing.publications
+}
+

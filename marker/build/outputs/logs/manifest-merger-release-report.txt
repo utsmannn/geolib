@@ -1,37 +1,37 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/utsman/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml:7:1-10:12
-INJECTED from /Users/utsman/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml:7:1-10:12
-INJECTED from /Users/utsman/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml:7:1-10:12
-INJECTED from /Users/utsman/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml:7:1-10:12
-INJECTED from /Users/utsman/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml:7:1-10:12
-INJECTED from /Users/utsman/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml:7:1-10:12
-INJECTED from /Users/utsman/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml:7:1-10:12
+ADDED from /Users/ruangguru/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml:7:1-10:12
+INJECTED from /Users/ruangguru/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml:7:1-10:12
+INJECTED from /Users/ruangguru/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml:7:1-10:12
+INJECTED from /Users/ruangguru/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml:7:1-10:12
+INJECTED from /Users/ruangguru/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml:7:1-10:12
+INJECTED from /Users/ruangguru/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml:7:1-10:12
+INJECTED from /Users/ruangguru/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml:7:1-10:12
 	package
-		ADDED from /Users/utsman/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml:8:5-39
-		INJECTED from /Users/utsman/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml
-		INJECTED from /Users/utsman/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml
+		ADDED from /Users/ruangguru/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml:8:5-39
+		INJECTED from /Users/ruangguru/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml
+		INJECTED from /Users/ruangguru/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml
 	android:versionName
-		INJECTED from /Users/utsman/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml
-		ADDED from /Users/utsman/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml:7:1-10:12
-		INJECTED from /Users/utsman/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml
+		INJECTED from /Users/ruangguru/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml
+		ADDED from /Users/ruangguru/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml:7:1-10:12
+		INJECTED from /Users/ruangguru/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml
 	android:versionCode
-		INJECTED from /Users/utsman/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml
-		ADDED from /Users/utsman/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml:7:1-10:12
-		INJECTED from /Users/utsman/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml
+		INJECTED from /Users/ruangguru/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml
+		ADDED from /Users/ruangguru/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml:7:1-10:12
+		INJECTED from /Users/ruangguru/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml
 	xmlns:android
-		ADDED from /Users/utsman/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml:7:11-69
+		ADDED from /Users/ruangguru/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml:7:11-69
 uses-sdk
-INJECTED from /Users/utsman/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from /Users/utsman/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml
-INJECTED from /Users/utsman/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml
-INJECTED from /Users/utsman/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml
-INJECTED from /Users/utsman/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml
+INJECTED from /Users/ruangguru/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/ruangguru/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml
+INJECTED from /Users/ruangguru/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml
+INJECTED from /Users/ruangguru/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml
+INJECTED from /Users/ruangguru/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml
 	android:targetSdkVersion
-		INJECTED from /Users/utsman/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml
-		ADDED from /Users/utsman/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml
-		INJECTED from /Users/utsman/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml
+		INJECTED from /Users/ruangguru/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml
+		ADDED from /Users/ruangguru/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml
+		INJECTED from /Users/ruangguru/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from /Users/utsman/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml
-		ADDED from /Users/utsman/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml
-		INJECTED from /Users/utsman/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml
+		INJECTED from /Users/ruangguru/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml
+		ADDED from /Users/ruangguru/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml
+		INJECTED from /Users/ruangguru/AndroidStudioProjects/geolib/marker/src/main/AndroidManifest.xml
