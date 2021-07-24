@@ -1,0 +1,8 @@
+/*
+ * Created on 7/24/21, 10:01 AM
+ * Copyright (c) Muhammad Utsman 2021 All rights reserved.
+ */
+
+dependencies {
+    implementation 'com.github.utsmannn.geolib:core:bb3bc50531'
+}

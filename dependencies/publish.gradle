@@ -3,18 +3,18 @@
  * Copyright (c) Muhammad Utsman 2021 All rights reserved.
  */
 
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
-ext {
-    packageName = "com.utsman.geolib"
-    libVersion = versionName
-    projectName = project.getName()
-
-    url = "https://utsmannn.jfrog.io/artifactory/"
-    repository = "android"
-    username = properties.getProperty("jfrog.user")
-    password = properties.getProperty("jfrog.password")
-}
-
-apply from: 'https://raw.githubusercontent.com/utsmannn/app/master/artifactory-install.gradle'
+//Properties properties = new Properties()
+//properties.load(project.rootProject.file('local.properties').newDataInputStream())
+//
+//ext {
+//    packageName = "com.utsman.geolib"
+//    libVersion = versionName
+//    projectName = project.getName()
+//
+//    url = "https://utsmannn.jfrog.io/artifactory/"
+//    repository = "android"
+//    username = properties.getProperty("jfrog.user")
+//    password = properties.getProperty("jfrog.password")
+//}
+//
+//apply from: 'https://raw.githubusercontent.com/utsmannn/app/master/artifactory-install.gradle'

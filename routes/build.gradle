@@ -15,9 +15,9 @@ apply from: "$rootDir/dependencies/commons.gradle"
 apply from: "$rootDir/dependencies/externals.gradle"
 apply from: "$rootDir/dependencies/network.gradle"
 apply from: "$rootDir/dependencies/publish.gradle"
+apply from: "$rootDir/dependencies/core.gradle"
 
 dependencies {
     // another dependencies
-
-    implementation 'com.github.utsmannn.geolib:core:bb3bc50531'
 }
+
