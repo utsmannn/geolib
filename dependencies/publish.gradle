@@ -20,7 +20,6 @@ artifacts {
 }
 
 group = "io.github.utsmannn"
-//group = "geolib"
 version = "2.5.5"
 
 afterEvaluate {
@@ -61,8 +60,6 @@ afterEvaluate {
                         }
                     }
 
-                    // Version control info - if you're using GitHub, follow the
-                    // format as seen here
                     scm {
                         connection = "scm:git:github.com/utsmannn/geolib.git"
                         developerConnection = "scm:git:ssh:github.com/utsmannn/geolib.git"
