@@ -1,6 +1,5 @@
 
 <p align="center">
-  <img src="docs/static/img/icon/geolib.svg"></img>
   <h1 align="center">Geolib</h1>
 </p>
 
@@ -9,25 +8,25 @@
 </p>
 
 <p align="center">
-  <a href="https://utsmannn.jfrog.io/artifactory/android/com/utsman/geolib/location/"><img alt="artifactory" src="https://artifactory-badge.herokuapp.com/artifactory?url=https://utsmannn.jfrog.io/artifactory/android/com/utsman/geolib/marker/"></a>
+  <a href="https://img.shields.io/maven-central/v/io.github.utsmannn/geolib-location"></a>
   <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"></a>
   <a href="https://github.com/utsmannn/geolib/pulls"><img alt="Pull request" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat"></a>
   <a href="https://developer.android.com/kotlin"><img alt="Fcm docs" src="https://img.shields.io/badge/Kotlin-Coroutine-orange?logo=kotlin&style=flat"></a>
   <a href="https://twitter.com/utsmannn"><img alt="Twitter" src="https://img.shields.io/twitter/follow/utsmannn"></a>
   <a href="https://github.com/utsmannn"><img alt="Github" src="https://img.shields.io/github/followers/utsmannn?label=follow&style=social"></a>
-  <p align="center">Android helper libraries for geolocation, places and animating polyline. <br>Build for modern architecture with Kotlin and Coroutine</p>
+  <p align="center">Android helper libraries for geolocation, places, markering and animating polyline. <br>Build for modern architecture with Kotlin and Coroutine</p>
 </p>
 
 
 ## Documentation libraries
-Check docs https://utsmannn.github.io/geolib <br>
+Check docs on wiki https://github.com/utsmannn/geolib/wiki <br>
 Sample https://github.com/utsmannn/geolib-app-samples
 
 ## Artifact libraries
-- [Location library](https://utsmannn.github.io/geolib/docs/artifacts/location-lib)
-- [Routes Library](https://utsmannn.github.io/geolib/docs/artifacts/routes-lib)
-- [Polyline utils](https://utsmannn.github.io/geolib/docs/artifacts/polyline-help)
-- [Marker utils](https://utsmannn.github.io/geolib/docs/artifacts/marker-lib)
+- [Location library](https://github.com/utsmannn/geolib/wiki/Location)
+- [Routes Library](https://github.com/utsmannn/geolib/wiki/Routes)
+- [Polyline utils](https://github.com/utsmannn/geolib/wiki/Polyline)
+- [Marker utils](https://github.com/utsmannn/geolib/wiki/Marker)
 
 ## Screenshot
 |Get location|Search location|
@@ -58,31 +57,20 @@ implementation 'com.google.maps.android:maps-ktx:2.1.1'
 implementation 'com.google.android.gms:play-services-location:17.1.0'
 ```
 
-### Jitpack repository
-```groovy
-allprojects {
-    repositories {
-
-        // add this url
-        maven { url 'https://utsmannn.jfrog.io/artifactory/android' }
-    }
-}
-```
-
 ### All dependencies
 ```groovy
 
 // location
-implementation 'com.utsman.geolib:location:{last_version}'
+implementation 'io.github.utsmannn:geolib-location:{last_version}'
 
 // routes
-implementation 'com.utsman.geolib:routes:{last_version}'
+implementation 'io.github.utsmannn:geolib-routes:{last_version}'
 
 // polyline utils
-implementation 'com.utsman.geolib:polyline:{last_version}'
+implementation 'io.github.utsmannn:geolib-polyline:{last_version}'
 
 // google maps marker utils
-implementation 'com.utsman.geolib:marker:{last_version}'
+implementation 'io.github.utsmannn:geolib-marker:{last_version}'
 ```
 
 ## License
