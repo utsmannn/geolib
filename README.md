@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-  <a href="https://img.shields.io/maven-central/v/io.github.utsmannn/geolib-location"></a>
+  <a href="https://search.maven.org/search?q=g:io.github.utsmannn"><img alt="License" src="https://img.shields.io/maven-central/v/io.github.utsmannn/geolib-location"></a>
   <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"></a>
   <a href="https://github.com/utsmannn/geolib/pulls"><img alt="Pull request" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat"></a>
   <a href="https://developer.android.com/kotlin"><img alt="Fcm docs" src="https://img.shields.io/badge/Kotlin-Coroutine-orange?logo=kotlin&style=flat"></a>
@@ -21,6 +21,9 @@
 ## Documentation libraries
 Check docs on wiki https://github.com/utsmannn/geolib/wiki <br>
 Sample https://github.com/utsmannn/geolib-app-samples
+
+## Latest Version on Maven Central
+<a href="https://search.maven.org/search?q=g:io.github.utsmannn"><img alt="License" src="https://img.shields.io/maven-central/v/io.github.utsmannn/geolib-location"></a>
 
 ## Artifact libraries
 - [Location library](https://github.com/utsmannn/geolib/wiki/Location)
