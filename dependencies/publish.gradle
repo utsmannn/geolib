@@ -20,7 +20,7 @@ artifacts {
 }
 
 group = "io.github.utsmannn"
-version = "2.5.5"
+version = versionName
 
 afterEvaluate {
     publishing {

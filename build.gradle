@@ -63,7 +63,7 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven { url 'https://jitpack.io' }
+        //maven { url 'https://jitpack.io' }
     }
 }
 
@@ -77,5 +77,5 @@ ext {
     minSdk = 21
     targetSdk = 29
     versionCode = 8
-    versionName = "2.5.2"
+    versionName = "2.5.6"
 }
