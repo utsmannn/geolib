@@ -62,18 +62,19 @@ implementation 'com.google.android.gms:play-services-location:17.1.0'
 
 ### All dependencies
 ```groovy
+ext.geolib_version = "2.5.6"
 
 // location
-implementation 'io.github.utsmannn:geolib-location:{last_version}'
+implementation "io.github.utsmannn:geolib-location:$geolib_version"
 
 // routes
-implementation 'io.github.utsmannn:geolib-routes:{last_version}'
+implementation "io.github.utsmannn:geolib-routes:$geolib_version"
 
 // polyline utils
-implementation 'io.github.utsmannn:geolib-polyline:{last_version}'
+implementation "io.github.utsmannn:geolib-polyline:$geolib_version"
 
 // google maps marker utils
-implementation 'io.github.utsmannn:geolib-marker:{last_version}'
+implementation "io.github.utsmannn:geolib-marker:$geolib_version"
 ```
 
 ## License
