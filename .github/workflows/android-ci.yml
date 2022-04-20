@@ -5,7 +5,7 @@ env:
   main_project_module: app
 
   # The name of the Play Store
-  playstore_name: Frogobox ID
+  playstore_name: utsmannn
 
 on:
   # Triggers the workflow on push or pull request events but only for default and protected branches
