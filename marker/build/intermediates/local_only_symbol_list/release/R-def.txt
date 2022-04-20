@@ -1,4 +1,0 @@
-R_DEF: Internal format may change without notice
-local
-id lottie_container
-layout lottie_container
