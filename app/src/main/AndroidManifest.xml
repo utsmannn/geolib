@@ -17,7 +17,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CoroutinePlacesHelper">
-        <activity android:name="com.utsman.geolib.sample.MainActivity">
+        <activity 
+                  android:exported="true"
+                  android:name="com.utsman.geolib.sample.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
