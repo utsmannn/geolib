@@ -46,11 +46,9 @@ internal class PlacesLocationImpl(
     override suspend fun getLocationFlow(): Flow<Location> {
         val callbackFlow: Flow<Location> = callbackFlow {
             val locationCallback = object : LocationCallback() {
-                override fun onLocationResult(result: LocationResult?) {
-                    if (result != null) {
-                        for (location in result.locations) {
-                            offer(location)
-                        }
+                override fun onLocationResult(p0: LocationResult) {
+                    for (location in p0.locations) {
+                        trySend(location).isSuccess
                     }
                 }
             }
@@ -91,11 +89,9 @@ internal class PlacesLocationImpl(
         var oldLocation: Location? = null
         val callbackFlow: Flow<ComparisonLocation> = callbackFlow {
             val locationCallback = object : LocationCallback() {
-                override fun onLocationResult(result: LocationResult?) {
-                    if (result != null) {
-                        for (location in result.locations) {
-                            offer(ComparisonLocation(oldLocation, location))
-                        }
+                override fun onLocationResult(p0: LocationResult) {
+                    for (location in p0.locations) {
+                        trySend(ComparisonLocation(oldLocation, location)).isSuccess
                     }
                 }
             }
